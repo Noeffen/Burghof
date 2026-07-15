@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Burghof Hotel – 42 komfortable Zimmer und 5 Seminarräume für Tagungen im Odenwald.">
+  <title>Hotel & Seminarräume – Burghof</title>
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --gold-light: #e8c547;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      padding: 1.5rem 0;
+      background: var(--white);
+      border-bottom: 1px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--black);
+      letter-spacing: 2px;
+    }
+
+    .logo .gold {
+      color: var(--gold);
+    }
+
+    nav a {
+      margin-left: 2.5rem;
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    .hero {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
+      color: var(--white);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .room-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
+    }
+
+    .room-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #2a5a4a 0%, #4a9d6f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .room-content {
+      padding: 2rem;
+    }
+
+    .room-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .room-count {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .room-content p {
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .seminar-section {
+      background: var(--gray);
+      padding: 3rem;
+      border-radius: var(--radius);
+      margin: 3rem 0;
+    }
+
+    .seminar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .seminar-image {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
+      border-radius: var(--radius);
+    }
+
+    .seminar-content h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .seminar-content p {
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .features-list li {
+      padding: 0.7rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--gray-dark);
+    }
+
+    .features-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 3rem;
+      background: var(--gray);
+      border-radius: var(--radius);
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      color: var(--gray-dark);
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      padding-top: 2rem;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .room-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .seminar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="index.html#kernthemen">Angebote</a>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Hotel & Seminarräume</h1>
+      <p>Übernachtung mit Komfort, Seminare mit Innovation – perfekt für Tagungen und Kurzurlaube</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Unsere Hotelzimmer</h2>
+
+      <div class="room-grid">
+        <div class="room-card">
+          <div class="room-image">🛏️</div>
+          <div class="room-content">
+            <h3>Standardzimmer</h3>
+            <div class="room-count">6 Zimmer</div>
+            <p>Komfortable Zimmer mit den wichtigsten Annehmlichkeiten für einen erholsamen Aufenthalt.</p>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image">⭐</div>
+          <div class="room-content">
+            <h3>Komfortzimmer</h3>
+            <div class="room-count">16 Zimmer</div>
+            <p>Geräumigere Zimmer mit moderner Ausstattung und Blick auf die Natur des Odenwalds.</p>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image">👨‍👩‍👧‍👦</div>
+          <div class="room-content">
+            <h3>Familienzimmer</h3>
+            <div class="room-count">8 Zimmer</div>
+            <p>Perfekt für Familien – mit ausreichend Platz für Eltern und Kinder.</p>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image">🏰</div>
+          <div class="room-content">
+            <h3>Familiensuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Luxus für die ganze Familie – großzügig geschnittene Räume mit separaten Bereichen.</p>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image">👑</div>
+          <div class="room-content">
+            <h3>Juniorsuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Elegante Suite mit separatem Wohnbereich – Luxus für Zwei.</p>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image">♟️</div>
+          <div class="room-content">
+            <h3>Seniorsuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Barrierefreie Luxus-Suite mit erhöhtem Komfort speziell für Seniorinnen und Senioren.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seminar-section">
+    <div class="container">
+      <div class="seminar-grid">
+        <div class="seminar-image"></div>
+        <div class="seminar-content">
+          <h2>Seminarräume für Tagungen</h2>
+          <p>Wir verfügen über 5 moderne Seminarräume mit einer Gesamtkapazität von bis zu 119 Teilnehmenden.</p>
+          <p>Alle Räume sind flexibel nutzbar und mit modernster Technik ausgestattet – perfekt für Meetings, Workshops und Offsite-Tagungen.</p>
+
+          <ul class="features-list">
+            <li>5 verschiedene Räume in unterschiedlichen Größen</li>
+            <li>Bis zu 119 Plätze je nach Raumkombination</li>
+            <li>Moderne Audio-/Video-Ausstattung</li>
+            <li>Hochgeschwindigkeits-WLAN</li>
+            <li>Catering & Getränke-Service</li>
+            <li>Übernachtung im Haus</li>
+            <li>Flexible Pausenzeiten</li>
+            <li>Individuelle Betreuung</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ihre Tagung im Burghof</h2>
+        <p>Moderne Räume, erstklassiges Service und inspirierende Umgebung – alles für Ihren erfolgreichen Event</p>
+        <a href="kontakt.html" class="btn">Anfrage stellen</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>KONTAKT</h4>
+          <p>Burghof 16<br>64753 Brombachtal</p>
+          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
+          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>ÖFFNUNGSZEITEN</h4>
+          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
+          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>LEGAL</h4>
+          <p><a href="datenschutz.html">Datenschutz</a></p>
+          <p><a href="impressum.html">Impressum</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
