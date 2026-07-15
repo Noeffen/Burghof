@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Burghof Kontakt – Nehmen Sie Kontakt auf für Reservierungen und Anfragen.">
+  <title>Kontakt – Burghof</title>
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
+    .logo .gold { color: var(--gold); }
+    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: var(--gold); }
+
+    .hero { padding: 4rem 0; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.1rem; color: #ccc; }
+
+    .section { padding: 4rem 0; }
+
+    .contact-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+
+    .contact-form { background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .contact-form h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--black); }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #e0e0e0;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit {
+      background: var(--black);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .form-submit:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .form-message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      display: none;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .form-message.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .form-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      display: block;
+    }
+
+    .contact-info { background: var(--gray); padding: 2rem; border-radius: var(--radius); }
+    .contact-info h3 { font-size: 1.4rem; margin-bottom: 1.5rem; font-weight: 700; }
+
+    .info-block { margin-bottom: 2rem; }
+    .info-block h4 { font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700; }
+    .info-block p, .info-block a { color: var(--gray-dark); text-decoration: none; line-height: 1.7; }
+    .info-block a:hover { color: var(--gold); }
+
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.95rem; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="index.html#kernthemen">Angebote</a>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Kontakt & Anfragen</h1>
+      <p>Wir freuen uns auf Ihre Nachricht – kontaktieren Sie uns für Reservierungen, Anfragen oder Besichtigungen</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-form">
+          <h2>Kontaktformular</h2>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-Mail *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Telefon</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+
+            <div class="form-group">
+              <label for="anliegen">Anliegen *</label>
+              <select id="anliegen" name="anliegen" required>
+                <option value="">-- Bitte wählen --</option>
+                <option value="Hochzeit">Hochzeit</option>
+                <option value="Firmenevents">Firmenevents</option>
+                <option value="Tagungen">Tagungen & Seminare</option>
+                <option value="Hotelreservierung">Hotelreservierung</option>
+                <option value="Restaurantreservierung">Restaurantreservierung</a>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Nachricht *</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">Anfrage senden</button>
+            <div id="formMessage" class="form-message"></div>
+          </form>
+        </div>
+
+        <div class="contact-info">
+          <h3>Kontaktdaten</h3>
+
+          <div class="info-block">
+            <h4>📍 Adresse</h4>
+            <p>Burghof 16<br>64753 Brombachtal<br>Deutschland</p>
+          </div>
+
+          <div class="info-block">
+            <h4>📞 Telefon</h4>
+            <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
+          </div>
+
+          <div class="info-block">
+            <h4>📧 E-Mail</h4>
+            <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+          </div>
+
+          <div class="info-block">
+            <h4>⏰ Öffnungszeiten</h4>
+            <p>Restaurant täglich 18-23 Uhr<br>Küche bis 21:30 Uhr</p>
+          </div>
+
+          <div class="info-block">
+            <h4>📱 Social Media</h4>
+            <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram @burghof_hotelundevent</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>KONTAKT</h4>
+          <p>Burghof 16<br>64753 Brombachtal</p>
+          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
+          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>ÖFFNUNGSZEITEN</h4>
+          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
+          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>LEGAL</h4>
+          <p><a href="datenschutz.html">Datenschutz</a></p>
+          <p><a href="impressum.html">Impressum</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const anliegen = document.getElementById('anliegen').value;
+      const message = document.getElementById('message').value.trim();
+      const formMessage = document.getElementById('formMessage');
+
+      // Validierung
+      if (!name || !email || !anliegen || !message) {
+        formMessage.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+        formMessage.classList.add('error');
+        formMessage.classList.remove('success');
+        return;
+      }
+
+      // Email-Validierung
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        formMessage.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        formMessage.classList.add('error');
+        formMessage.classList.remove('success');
+        return;
+      }
+
+      // Formulardaten für Formspree vorbereiten
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('anliegen', anliegen);
+      formData.append('message', message);
+      formData.append('_replyto', email);
+
+      // An Formspree senden (FORM_ID muss ersetzt werden!)
+      fetch('https://formspree.io/f/YOUR_FORM_ID_HERE', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          formMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde versendet. Wir melden uns bald bei Ihnen.';
+          formMessage.classList.add('success');
+          formMessage.classList.remove('error');
+          document.getElementById('contactForm').reset();
+        } else {
+          formMessage.textContent = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+          formMessage.classList.add('error');
+          formMessage.classList.remove('success');
+        }
+      })
+      .catch(error => {
+        formMessage.textContent = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+        formMessage.classList.add('error');
+        formMessage.classList.remove('success');
+      });
+    });
+  </script>
+</body>
+</html>
