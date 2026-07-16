@@ -32,7 +32,7 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 2rem;
     }
@@ -101,249 +101,97 @@
       font-size: 1.2rem;
       color: #ccc;
       max-width: 700px;
-      margin: 0 auto 2rem;
+      margin: 0 auto;
       line-height: 1.8;
     }
 
-    .hero-cta {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background: var(--gold);
-      color: var(--black);
-      text-decoration: none;
-      border-radius: var(--radius);
-      font-weight: 600;
-      transition: all 0.3s;
-      font-size: 1rem;
+    /* LANDING PAGE KACHELN */
+    .landing-kacheln {
+      padding: 3rem 0;
     }
 
-    .hero-cta:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
-    }
-
-    /* 3 KERNTHEMEN */
-    .kernthemen {
-      padding: 5rem 0;
-      background: var(--gray);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--gray-dark);
-      margin-bottom: 4rem;
-      font-size: 1.1rem;
-    }
-
-    .kernthemen-grid {
+    .landing-kachel {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-    }
-
-    .kernthema-card {
-      background: var(--white);
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 2rem;
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: all 0.3s;
       cursor: pointer;
+      min-height: 320px;
+      text-decoration: none;
     }
 
-    .kernthema-card:hover {
-      transform: translateY(-8px);
+    .landing-kachel:hover {
+      transform: translateY(-4px);
       box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
     }
 
-    .kernthema-image {
+    .landing-kachel-image {
       width: 100%;
-      height: 280px;
-      background: linear-gradient(135deg, #c19a6b 0%, #d4af37 100%);
+      height: 100%;
+      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 1.5rem;
     }
 
-    .kernthema-image.events {
+    .landing-kachel-image.events {
       background: linear-gradient(135deg, #8b4513 0%, #d4af37 100%);
     }
 
-    .kernthema-image.hotel {
+    .landing-kachel-image.hotel {
       background: linear-gradient(135deg, #2a5a4a 0%, #4a9d6f 100%);
     }
 
-    .kernthema-image.golf {
+    .landing-kachel-image.golf {
       background: linear-gradient(135deg, #3a6b5a 0%, #5ab88f 100%);
     }
 
-    .kernthema-image.restaurant {
-      background: linear-gradient(135deg, #8b4513 0%, #d4af37 100%);
+    .landing-kachel-image.restaurant {
+      background: linear-gradient(135deg, #6b4423 0%, #d4af37 100%);
     }
 
-    .kernthema-content {
-      padding: 2rem;
+    .landing-kachel-content {
+      padding: 3rem;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .kernthema-content h3 {
-      font-size: 1.5rem;
+    .landing-kachel-content h2 {
+      font-size: 2rem;
       margin-bottom: 1rem;
       color: var(--black);
-    }
-
-    .kernthema-content p {
-      color: var(--gray-dark);
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-    }
-
-    .kernthema-cta {
-      display: inline-block;
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .kernthema-cta:hover {
-      color: var(--gold-light);
-    }
-
-    .kernthema-cta::after {
-      content: " →";
-      margin-left: 0.5rem;
-    }
-
-    /* ÜBER SECTION */
-    .about-section {
-      padding: 5rem 0;
-      background: var(--white);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-image {
-      width: 100%;
-      height: 400px;
-      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
-      border-radius: var(--radius);
-    }
-
-    .about-content h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
       font-weight: 700;
     }
 
-    .about-content p {
+    .landing-kachel-content p {
       color: var(--gray-dark);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       line-height: 1.8;
       font-size: 1.05rem;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin: 2rem 0;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      color: var(--gray-dark);
-      font-size: 0.95rem;
-    }
-
-    /* TESTIMONIAL */
-    .testimonial-section {
-      padding: 5rem 0;
-      background: var(--gray);
-    }
-
-    .testimonial {
-      background: var(--white);
-      padding: 2rem;
-      border-left: 4px solid var(--gold);
-      border-radius: var(--radius);
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: var(--shadow);
-    }
-
-    .testimonial-text {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: var(--black);
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      font-weight: 600;
-      color: var(--gray-dark);
-      font-style: normal;
-    }
-
-    /* CTA SECTION */
-    .cta-section {
-      padding: 4rem 0;
+    .landing-kachel-cta {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
       background: var(--black);
       color: var(--white);
-      text-align: center;
-    }
-
-    .cta-section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-
-    .cta-section p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      color: #ccc;
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background: var(--gold);
-      color: var(--black);
       text-decoration: none;
       border-radius: var(--radius);
       font-weight: 600;
       transition: all 0.3s;
-      font-size: 1rem;
+      width: fit-content;
     }
 
-    .cta-button:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+    .landing-kachel-cta:hover {
+      background: var(--gold);
+      color: var(--black);
     }
 
     /* FOOTER */
@@ -397,19 +245,24 @@
         font-size: 0.85rem;
       }
 
-      .kernthemen-grid {
+      .landing-kachel {
         grid-template-columns: 1fr;
+        min-height: 400px;
       }
 
-      .about-grid {
-        grid-template-columns: 1fr;
+      .landing-kachel-image {
+        min-height: 200px;
+      }
+
+      .landing-kachel-content {
+        padding: 2rem;
+      }
+
+      .landing-kachel-content h2 {
+        font-size: 1.5rem;
       }
 
       .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
         grid-template-columns: 1fr;
       }
     }
@@ -422,11 +275,6 @@
       <div class="header-content">
         <a href="#" class="logo">BURG<span class="gold">HOF</span></a>
         <nav>
-          <a href="#kernthemen">Angebote</a>
-          <a href="events.html">Events</a>
-          <a href="hotel.html">Hotel</a>
-          <a href="golf.html">Golf</a>
-          <a href="restaurant.html">Restaurant</a>
           <a href="kontakt.html">Kontakt</a>
         </nav>
       </div>
@@ -438,107 +286,51 @@
     <div class="container">
       <h1>Willkommen im <span class="gold-accent">Burghof</span></h1>
       <p>Luxus Eventlocation, Hotel & Seminarräume im Odenwald – 45 Minuten von Frankfurt entfernt</p>
-      <a href="kontakt.html" class="hero-cta">Besichtigung buchen</a>
     </div>
   </section>
 
-  <!-- 3 KERNTHEMEN -->
-  <section class="kernthemen" id="kernthemen">
+  <!-- LANDING PAGE KACHELN -->
+  <section class="landing-kacheln">
     <div class="container">
-      <h2 class="section-title">Ihre perfekte Location</h2>
-      <p class="section-subtitle">Vier Welten unter einem Dach</p>
-
-      <div class="kernthemen-grid">
-        <!-- EVENTS -->
-        <div class="kernthema-card">
-          <div class="kernthema-image events"></div>
-          <div class="kernthema-content">
-            <h3>Eventlocation</h3>
-            <p>Von rauschenden Hochzeiten bis zu intimalen Familienfeiern – bis zu 180 Gäste in eleganter Atmosphäre.</p>
-            <a href="events.html" class="kernthema-cta">Mehr erfahren</a>
-          </div>
+      <!-- EVENTS -->
+      <a href="events.html" class="landing-kachel">
+        <div class="landing-kachel-image events"></div>
+        <div class="landing-kachel-content">
+          <h2>Eventlocation</h2>
+          <p>Von rauschenden Hochzeiten bis zu intimalen Familienfeiern – bis zu 180 Gäste in eleganter Atmosphäre. Der perfekte Rahmen für Ihre unvergessliche Feier.</p>
+          <a href="events.html" class="landing-kachel-cta">Mehr erfahren →</a>
         </div>
+      </a>
 
-        <!-- HOTEL & SEMINARE -->
-        <div class="kernthema-card">
-          <div class="kernthema-image hotel"></div>
-          <div class="kernthema-content">
-            <h3>Hotel & Seminare</h3>
-            <p>42 komfortable Zimmer und 5 moderne Seminarräume – perfekt für Tagungen und Offsite-Events.</p>
-            <a href="hotel.html" class="kernthema-cta">Mehr erfahren</a>
-          </div>
+      <!-- HOTEL & SEMINARE -->
+      <a href="hotel.html" class="landing-kachel">
+        <div class="landing-kachel-image hotel"></div>
+        <div class="landing-kachel-content">
+          <h2>Hotel & Seminare</h2>
+          <p>42 komfortable Zimmer und 5 moderne Seminarräume – perfekt für Tagungen, Offsite-Events und erholsame Kurzurlaube. Alles unter einem Dach.</p>
+          <a href="hotel.html" class="landing-kachel-cta">Mehr erfahren →</a>
         </div>
+      </a>
 
-        <!-- GOLF -->
-        <div class="kernthema-card">
-          <div class="kernthema-image golf"></div>
-          <div class="kernthema-content">
-            <h3>Golf & Aktivitäten</h3>
-            <p>Direkter Zugang zu erstklassigen Golfplätzen und umgeben von wunderschöner Natur des Odenwalds.</p>
-            <a href="golf.html" class="kernthema-cta">Mehr erfahren</a>
-          </div>
+      <!-- GOLF & AKTIVITÄTEN -->
+      <a href="golf.html" class="landing-kachel">
+        <div class="landing-kachel-image golf"></div>
+        <div class="landing-kachel-content">
+          <h2>Golf & Aktivitäten</h2>
+          <p>Direkter Zugang zu erstklassigen Golfplätzen und umgeben von wunderschöner Natur des Odenwalds. Entdecken Sie Aktivurlaub auf höchstem Niveau.</p>
+          <a href="golf.html" class="landing-kachel-cta">Mehr erfahren →</a>
         </div>
+      </a>
 
-        <!-- RESTAURANT -->
-        <div class="kernthema-card">
-          <div class="kernthema-image restaurant"></div>
-          <div class="kernthema-content">
-            <h3>Fine Dining Restaurant</h3>
-            <p>Kulinarische Meisterwerke von Chefkoch Filip Mitevski – abends zum Genießen oder als Event-Catering.</p>
-            <a href="restaurant.html" class="kernthema-cta">Mehr erfahren</a>
-          </div>
+      <!-- RESTAURANT -->
+      <a href="restaurant.html" class="landing-kachel">
+        <div class="landing-kachel-image restaurant"></div>
+        <div class="landing-kachel-content">
+          <h2>Fine Dining Restaurant</h2>
+          <p>Kulinarische Meisterwerke von Chefkoch Filip Mitevski – aufregend neue Interpretationen klassischer Gerichte. Genießen Sie Premium-Dining im Burghof.</p>
+          <a href="restaurant.html" class="landing-kachel-cta">Mehr erfahren →</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ÜBER BURGHOF -->
-  <section class="about-section">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-image"></div>
-        <div class="about-content">
-          <h2>Das ist der Burghof</h2>
-          <p>Der Burghof in Brombachtal ist eine einzigartige Eventlocation mit integriertem Hotel, perfekt gelegen im grünen Herzen des Odenwalds.</p>
-          <p>Egal ob Sie eine unvergessliche Hochzeit feiern, eine inspirierende Firmentagung durchführen oder sich einen erholsamen Kurzurlaub gönnen möchten – der Burghof bietet die perfekte Kulisse.</p>
-
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-number">42</div>
-              <div class="stat-label">Hotelzimmer</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number">5</div>
-              <div class="stat-label">Seminarräume</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number">180</div>
-              <div class="stat-label">Eventkapazität</div>
-            </div>
-          </div>
-
-          <p><strong>Fine-Dining Restaurant:</strong> Chefkoch Filip Mitevski verwöhnt Sie mit aufregenden kulinarischen Kreationen.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIAL -->
-  <section class="testimonial-section">
-    <div class="container">
-      <div class="testimonial">
-        <div class="testimonial-text">"Ich gebe für den Standort 5 Sterne, weil wir in die Natur wollten und Ruhe gesucht haben, dafür ist es perfekt. Klare Empfehlung!"</div>
-        <div class="testimonial-author">— Daniela, Google Review</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA SECTION -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Lassen Sie sich inspirieren</h2>
-      <p>Kontaktieren Sie uns für eine persönliche Besichtigung</p>
-      <a href="kontakt.html" class="cta-button">Jetzt anfragen</a>
+      </a>
     </div>
   </section>
 
