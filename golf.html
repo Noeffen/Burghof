@@ -3,8 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof Golf – Golfplätze und Aktivitäten im Odenwald.">
-  <title>Golf & Aktivitäten – Burghof</title>
+  <meta name="description" content="Golf spielen, wandern und Rad fahren im Odenwald – direkt am Burghof Brombachtal. Erstklassige Golfplätze in der Nähe, 45 Minuten von Frankfurt.">
+  <title>Golf &amp; Aktivitäten im Odenwald – Burghof Brombachtal | 45 Min. von Frankfurt</title>
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/golf.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/golf.html">
+  <meta property="og:title" content="Golf & Aktivitäten im Odenwald – Burghof Brombachtal | 45 Min. von Frankfurt">
+  <meta property="og:description" content="Golf spielen, wandern und Rad fahren im Odenwald – direkt am Burghof Brombachtal. Erstklassige Golfplätze in der Nähe, 45 Minuten von Frankfurt.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Golf & Aktivitäten im Odenwald – Burghof Brombachtal | 45 Min. von Frankfurt">
+  <meta name="twitter:description" content="Golf spielen, wandern und Rad fahren im Odenwald – direkt am Burghof Brombachtal. Erstklassige Golfplätze in der Nähe, 45 Minuten von Frankfurt.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "@id": "https://burghof-odenwald.de/golf.html#activities",
+  "name": "Burghof – Golf & Aktivitäten im Odenwald",
+  "description": "Golf, Wandern, Radfahren und Naturerlebnisse im Odenwald. Burghof Brombachtal, 45 Minuten von Frankfurt.",
+  "url": "https://burghof-odenwald.de/golf.html",
+  "telephone": "+496063589962",
+  "email": "info@burghof-hotel.de",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Burghof 16",
+    "addressLocality": "Brombachtal",
+    "postalCode": "64753",
+    "addressRegion": "Hessen",
+    "addressCountry": "DE"
+  },
+  "containedIn": {
+    "@type": "Hotel",
+    "name": "Burghof",
+    "url": "https://burghof-odenwald.de"
+  }
+}
+  </script>
   <style>
     :root {
       --black: #1a1a1a;
@@ -13,53 +57,42 @@
       --gray: #f8f8f8;
       --gray-dark: #444;
       --radius: 12px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
     header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
     .header-content { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
     .logo .gold { color: var(--gold); }
     nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: var(--gold); }
-
     .hero { padding: 4rem 0; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
     .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
     .hero p { font-size: 1.1rem; color: #ccc; }
-
     .section { padding: 4rem 0; }
     .section-title { font-size: 2.2rem; margin-bottom: 2rem; font-weight: 700; }
-
     .activity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-bottom: 3rem; }
     .activity-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s; }
-    .activity-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2); }
-    
-    .activity-image { width: 100%; height: 250px; background: linear-gradient(135deg, #3a6b5a 0%, #5ab88f 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .activity-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(212,175,55,0.2); }
+    .activity-image { width: 100%; height: 250px; background: linear-gradient(135deg, #3a6b5a 0%, #5ab88f 100%); }
     .activity-content { padding: 2rem; }
     .activity-content h3 { font-size: 1.5rem; margin-bottom: 1rem; }
     .activity-content p { color: var(--gray-dark); line-height: 1.7; }
-
     .cta { text-align: center; padding: 3rem; background: var(--gray); border-radius: var(--radius); }
     .cta h2 { font-size: 2rem; margin-bottom: 1rem; }
     .cta p { color: var(--gray-dark); margin-bottom: 2rem; }
     .btn { display: inline-block; padding: 1rem 2.5rem; background: var(--black); color: var(--white); text-decoration: none; border-radius: var(--radius); font-weight: 600; transition: all 0.3s; }
     .btn:hover { background: var(--gold); color: var(--black); }
-
     footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 4rem; }
     .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
     .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.95rem; }
-    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
     .footer-section a:hover { color: var(--gold); }
     .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
-
-    @media (max-width: 768px) {
-      .activity-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-    }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+    @media (max-width: 768px) { .activity-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -78,82 +111,74 @@
       </div>
     </div>
   </header>
-
   <section class="hero">
     <div class="container">
-      <h1>Golf & Aktivitäten</h1>
+      <h1>Golf &amp; Aktivitäten im Odenwald</h1>
       <p>Im Herzen des Odenwalds – umgeben von Natur und in der Nähe erstklassiger Golfplätze</p>
     </div>
   </section>
-
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Freizeit & Aktivitäten</h2>
-
+      <h2 class="section-title">Freizeit &amp; Aktivitäten im Odenwald</h2>
       <div class="activity-grid">
         <div class="activity-card">
           <div class="activity-image"></div>
           <div class="activity-content">
             <h3>Golf spielen</h3>
-            <p>Direkt in der Nähe des Burghofs finden Sie erstklassige Golfplätze für alle Spielniveaus. Von Anfängern bis zu Profis – genießen Sie eine runde Golf inmitten herrlicher Natur. Wir vermitteln Kontakte zu lokalen Clubs.</p>
+            <p>Direkt in der Nähe des Burghofs finden Sie erstklassige Golfplätze für alle Spielniveaus. Von Anfängern bis zu Profis – genießen Sie eine Runde Golf inmitten der herrlichen Natur des Odenwalds. Wir vermitteln Kontakte zu lokalen Clubs.</p>
           </div>
         </div>
-
         <div class="activity-card">
           <div class="activity-image"></div>
           <div class="activity-content">
-            <h3>Radfahren & Hiking</h3>
-            <p>Der Odenwald ist ein Paradies für Radfahrer und Wanderer. Entdecken Sie malerische Routen durch die Natur, besuchen Sie charmante Dörfer und genießen Sie die frische Waldluft – direkt von unserem Haus aus.</p>
+            <h3>Radfahren &amp; Wandern</h3>
+            <p>Der Odenwald ist ein Paradies für Radfahrer und Wanderer. Entdecken Sie malerische Routen durch die Natur, besuchen Sie charmante Dörfer und genießen Sie die frische Waldluft – direkt von unserem Haus in Brombachtal aus.</p>
           </div>
         </div>
-
         <div class="activity-card">
           <div class="activity-image"></div>
           <div class="activity-content">
-            <h3>Naturerlebnis</h3>
-            <p>Die Natur des Odenwalds ist wunderbar – dichte Wälder, Wiesen und romantische Täler laden zum Erkunden ein. Erleben Sie Ruhe und Erholung ohne Stress.</p>
+            <h3>Naturerlebnis Odenwald</h3>
+            <p>Dichte Wälder, Wiesen und romantische Täler laden zum Erkunden ein. Erleben Sie Ruhe und Erholung abseits des Rhein-Main-Gebiets – der Odenwald bietet einzigartiges Naturerlebnis nur 45 Minuten von Frankfurt.</p>
           </div>
         </div>
-
         <div class="activity-card">
           <div class="activity-image"></div>
           <div class="activity-content">
             <h3>Kulinarische Erlebnisse</h3>
-            <p>Entdecken Sie die feine Küche unseres Chefkochs Filip Mitevski im Burghof Restaurant. Regionale Spezialitäten treffen auf internationale Gourmet-Kreationen.</p>
+            <p>Entdecken Sie die feine Küche unseres Chefkochs Filip Mitevski im Burghof Restaurant. Regionale Spezialitäten des Odenwalds treffen auf internationale Gourmet-Kreationen.</p>
           </div>
         </div>
       </div>
-
       <div class="cta">
-        <h2>Planen Sie Ihren Aktivurlaub</h2>
-        <p>Entdecken Sie den Odenwald von seiner schönsten Seite – im Burghof</p>
+        <h2>Planen Sie Ihren Aktivurlaub im Odenwald</h2>
+        <p>Entdecken Sie den Odenwald von seiner schönsten Seite – im Burghof Brombachtal</p>
         <a href="kontakt.html" class="btn">Anfrage stellen</a>
       </div>
     </div>
   </section>
-
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-section">
           <h4>KONTAKT</h4>
           <p>Burghof 16<br>64753 Brombachtal</p>
-          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
-          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
         </div>
         <div class="footer-section">
           <h4>ÖFFNUNGSZEITEN</h4>
-          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
         </div>
         <div class="footer-section">
           <h4>LEGAL</h4>
-          <p><a href="datenschutz.html">Datenschutz</a></p>
-          <p><a href="impressum.html">Impressum</a></p>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
       </div>
     </div>
   </footer>

@@ -3,8 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof Restaurant – Fine Dining mit Chefkoch Filip Mitevski im Odenwald.">
-  <title>Restaurant – Burghof</title>
+  <meta name="description" content="Fine Dining Restaurant im Burghof Brombachtal – Chefkoch Filip Mitevski verbindet regionale Produkte mit internationalen Gourmet-Kreationen. Täglich 18–23 Uhr.">
+  <title>Fine Dining Restaurant im Odenwald – Chefkoch Filip Mitevski | Burghof Brombachtal</title>
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/restaurant.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/restaurant.html">
+  <meta property="og:title" content="Fine Dining Restaurant im Odenwald – Chefkoch Filip Mitevski | Burghof Brombachtal">
+  <meta property="og:description" content="Fine Dining Restaurant im Burghof Brombachtal – Chefkoch Filip Mitevski verbindet regionale Produkte mit internationalen Gourmet-Kreationen. Täglich 18–23 Uhr.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fine Dining Restaurant im Odenwald – Chefkoch Filip Mitevski | Burghof Brombachtal">
+  <meta name="twitter:description" content="Fine Dining Restaurant im Burghof Brombachtal – Chefkoch Filip Mitevski verbindet regionale Produkte mit internationalen Gourmet-Kreationen. Täglich 18–23 Uhr.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://burghof-odenwald.de/restaurant.html#restaurant",
+  "name": "Burghof Restaurant",
+  "description": "Fine Dining Restaurant mit Chefkoch Filip Mitevski im Burghof Brombachtal, Odenwald.",
+  "url": "https://burghof-odenwald.de/restaurant.html",
+  "telephone": "+496063589962",
+  "email": "info@burghof-hotel.de",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Burghof 16",
+    "addressLocality": "Brombachtal",
+    "postalCode": "64753",
+    "addressRegion": "Hessen",
+    "addressCountry": "DE"
+  },
+  "servesCuisine": [
+    "Fine Dining",
+    "Europäische Küche"
+  ],
+  "priceRange": "€€€",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "opens": "18:00",
+    "closes": "23:00"
+  },
+  "hasMenu": "https://burghof-odenwald.de/restaurant.html",
+  "containedIn": {
+    "@type": "Hotel",
+    "name": "Burghof",
+    "url": "https://burghof-odenwald.de"
+  }
+}
+  </script>
   <style>
     :root {
       --black: #1a1a1a;
@@ -13,61 +77,48 @@
       --gray: #f8f8f8;
       --gray-dark: #444;
       --radius: 12px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
     header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
     .header-content { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
     .logo .gold { color: var(--gold); }
     nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: var(--gold); }
-
     .hero { padding: 4rem 0; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
     .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
     .hero p { font-size: 1.1rem; color: #ccc; }
-
     .section { padding: 4rem 0; }
     .section-title { font-size: 2.2rem; margin-bottom: 2rem; font-weight: 700; }
-
     .restaurant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 3rem; }
     .restaurant-image { width: 100%; height: 400px; background: linear-gradient(135deg, #c19a6b 0%, #d4af37 100%); border-radius: var(--radius); }
-    
     .restaurant-content p { color: var(--gray-dark); margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
     .restaurant-content h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 700; }
-
     .chef-section { background: var(--gray); padding: 3rem; border-radius: var(--radius); margin: 3rem 0; }
     .chef-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
     .chef-image { width: 100%; height: 300px; background: linear-gradient(135deg, #8b4513 0%, #d4af37 100%); border-radius: var(--radius); }
     .chef-content h3 { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; }
     .chef-content p { color: var(--gray-dark); line-height: 1.8; margin-bottom: 1rem; }
-
     .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2rem 0; }
     .info-box { background: var(--white); padding: 2rem; border-radius: var(--radius); border-left: 4px solid var(--gold); }
     .info-box h4 { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 700; }
     .info-box p { color: var(--gray-dark); line-height: 1.7; }
-
     .cta { text-align: center; padding: 3rem; background: var(--gray); border-radius: var(--radius); }
     .cta h2 { font-size: 2rem; margin-bottom: 1rem; }
     .cta p { color: var(--gray-dark); margin-bottom: 2rem; }
     .btn { display: inline-block; padding: 1rem 2.5rem; background: var(--black); color: var(--white); text-decoration: none; border-radius: var(--radius); font-weight: 600; transition: all 0.3s; }
     .btn:hover { background: var(--gold); color: var(--black); }
-
     footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 4rem; }
     .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
     .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.95rem; }
-    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
     .footer-section a:hover { color: var(--gold); }
     .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
-
-    @media (max-width: 768px) {
-      .restaurant-grid, .chef-grid, .info-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-    }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+    @media (max-width: 768px) { .restaurant-grid, .chef-grid, .info-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -86,28 +137,25 @@
       </div>
     </div>
   </header>
-
   <section class="hero">
     <div class="container">
-      <h1>Fine Dining Restaurant</h1>
-      <p>Kulinarische Meisterwerke im Herzen des Odenwalds</p>
+      <h1>Fine Dining Restaurant im Odenwald</h1>
+      <p>Kulinarische Meisterwerke im Herzen des Odenwalds – Burghof Brombachtal</p>
     </div>
   </section>
-
   <section class="section">
     <div class="container">
       <div class="restaurant-grid">
         <div class="restaurant-image"></div>
         <div class="restaurant-content">
           <h2>Genuss auf höchstem Niveau</h2>
-          <p>Das Restaurant des Burghofs ist ein kulinarisches Highlight der Region. Mit Fokus auf Qualität, Innovation und regionalen Produkten schaffen wir unvergessliche Geschmackserlebnisse.</p>
-          <p>Ob zu besonderen Anlässen oder einfach für einen wunderbaren Abend – unser Team sorgt für perfektes Ambiente und erstklassigen Service.</p>
-          <p><strong>Öffnungszeiten:</strong> Täglich 18-23 Uhr (Küche bis 21:30 Uhr)</p>
+          <p>Das Restaurant des Burghofs ist ein kulinarisches Highlight der Region Odenwald. Mit Fokus auf Qualität, Innovation und regionalen Produkten entstehen unvergessliche Geschmackserlebnisse.</p>
+          <p>Ob zu besonderen Anlässen oder für einen außergewöhnlichen Abend im Odenwald – unser Team sorgt für perfektes Ambiente und erstklassigen Service.</p>
+          <p><strong>Öffnungszeiten:</strong> Täglich 18–23 Uhr · Küche bis 21:30 Uhr</p>
         </div>
       </div>
     </div>
   </section>
-
   <section class="chef-section">
     <div class="container">
       <div class="chef-grid">
@@ -115,66 +163,62 @@
         <div class="chef-content">
           <h3>Chefkoch Filip Mitevski</h3>
           <p>Mit Jahren von Erfahrung in renommierten Restaurants hat Filip Mitevski sich als Meister seines Handwerks etabliert.</p>
-          <p>Seine Philosophie: Respekt vor den Zutaten, Leidenschaft im Kochen, Perfektion im Detail. Jedes Gericht ist eine Komposition – ein Kunstwerk auf dem Teller.</p>
-          <p>Im Burghof kreiert Filip Mitevski aufregend neue Interpretationen klassischer Gerichte – moderne Fine Dining mit Herz und Seele.</p>
+          <p>Seine Philosophie: Respekt vor den Zutaten, Leidenschaft im Kochen, Perfektion im Detail. Jedes Gericht ist eine Komposition aus regionalen Produkten und internationaler Küche.</p>
+          <p>Im Burghof kreiert Filip Mitevski aufregend neue Interpretationen klassischer Gerichte – modernes Fine Dining mit Herz und Seele.</p>
         </div>
       </div>
     </div>
   </section>
-
   <section class="section">
     <div class="container">
       <h2 class="section-title">Besonderheiten</h2>
-
       <div class="info-grid">
         <div class="info-box">
-          <h4> Weinauswahl</h4>
+          <h4>Weinauswahl</h4>
           <p>Sorgfältig ausgewählte Weine aus deutschen Weingütern und dem Ausland – perfekt abgestimmt auf unsere Menüs.</p>
         </div>
         <div class="info-box">
-          <h4> Menü & À la Carte</h4>
-          <p>Wählen Sie zwischen unserem exklusiven Menü des Tages oder entdecken Sie unsere à la carte Auswahl.</p>
+          <h4>Menü &amp; À la Carte</h4>
+          <p>Wählen Sie zwischen dem Menü des Tages oder entdecken Sie unsere À-la-carte-Auswahl.</p>
         </div>
         <div class="info-box">
-          <h4> Spezielle Anlässe</h4>
-          <p>Möchten Sie ein privates Dinner feiern? Wir gestalten gerne ein maßgeschneidertes kulinarisches Erlebnis für Sie.</p>
+          <h4>Spezielle Anlässe</h4>
+          <p>Privates Dinner oder besonderer Anlass? Wir gestalten gerne ein maßgeschneidertes kulinarisches Erlebnis.</p>
         </div>
         <div class="info-box">
-          <h4> Für Hotelgäste</h4>
-          <p>Genießen Sie exklusive Menüs und besondere Arrangements für Übernachtungsgäste – mit Rabatt auf ausgewählte Gänge.</p>
+          <h4>Für Hotelgäste</h4>
+          <p>Exklusive Menüs und besondere Arrangements für Übernachtungsgäste im Burghof.</p>
         </div>
       </div>
-
       <div class="cta">
-        <h2>Reservierung gewünscht?</h2>
-        <p>Sichern Sie sich einen Tisch für ein unvergessliches kulinarisches Erlebnis</p>
+        <h2>Tisch reservieren</h2>
+        <p>Sichern Sie sich einen Tisch für ein unvergessliches kulinarisches Erlebnis im Odenwald</p>
         <a href="kontakt.html" class="btn">Jetzt reservieren</a>
       </div>
     </div>
   </section>
-
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-section">
           <h4>KONTAKT</h4>
           <p>Burghof 16<br>64753 Brombachtal</p>
-          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
-          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
         </div>
         <div class="footer-section">
           <h4>ÖFFNUNGSZEITEN</h4>
-          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
         </div>
         <div class="footer-section">
           <h4>LEGAL</h4>
-          <p><a href="datenschutz.html">Datenschutz</a></p>
-          <p><a href="impressum.html">Impressum</a></p>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
       </div>
     </div>
   </footer>

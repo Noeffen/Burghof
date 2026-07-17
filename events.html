@@ -3,256 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof – Ihre Eventlocation für Hochzeiten, Firmenevents und Familienevents im Odenwald.">
-  <title>Events & Feiern – Burghof</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Eventlocation für Hochzeiten, Firmenevents und Familienfeiern im Odenwald – bis zu 180 Gäste, 45 Minuten von Frankfurt. Burghof Brombachtal.">
+  <title>Eventlocation im Odenwald – Hochzeiten &amp; Firmenevents | Burghof Brombachtal</title>
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/events.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/events.html">
+  <meta property="og:title" content="Eventlocation im Odenwald – Hochzeiten & Firmenevents | Burghof Brombachtal">
+  <meta property="og:description" content="Eventlocation für Hochzeiten, Firmenevents und Familienfeiern im Odenwald – bis zu 180 Gäste, 45 Minuten von Frankfurt. Burghof Brombachtal.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Eventlocation im Odenwald – Hochzeiten & Firmenevents | Burghof Brombachtal">
+  <meta name="twitter:description" content="Eventlocation für Hochzeiten, Firmenevents und Familienfeiern im Odenwald – bis zu 180 Gäste, 45 Minuten von Frankfurt. Burghof Brombachtal.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EventVenue",
+  "@id": "https://burghof-odenwald.de/events.html#venue",
+  "name": "Burghof Eventlocation",
+  "description": "Eventlocation im Odenwald für Hochzeiten, Firmenevents und Familienfeiern. Bis zu 180 Gäste, 45 Minuten von Frankfurt.",
+  "maximumAttendeeCapacity": 180,
+  "url": "https://burghof-odenwald.de/events.html",
+  "telephone": "+496063589962",
+  "email": "info@burghof-hotel.de",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Burghof 16",
+    "addressLocality": "Brombachtal",
+    "postalCode": "64753",
+    "addressRegion": "Hessen",
+    "addressCountry": "DE"
+  },
+  "containedIn": {
+    "@type": "Hotel",
+    "name": "Burghof",
+    "url": "https://burghof-odenwald.de"
+  }
+}
+  </script>
   <style>
     :root {
       --black: #1a1a1a;
       --gold: #d4af37;
-      --gold-light: #e8c547;
       --white: #ffffff;
       --gray: #f8f8f8;
       --gray-dark: #444;
       --radius: 12px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
-      color: var(--black);
-      background: var(--white);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    header {
-      padding: 1.5rem 0;
-      background: var(--white);
-      border-bottom: 1px solid #f0f0f0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--black);
-      letter-spacing: 2px;
-    }
-
-    .logo .gold {
-      color: var(--gold);
-    }
-
-    nav a {
-      margin-left: 2.5rem;
-      text-decoration: none;
-      color: var(--black);
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--gold);
-    }
-
-    .hero {
-      padding: 4rem 0;
-      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
-      color: var(--white);
-    }
-
-    .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: #ccc;
-      max-width: 600px;
-    }
-
-    .section {
-      padding: 4rem 0;
-    }
-
-    .section-title {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      font-weight: 700;
-    }
-
-    .event-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .event-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: all 0.3s;
-    }
-
-    .event-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
-    }
-
-    .event-image {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-    }
-
-    .event-content {
-      padding: 2rem;
-    }
-
-    .event-content h3 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .event-content p {
-      color: var(--gray-dark);
-      margin-bottom: 1rem;
-      line-height: 1.7;
-    }
-
-    .event-features {
-      list-style: none;
-      margin: 1.5rem 0;
-      font-size: 0.95rem;
-      color: var(--gray-dark);
-    }
-
-    .event-features li {
-      padding: 0.5rem 0;
-      padding-left: 1.5rem;
-      position: relative;
-    }
-
-    .event-features li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--gold);
-      font-weight: bold;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 3rem;
-      background: var(--gray);
-      border-radius: var(--radius);
-    }
-
-    .cta h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .cta p {
-      color: var(--gray-dark);
-      margin-bottom: 2rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background: var(--black);
-      color: var(--white);
-      text-decoration: none;
-      border-radius: var(--radius);
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .btn:hover {
-      background: var(--gold);
-      color: var(--black);
-    }
-
-    footer {
-      background: var(--black);
-      color: var(--white);
-      padding: 3rem 0;
-      margin-top: 4rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-section h4 {
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-    }
-
-    .footer-section p,
-    .footer-section a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.9rem;
-      line-height: 1.8;
-    }
-
-    .footer-section a:hover {
-      color: var(--gold);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #333;
-      padding-top: 2rem;
-      text-align: center;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .event-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
+    .logo .gold { color: var(--gold); }
+    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: var(--gold); }
+    .hero { padding: 4rem 0; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.1rem; color: #ccc; max-width: 600px; }
+    .section { padding: 4rem 0; }
+    .section-title { font-size: 2.2rem; margin-bottom: 2rem; font-weight: 700; }
+    .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
+    .event-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s; }
+    .event-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(212,175,55,0.2); }
+    .event-image { width: 100%; height: 200px; background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%); }
+    .event-content { padding: 2rem; }
+    .event-content h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+    .event-content p { color: var(--gray-dark); margin-bottom: 1rem; line-height: 1.7; }
+    .event-features { list-style: none; margin: 1.5rem 0; font-size: 0.95rem; color: var(--gray-dark); }
+    .event-features li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+    .event-features li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: bold; }
+    .cta { text-align: center; padding: 3rem; background: var(--gray); border-radius: var(--radius); }
+    .cta h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .cta p { color: var(--gray-dark); margin-bottom: 2rem; }
+    .btn { display: inline-block; padding: 1rem 2.5rem; background: var(--black); color: var(--white); text-decoration: none; border-radius: var(--radius); font-weight: 600; transition: all 0.3s; }
+    .btn:hover { background: var(--gold); color: var(--black); }
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.95rem; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+    @media (max-width: 768px) { .event-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -274,68 +118,61 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Events & Feiern</h1>
-      <p>Von der Hochzeit bis zur Familienfeier – der Burghof ist die perfekte Location für Ihre unvergessliche Veranstaltung</p>
+      <h1>Events &amp; Feiern im Odenwald</h1>
+      <p>Von der Hochzeit bis zur Familienfeier – der Burghof in Brombachtal ist die perfekte Eventlocation für Ihre unvergessliche Veranstaltung</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <h2 class="section-title">Unsere Event-Angebote</h2>
-
       <div class="event-grid">
-        <!-- HOCHZEITEN -->
         <div class="event-card">
           <div class="event-image"></div>
           <div class="event-content">
-            <h3>Hochzeiten</h3>
-            <p>Ihre Traumhochzeit verdient einen Traumort. Mit bis zu 180 Gästen, eleganter Atmosphäre und perfektem Service.</p>
+            <h3>Hochzeiten im Odenwald</h3>
+            <p>Ihre Traumhochzeit verdient einen Traumort. Mit bis zu 180 Gästen, eleganter Atmosphäre und vollständigem Service im Burghof Brombachtal.</p>
             <ul class="event-features">
               <li>Bis zu 180 Gäste</li>
               <li>Rundum-Service</li>
               <li>Fine-Dining Restaurant</li>
-              <li>Hotelzimmer für Gäste</li>
+              <li>44 Hotelzimmer für Gäste</li>
               <li>Flexible Paketlösungen</li>
             </ul>
           </div>
         </div>
-
-        <!-- FIRMENEVENTS -->
         <div class="event-card">
           <div class="event-image"></div>
           <div class="event-content">
-            <h3>Firmenevents</h3>
-            <p>Abende zum Netzwerken, Gala-Dinner oder Produktpräsentationen – wir machen es möglich.</p>
+            <h3>Firmenevents &amp; Tagungen</h3>
+            <p>Abende zum Netzwerken, Gala-Dinner oder Produktpräsentationen – wir machen es möglich, 45 Minuten von Frankfurt entfernt.</p>
             <ul class="event-features">
               <li>Flexible Raumnutzung</li>
-              <li>Catering & Getränke</li>
+              <li>Catering &amp; Getränke</li>
               <li>Audio-/Videoausstattung</li>
-              <li>Parking vorhanden</li>
+              <li>Parkplätze vorhanden</li>
               <li>Übernachtungen möglich</li>
             </ul>
           </div>
         </div>
-
-        <!-- FAMILIENEVENTS -->
         <div class="event-card">
           <div class="event-image"></div>
           <div class="event-content">
-            <h3>Familienevents</h3>
-            <p>Geburtstage, Jubiläen und weitere Anlässe – in entspannter Atmosphäre im Grünen.</p>
+            <h3>Familienfeiern</h3>
+            <p>Geburtstage, Jubiläen und weitere Anlässe – in entspannter Atmosphäre inmitten der Natur des Odenwalds.</p>
             <ul class="event-features">
               <li>Gemütliche Räume</li>
-              <li>Individuelle Paketierung</li>
-              <li>Natur & Aktivitäten</li>
-              <li>Freundliche Preise</li>
+              <li>Individuelle Pakete</li>
+              <li>Natur &amp; Aktivitäten</li>
+              <li>Faire Preise</li>
               <li>Persönliche Betreuung</li>
             </ul>
           </div>
         </div>
       </div>
-
       <div class="cta">
         <h2>Bereit für das perfekte Event?</h2>
-        <p>Kontaktieren Sie uns noch heute für eine Besichtigung und individuelle Angebot</p>
+        <p>Kontaktieren Sie uns für eine Besichtigung und ein individuelles Angebot</p>
         <a href="kontakt.html" class="btn">Jetzt anfragen</a>
       </div>
     </div>
@@ -347,22 +184,22 @@
         <div class="footer-section">
           <h4>KONTAKT</h4>
           <p>Burghof 16<br>64753 Brombachtal</p>
-          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
-          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
         </div>
         <div class="footer-section">
           <h4>ÖFFNUNGSZEITEN</h4>
-          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
         </div>
         <div class="footer-section">
           <h4>LEGAL</h4>
-          <p><a href="datenschutz.html">Datenschutz</a></p>
-          <p><a href="impressum.html">Impressum</a></p>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
       </div>
     </div>
   </footer>

@@ -3,305 +3,202 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof – Eventlocation, Hotel & Golf im Odenwald. Hochzeiten, Seminare, Restaurant.">
-  <title>Burghof – Eventlocation, Hotel & Golf im Odenwald</title>
+  <meta name="description" content="Hotel, Eventlocation und Fine Dining im Odenwald – 45 Minuten von Frankfurt. Hochzeiten bis 180 Gäste, 44 Zimmer, 5 Seminarräume. In Brombachtal.">
+  <title>Burghof – Eventlocation, Hotel &amp; Restaurant im Odenwald | Brombachtal</title>
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/">
+  <meta property="og:title" content="Burghof – Eventlocation, Hotel & Restaurant im Odenwald | Brombachtal">
+  <meta property="og:description" content="Hotel, Eventlocation und Fine Dining im Odenwald – 45 Minuten von Frankfurt. Hochzeiten bis 180 Gäste, 44 Zimmer, 5 Seminarräume. In Brombachtal.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Burghof – Eventlocation, Hotel & Restaurant im Odenwald | Brombachtal">
+  <meta name="twitter:description" content="Hotel, Eventlocation und Fine Dining im Odenwald – 45 Minuten von Frankfurt. Hochzeiten bis 180 Gäste, 44 Zimmer, 5 Seminarräume. In Brombachtal.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "Hotel",
+    "LodgingBusiness"
+  ],
+  "@id": "https://burghof-odenwald.de/#hotel",
+  "name": "Burghof",
+  "legalName": "Burghof M&H Betriebs GmbH",
+  "description": "Hotel, Eventlocation und Fine-Dining-Restaurant im Odenwald – 45 Minuten von Frankfurt. Hochzeiten bis 180 Gäste, 44 Zimmer und Suiten, 5 Seminarräume.",
+  "url": "https://burghof-odenwald.de",
+  "telephone": "+496063589962",
+  "email": "info@burghof-hotel.de",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Burghof 16",
+    "addressLocality": "Brombachtal",
+    "postalCode": "64753",
+    "addressRegion": "Hessen",
+    "addressCountry": "DE"
+  },
+  "numberOfRooms": 44,
+  "checkinTime": "15:00",
+  "checkoutTime": "11:00",
+  "priceRange": "€€€",
+  "amenityFeature": [
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Kostenloses WLAN",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Restaurant",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Seminarräume",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Parkplatz",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Aufzug",
+      "value": true
+    }
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "opens": "18:00",
+    "closes": "23:00"
+  },
+  "sameAs": [
+    "https://www.instagram.com/burghof_hotelundevent/"
+  ]
+}
+  </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #1a1a1a;
-    }
-
-    /* HEADER */
-    header {
-      padding: 1.5rem 2rem;
-      background: white;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: #1a1a1a;
-      letter-spacing: 2px;
-    }
-
-    .logo .gold {
-      color: #d4af37;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #1a1a1a;
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      color: #d4af37;
-    }
-
-    /* HERO BANNER - Schlank & elegant */
-    .hero {
-      padding: 1.5rem 2rem;
-      background: white;
-      border-bottom: 1px solid #e0e0e0;
-      text-align: center;
-    }
-
-    .hero-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #1a1a1a;
-      letter-spacing: 1px;
-    }
-
-    .hero p {
-      display: none;
-    }
-
-    /* 4 KACHELN */
-    .kachel {
-      width: 100%;
-      padding: 5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 400px;
-      text-decoration: none;
-      color: white;
-      transition: opacity 0.3s;
-      position: relative;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .kachel::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
-    }
-
-    .kachel:hover {
-      opacity: 0.9;
-    }
-
-    .kachel-1 {
-      background-image: url('Bilder/foto1.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .kachel-2 {
-      background-image: url('Bilder/foto2.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .kachel-3 {
-      background-image: url('Bilder/foto3.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .kachel-4 {
-      background-image: url('Bilder/foto4.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .kachel-inner {
-      max-width: 600px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .kachel h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .kachel p {
-      font-size: 1.05rem;
-      margin-bottom: 2rem;
-      line-height: 1.8;
-    }
-
-    .kachel-button {
-      display: inline-block;
-      padding: 0.8rem 2rem;
-      background: white;
-      color: #1a1a1a;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .kachel-button:hover {
-      background: #d4af37;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #1a1a1a;
-      color: white;
-      padding: 3rem 2rem;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-section h4 {
-      color: #d4af37;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-    }
-
-    .footer-section a {
-      color: #aaa;
-      text-decoration: none;
-    }
-
-    .footer-section a:hover {
-      color: #d4af37;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #333;
-      padding-top: 2rem;
-      text-align: center;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .kachel {
-        padding: 3rem 1.5rem;
-        min-height: 300px;
-      }
-
-      .kachel h2 {
-        font-size: 1.5rem;
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1a1a1a; }
+    header { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #f0f0f0; }
+    .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: #1a1a1a; letter-spacing: 2px; }
+    .logo .gold { color: #d4af37; }
+    nav a { text-decoration: none; color: #1a1a1a; font-weight: 500; }
+    nav a:hover { color: #d4af37; }
+    .hero { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e0e0e0; text-align: center; }
+    .hero-content { max-width: 1200px; margin: 0 auto; }
+    .hero h1 { font-size: 1.1rem; font-weight: 600; color: #1a1a1a; letter-spacing: 1px; }
+    .kachel { width: 100%; padding: 5rem 2rem; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 400px; text-decoration: none; color: white; transition: opacity 0.3s; position: relative; background-size: cover; background-position: center; }
+    .kachel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1; }
+    .kachel:hover { opacity: 0.9; }
+    .kachel-1 { background-image: url('Bilder/foto1.jpg'); background-color: #2a3a2a; }
+    .kachel-2 { background-image: url('Bilder/foto2.jpg'); background-color: #1a2a3a; }
+    .kachel-3 { background-image: url('Bilder/foto3.jpg'); background-color: #2a3a1a; }
+    .kachel-4 { background-image: url('Bilder/foto4.jpg'); background-color: #3a2a1a; }
+    .kachel-inner { max-width: 600px; position: relative; z-index: 2; }
+    .kachel h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .kachel p { font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.8; }
+    .kachel-button { display: inline-block; padding: 0.8rem 2rem; background: white; color: #1a1a1a; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
+    .kachel-button:hover { background: #d4af37; }
+    footer { background: #1a1a1a; color: white; padding: 3rem 2rem; }
+    .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h4 { color: #d4af37; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section a, .footer-section p { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: #d4af37; }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
+    .footer-bottom a { color: #d4af37; text-decoration: none; }
+    @media (max-width: 768px) { .hero h1 { font-size: 1.4rem; } .kachel { padding: 3rem 1.5rem; min-height: 300px; } .kachel h2 { font-size: 1.5rem; } .footer-content { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
   <header>
     <div class="header-content">
-      <a href="#" class="logo">BURG<span class="gold">HOF</span></a>
+      <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
       <nav>
         <a href="kontakt.html">Kontakt</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO BANNER -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Burghof – Eventlocation, Hotel & Golf im Odenwald</h1>
+      <h1>Burghof – Eventlocation, Hotel &amp; Restaurant im Odenwald</h1>
     </div>
   </section>
 
-  <!-- KACHEL 1: EVENTS -->
   <a href="events.html" class="kachel kachel-1">
     <div class="kachel-inner">
       <h2>Eventlocation</h2>
-      <p>Von rauschenden Hochzeiten bis zu intimalen Familienfeiern – bis zu 180 Gäste in eleganter Atmosphäre.</p>
+      <p>Von rauschenden Hochzeiten bis zu intimen Familienfeiern – bis zu 180 Gäste in eleganter Atmosphäre.</p>
       <div class="kachel-button">Mehr erfahren →</div>
     </div>
   </a>
 
-  <!-- KACHEL 2: HOTEL -->
   <a href="hotel.html" class="kachel kachel-2">
     <div class="kachel-inner">
-      <h2>Hotel & Seminare</h2>
-      <p>42 komfortable Zimmer und 5 moderne Seminarräume – perfekt für Tagungen und Offsite-Events.</p>
+      <h2>Hotel &amp; Seminare</h2>
+      <p>44 Zimmer und Suiten sowie 5 Seminarräume – perfekt für Tagungen und Offsite-Events im Odenwald.</p>
       <div class="kachel-button">Mehr erfahren →</div>
     </div>
   </a>
 
-  <!-- KACHEL 3: GOLF -->
   <a href="golf.html" class="kachel kachel-3">
     <div class="kachel-inner">
-      <h2>Golf & Aktivitäten</h2>
+      <h2>Golf &amp; Aktivitäten</h2>
       <p>Direkter Zugang zu erstklassigen Golfplätzen und umgeben von wunderschöner Natur des Odenwalds.</p>
       <div class="kachel-button">Mehr erfahren →</div>
     </div>
   </a>
 
-  <!-- KACHEL 4: RESTAURANT -->
   <a href="restaurant.html" class="kachel kachel-4">
     <div class="kachel-inner">
       <h2>Fine Dining Restaurant</h2>
-      <p>Kulinarische Meisterwerke von Chefkoch Filip Mitevski – aufregend neue Interpretationen.</p>
+      <p>Kulinarische Meisterwerke von Chefkoch Filip Mitevski – regionale Produkte, internationale Kreationen.</p>
       <div class="kachel-button">Mehr erfahren →</div>
     </div>
   </a>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-content">
       <div class="footer-section">
         <h4>KONTAKT</h4>
         <p>Burghof 16<br>64753 Brombachtal</p>
-        <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
-        <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+        <a href="tel:+496063589962">+49 6063 589962-00</a>
+        <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
       </div>
       <div class="footer-section">
         <h4>ÖFFNUNGSZEITEN</h4>
-        <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-        <p><a href="https://www.instagram.com/burghof_hotelundevent/">Instagram</a></p>
+        <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+        <a href="https://www.instagram.com/burghof_hotelundevent/">Instagram</a>
       </div>
       <div class="footer-section">
         <h4>LEGAL</h4>
-        <p><a href="datenschutz.html">Datenschutz</a></p>
-        <p><a href="impressum.html">Impressum</a></p>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
       </div>
     </div>
     <div class="footer-bottom">
-      © 2026 Burghof
+      © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
     </div>
   </footer>
 </body>
