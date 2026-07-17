@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Über den Burghof in Brombachtal – modernes Hotel und historischer Gutshof als Eventlocation, direkt nebeneinander im Odenwald. 45 Minuten von Frankfurt.">
+  <title>Über den Burghof – Hotel & Eventlocation im Odenwald | Brombachtal</title>
+
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/ueber-uns.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/ueber-uns.html">
+  <meta property="og:title" content="Über den Burghof – Hotel & Eventlocation im Odenwald">
+  <meta property="og:description" content="Modernes Hotel und historischer Gutshof als Eventlocation, direkt nebeneinander in Brombachtal. 45 Minuten von Frankfurt im Odenwald.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Über den Burghof – Hotel & Eventlocation im Odenwald">
+  <meta name="twitter:description" content="Modernes Hotel und historischer Gutshof in Brombachtal, Odenwald. 45 Minuten von Frankfurt.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Über den Burghof",
+    "url": "https://burghof-odenwald.de/ueber-uns.html",
+    "description": "Über den Burghof – modernes Hotel und historischer Gutshof als Eventlocation in Brombachtal, Odenwald.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Burghof",
+      "url": "https://burghof-odenwald.de"
+    },
+    "about": {
+      "@type": "Organization",
+      "name": "Burghof M&H Betriebs GmbH",
+      "legalName": "Burghof M&H Betriebs GmbH",
+      "url": "https://burghof-odenwald.de",
+      "telephone": "+496063589962",
+      "email": "info@burghof-hotel.de",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Burghof 16",
+        "addressLocality": "Brombachtal",
+        "postalCode": "64753",
+        "addressRegion": "Hessen",
+        "addressCountry": "DE"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Hans Meisinger",
+        "jobTitle": "Geschäftsführer"
+      },
+      "employee": {
+        "@type": "Person",
+        "name": "Filip Mitevski",
+        "jobTitle": "Chefkoch"
+      },
+      "sameAs": ["https://www.instagram.com/burghof_hotelundevent/"]
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HEADER */
+    header {
+      padding: 1.5rem 0;
+      background: var(--white);
+      border-bottom: 1px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--black);
+      letter-spacing: 2px;
+    }
+
+    .logo .gold { color: var(--gold); }
+
+    nav a {
+      margin-left: 2.5rem;
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 0 4rem;
+      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
+      color: var(--white);
+    }
+
+    .hero-label {
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #bbb;
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    /* STORY */
+    .story-section { padding: 5rem 0; }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .story-image {
+      width: 100%;
+      height: 500px;
+      background: linear-gradient(160deg, #3a2a1a 0%, #c19a6b 60%, #d4af37 100%);
+      border-radius: var(--radius);
+    }
+
+    .story-text h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .story-text p {
+      color: var(--gray-dark);
+      line-height: 1.9;
+      margin-bottom: 1.3rem;
+      font-size: 1.02rem;
+    }
+
+    .story-text p strong {
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    /* DUALITY */
+    .duality-section {
+      background: var(--gray);
+      padding: 5rem 0;
+    }
+
+    .duality-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .duality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .duality-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .duality-image {
+      width: 100%;
+      height: 260px;
+    }
+
+    .duality-image.hotel-img {
+      background: linear-gradient(135deg, #2a3a4a 0%, #4a7a9a 100%);
+    }
+
+    .duality-image.event-img {
+      background: linear-gradient(135deg, #4a2a1a 0%, #c8803a 100%);
+    }
+
+    .duality-content {
+      padding: 2rem;
+    }
+
+    .duality-tag {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .duality-content h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .duality-content p {
+      color: var(--gray-dark);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* LOCATION */
+    .location-section { padding: 5rem 0; }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .location-text h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .location-text p {
+      color: var(--gray-dark);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+      font-size: 1.02rem;
+    }
+
+    .location-image {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #2a4a2a 0%, #4a8a4a 60%, #6aaa5a 100%);
+      border-radius: var(--radius);
+    }
+
+    /* TEAM */
+    .team-section {
+      background: var(--black);
+      padding: 5rem 0;
+      color: var(--white);
+    }
+
+    .team-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .team-card {
+      border: 1px solid #333;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .team-image {
+      width: 100%;
+      height: 220px;
+    }
+
+    .team-image.gf-img {
+      background: linear-gradient(135deg, #1a2a3a 0%, #3a5a7a 100%);
+    }
+
+    .team-image.chef-img {
+      background: linear-gradient(135deg, #2a1a0a 0%, #7a4a1a 100%);
+    }
+
+    .team-content {
+      padding: 1.8rem;
+    }
+
+    .team-role {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .team-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--white);
+    }
+
+    .team-content p {
+      color: #aaa;
+      font-size: 0.93rem;
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .cta-section { padding: 5rem 0; }
+
+    .cta-inner {
+      border: 1px solid #e8e8e8;
+      border-radius: var(--radius);
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .cta-inner h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    .cta-inner p {
+      color: var(--gray-dark);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.2rem;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--gold); color: var(--black); }
+
+    /* FOOTER */
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.88rem; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .story-grid, .duality-grid, .location-grid, .team-grid { grid-template-columns: 1fr; }
+      .location-grid { direction: ltr; }
+      .cta-inner { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="tagungen.html">Tagungen</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="ueber-uns.html">Über uns</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <span class="hero-label">Über den Burghof</span>
+      <h1>Zwei Seiten, ein Ort.</h1>
+      <p>Modernes Hotel und historischer Gutshof – direkt nebeneinander, als eine Einheit betrieben. Im Odenwald. 45 Minuten von Frankfurt.</p>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-image"></div>
+        <div class="story-text">
+          <h2>Was den Burghof besonders macht</h2>
+          <p>Der Burghof in Brombachtal ist kein gewöhnliches Hotel. Direkt nebeneinander betrieben: ein <strong>modernes Hotelgebäude</strong> mit 44 Zimmern und Suiten auf drei Etagen – und ein <strong>alter Gutshof</strong>, der seit Jahren der Rahmen für Hochzeiten, Firmenfeiern und besondere Abende ist.</p>
+          <p>Gäste schlafen im Hotel, feiern im Gutshof, essen im Restaurant – ohne einen Schritt auf die Straße setzen zu müssen. Diese Verbindung macht den Burghof zu einem Ort, der für viele Anlässe gleichzeitig funktioniert: Hochzeit, Firmentagung, Kurzurlaub oder Gourmetabend.</p>
+          <p>Das Hotelgebäude wurde mit Naturmaterialien gebaut – Granit und Eiche prägen die Räume. Alle 44 Zimmer haben bodentiefe Fenster, offene Bäder mit Regendusche und Blick in den Odenwald.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DUALITY -->
+  <section class="duality-section">
+    <div class="container">
+      <h2>Hotel und Eventlocation – in einem</h2>
+      <div class="duality-grid">
+        <div class="duality-card">
+          <div class="duality-image hotel-img"></div>
+          <div class="duality-content">
+            <span class="duality-tag">Das Hotel</span>
+            <h3>44 Zimmer & Suiten</h3>
+            <p>Granit, Eiche und bodentiefe Fenster mit Blick in den Odenwald. Drei Stockwerke, Aufzug, fünf Seminarräume für bis zu 119 Personen. Modern gebaut, ruhig gelegen.</p>
+          </div>
+        </div>
+        <div class="duality-card">
+          <div class="duality-image event-img"></div>
+          <div class="duality-content">
+            <span class="duality-tag">Die Eventlocation</span>
+            <h3>Der historische Gutshof</h3>
+            <p>Der alte Gutshof als Rahmen für Hochzeiten, Familienfeiern und Firmenevents. Bis zu 180 Gäste in Atmosphäre, die kein Konferenzhotel erzeugen kann.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location-section">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-text">
+          <h2>Brombachtal. Odenwald. Nah an Frankfurt.</h2>
+          <p>Der Burghof liegt in Brombachtal, eingebettet in die Wälder und Wiesen des Odenwaldkreises. Eine Gegend, die man aus dem Rhein-Main-Gebiet selten kennt – und die genau deshalb funktioniert.</p>
+          <p>45 Minuten von Frankfurt entfernt, gut erreichbar über die A3 und A67. Weit genug vom Büroalltag um wirklich abzuschalten, nah genug um unkompliziert anzureisen. Für Gäste aus dem gesamten Rhein-Main-Gebiet einer der nächstgelegenen Orte dieser Art.</p>
+          <p>Direkt vor dem Haus: Wanderwege, Radstrecken und in der Nähe erstklassige Golfplätze. Der Odenwald ist keine Kulisse – er ist Teil des Aufenthalts.</p>
+        </div>
+        <div class="location-image"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="container">
+      <h2>Die Menschen hinter dem Burghof</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-image gf-img"></div>
+          <div class="team-content">
+            <span class="team-role">Geschäftsführer</span>
+            <h3>Hans Meisinger</h3>
+            <p>Hans Meisinger führt den Burghof als Geschäftsführer der Burghof M&H Betriebs GmbH. Sein Anspruch: ein Haus, das für jeden Anlass den richtigen Rahmen bietet – ohne Kompromisse bei Qualität und Service.</p>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-image chef-img"></div>
+          <div class="team-content">
+            <span class="team-role">Chefkoch</span>
+            <h3>Filip Mitevski</h3>
+            <p>Filip Mitevski verantwortet die Küche des Burghof-Restaurants. Seine Handschrift: regionale Produkte des Odenwalds, präzise verarbeitet und mit internationalem Blick auf den Teller gebracht. Fine Dining, das sich nicht inszeniert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h2>Den Burghof kennenlernen</h2>
+          <p>Am besten lässt sich der Burghof vor Ort erleben. Wir zeigen Ihnen gerne alles – Hotel, Eventlocation, Restaurant. Melden Sie sich für eine Besichtigung.</p>
+        </div>
+        <a href="kontakt.html" class="btn">Besichtigung anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>KONTAKT</h4>
+          <p>Burghof 16<br>64753 Brombachtal</p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
+        </div>
+        <div class="footer-section">
+          <h4>ÖFFNUNGSZEITEN</h4>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
+        </div>
+        <div class="footer-section">
+          <h4>LEGAL</h4>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
