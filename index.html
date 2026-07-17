@@ -103,7 +103,8 @@
     .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: #1a1a1a; letter-spacing: 2px; }
     .logo .gold { color: #d4af37; }
-    nav a { text-decoration: none; color: #1a1a1a; font-weight: 500; }
+    nav a {
+      position: relative; text-decoration: none; color: #1a1a1a; font-weight: 500; }
     nav a:hover { color: #d4af37; }
     .hero { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e0e0e0; text-align: center; }
     .hero-content { max-width: 1200px; margin: 0 auto; }
@@ -128,7 +129,23 @@
     .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
     .footer-bottom a { color: #d4af37; text-decoration: none; }
     @media (max-width: 768px) { .hero h1 { font-size: 1.4rem; } .kachel { padding: 3rem 1.5rem; min-height: 300px; } .kachel h2 { font-size: 1.5rem; } .footer-content { grid-template-columns: 1fr; } }
-  </style>
+  
+    /* Active nav indicator */
+    nav a.nav-active {
+      color: var(--gold);
+    }
+
+    nav a.nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+</style>
 </head>
 <body>
   <header>
@@ -201,5 +218,26 @@
       © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
     </div>
   </footer>
+<script>
+(function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  var parentMap = {
+    'zimmer-standard.html':        'hotel.html',
+    'zimmer-komfort.html':         'hotel.html',
+    'zimmer-barrierefrei.html':    'hotel.html',
+    'zimmer-juniorsuite.html':     'hotel.html',
+    'zimmer-juniorsuite-loggia.html': 'hotel.html',
+    'zimmer-familie.html':         'hotel.html',
+    'zimmer-familiensuite.html':   'hotel.html',
+    'zimmer-suite-loggia.html':    'hotel.html'
+  };
+  var active = parentMap[path] || path;
+  document.querySelectorAll('nav a').forEach(function (a) {
+    if (a.getAttribute('href') === active) {
+      a.classList.add('nav-active');
+    }
+  });
+}());
+</script>
 </body>
 </html>

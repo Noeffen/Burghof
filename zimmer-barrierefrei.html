@@ -123,7 +123,8 @@
     .header-content { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
     .logo .gold { color: var(--gold); }
-    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a {
+      position: relative; margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: var(--gold); }
     .breadcrumb { background: var(--gray); padding: 0.75rem 0; font-size: 0.83rem; color: var(--gray-dark); }
     .breadcrumb a { color: var(--gray-dark); text-decoration: none; }
@@ -159,7 +160,23 @@
     .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.88rem; }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
     @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } .detail-image { height: 280px; position: static; } .footer-grid { grid-template-columns: 1fr; } }
-  </style>
+  
+    /* Active nav indicator */
+    nav a.nav-active {
+      color: var(--gold);
+    }
+
+    nav a.nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+</style>
 </head>
 <body>
   <header>
@@ -270,5 +287,26 @@
       </div>
     </div>
   </footer>
+<script>
+(function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  var parentMap = {
+    'zimmer-standard.html':        'hotel.html',
+    'zimmer-komfort.html':         'hotel.html',
+    'zimmer-barrierefrei.html':    'hotel.html',
+    'zimmer-juniorsuite.html':     'hotel.html',
+    'zimmer-juniorsuite-loggia.html': 'hotel.html',
+    'zimmer-familie.html':         'hotel.html',
+    'zimmer-familiensuite.html':   'hotel.html',
+    'zimmer-suite-loggia.html':    'hotel.html'
+  };
+  var active = parentMap[path] || path;
+  document.querySelectorAll('nav a').forEach(function (a) {
+    if (a.getAttribute('href') === active) {
+      a.classList.add('nav-active');
+    }
+  });
+}());
+</script>
 </body>
 </html>
