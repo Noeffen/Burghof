@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Juniorsuite im Burghof Brombachtal – 40 m², Abendsonne und Talblick, offenes Bad mit Regendusche. Ab 149 Euro pro Nacht.">
+  <title>Juniorsuite – Burghof Hotel</title>
+  <style>
+    :root { --black: #1a1a1a; --gold: #d4af37; --white: #ffffff; --gray: #f8f8f8; --gray-dark: #444; --radius: 12px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
+    .logo .gold { color: var(--gold); }
+    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: var(--gold); }
+    .breadcrumb { background: var(--gray); padding: 0.75rem 0; font-size: 0.83rem; color: var(--gray-dark); }
+    .breadcrumb a { color: var(--gray-dark); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { margin: 0 0.4rem; color: #bbb; }
+    .room-detail { padding: 3.5rem 0; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .detail-image { width: 100%; height: 480px; background: linear-gradient(135deg, #5a3a2a 0%, #c19a6b 100%); border-radius: var(--radius); position: sticky; top: 100px; }
+    .detail-info h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .room-label { font-size: 0.78rem; letter-spacing: 2px; color: var(--gold); font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .room-count-tag { display: inline-block; background: var(--gray); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.82rem; color: var(--gray-dark); margin: 0.8rem 0 1.5rem; }
+    .specs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #e8e8e8; border: 1px solid #e8e8e8; border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem; }
+    .spec-item { background: var(--white); padding: 1rem 1.2rem; }
+    .spec-label { font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.2rem; }
+    .spec-value { font-size: 0.95rem; font-weight: 600; color: var(--black); }
+    .features-list { list-style: none; margin-bottom: 2rem; }
+    .features-list li { padding: 0.45rem 0; padding-left: 1.4rem; position: relative; color: var(--gray-dark); font-size: 0.93rem; border-bottom: 1px solid #f5f5f5; }
+    .features-list li:last-child { border-bottom: none; }
+    .features-list li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: bold; font-size: 0.85rem; }
+    .price-box { border: 1px solid #e8e8e8; border-radius: var(--radius); padding: 1.8rem; margin-bottom: 1.5rem; background: var(--gray); }
+    .price-main { font-size: 2.2rem; font-weight: 700; color: var(--black); display: block; }
+    .price-sub { font-size: 0.85rem; color: var(--gray-dark); margin-top: 0.3rem; display: block; }
+    .price-note { margin-top: 0.8rem; font-size: 0.82rem; color: #999; line-height: 1.5; }
+    .btn { display: block; width: 100%; padding: 1rem 2rem; background: var(--black); color: var(--white); text-decoration: none; border-radius: var(--radius); font-weight: 600; text-align: center; transition: all 0.3s; font-size: 1rem; }
+    .btn:hover { background: var(--gold); color: var(--black); }
+    .back-link { display: inline-block; margin-top: 1.2rem; font-size: 0.88rem; color: var(--gray-dark); text-decoration: none; text-align: center; width: 100%; }
+    .back-link:hover { color: var(--gold); }
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 3rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.88rem; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+    @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } .detail-image { height: 280px; position: static; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="index.html#kernthemen">Angebote</a>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="breadcrumb">
+    <div class="container">
+      <a href="index.html">Start</a><span>›</span>
+      <a href="hotel.html">Hotel & Seminarräume</a><span>›</span>
+      Juniorsuite
+    </div>
+  </div>
+  <section class="room-detail">
+    <div class="container">
+      <div class="detail-grid">
+        <div class="detail-image"></div>
+        <div class="detail-info">
+          <span class="room-label">Suite</span>
+          <h1>Juniorsuite</h1>
+          <span class="room-count-tag">3 Suiten verfügbar</span>
+          <div class="specs-grid">
+            <div class="spec-item"><span class="spec-label">Größe</span><span class="spec-value">40 m²</span></div>
+            <div class="spec-item"><span class="spec-label">Ausrichtung</span><span class="spec-value">Abendsonne & Talblick</span></div>
+            <div class="spec-item"><span class="spec-label">Balkon</span><span class="spec-value">Französischer Balkon</span></div>
+            <div class="spec-item"><span class="spec-label">Belegung</span><span class="spec-value">1–2 Personen</span></div>
+          </div>
+          <ul class="features-list">
+            <li>Doppelbett aus 2 verbundenen Einzelbetten, bei Bedarf trennbar</li>
+            <li>Boxspringbetten mit Überlänge (2,10 m)</li>
+            <li>Großzügiger Grundriss mit 40 m² Wohnfläche</li>
+            <li>Breite, bodentiefe Fenster mit Talblick</li>
+            <li>Offener Badbereich mit Sichtschutz zum Wohn-/Schlafbereich</li>
+            <li>Ebenerdiger Duschbereich mit Regendusche und Ausblick ins Grüne</li>
+            <li>Granitboden und Fußbodenheizung im Badbereich</li>
+            <li>Separates WC</li>
+            <li>Kostenfreies WLAN und Schreibtisch</li>
+            <li>Safe und feststehende Kofferablage</li>
+            <li>Permanente klimatisierte Frischluftzufuhr</li>
+          </ul>
+          <div class="price-box">
+            <span class="price-main">€ 149</span>
+            <span class="price-sub">pro Zimmer und Nacht, exklusive Frühstück</span>
+            <p class="price-note">Frühstück: € 16 pro Person · Alle Preise inklusive MwSt.</p>
+          </div>
+          <a href="kontakt.html" class="btn">Verfügbarkeit anfragen</a>
+          <a href="hotel.html" class="back-link">← Zurück zu Zimmer & Suiten</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section"><h4>KONTAKT</h4><p>Burghof 16<br>64753 Brombachtal</p><a href="tel:+496063589962">+49 6063 589962-00</a><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></div>
+        <div class="footer-section"><h4>ÖFFNUNGSZEITEN</h4><p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></div>
+        <div class="footer-section"><h4>LEGAL</h4><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></div>
+      </div>
+      <div class="footer-bottom">© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></div>
+    </div>
+  </footer>
+</body>
+</html>
