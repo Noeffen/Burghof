@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Die Eventlocations des Burghofs in Brombachtal – Ballsaal, Tenne, Scheune, Eichenstube, Weinkeller, Hof und Biergarten. Für Hochzeiten, Firmenfeiern und besondere Anlässe im Odenwald.">
   <title>Eventlocations – Burghof Brombachtal | Ballsaal, Scheune & mehr im Odenwald</title>
-
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://burghof-odenwald.de/eventlocation.html">
   <meta property="og:type" content="website">
@@ -37,11 +36,6 @@
       "postalCode": "64753",
       "addressRegion": "Hessen",
       "addressCountry": "DE"
-    },
-    "containedIn": {
-      "@type": "Hotel",
-      "name": "Burghof",
-      "url": "https://burghof-odenwald.de"
     }
   }
   </script>
@@ -58,102 +52,149 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
-      color: var(--black);
-      background: var(--white);
-    }
-
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
-    /* HEADER */
-    header {
-      padding: 1.5rem 0;
-      background: var(--white);
-      border-bottom: 1px solid #f0f0f0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
+    header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
     .header-content { display: flex; justify-content: space-between; align-items: center; }
-
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
     .logo .gold { color: var(--gold); }
-
-    nav a {
-      margin-left: 2.5rem;
-      text-decoration: none;
-      color: var(--black);
-      font-weight: 500;
-      transition: color 0.3s;
-      position: relative;
-    }
-
+    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; position: relative; }
     nav a:hover { color: var(--gold); }
     nav a.nav-active { color: var(--gold); }
-    nav a.nav-active::after {
-      content: '';
-      position: absolute;
-      bottom: -22px;
-      left: 0; right: 0;
-      height: 2px;
-      background: var(--gold);
-      border-radius: 2px;
-    }
+    nav a.nav-active::after { content: ''; position: absolute; bottom: -22px; left: 0; right: 0; height: 2px; background: var(--gold); border-radius: 2px; }
 
-    /* BREADCRUMB */
-    .breadcrumb {
-      background: var(--gray);
-      padding: 0.75rem 0;
-      font-size: 0.83rem;
-      color: var(--gray-dark);
-    }
-
+    .breadcrumb { background: var(--gray); padding: 0.75rem 0; font-size: 0.83rem; color: var(--gray-dark); }
     .breadcrumb a { color: var(--gray-dark); text-decoration: none; }
     .breadcrumb a:hover { color: var(--gold); }
     .breadcrumb span { margin: 0 0.4rem; color: #bbb; }
 
-    /* HERO */
-    .hero {
-      padding: 5rem 0 4rem;
-      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
-      color: var(--white);
-    }
-
-    .hero-label {
-      font-size: 0.78rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 600;
-      display: block;
-      margin-bottom: 1.2rem;
-    }
-
+    .hero { padding: 5rem 0 4rem; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero-label { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 1.2rem; }
     .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
     .hero p { font-size: 1.1rem; color: #bbb; max-width: 580px; line-height: 1.7; }
 
-    /* INTRO */
     .intro-section { padding: 4rem 0 2rem; }
+    .intro-section p { font-size: 1.05rem; color: var(--gray-dark); max-width: 780px; line-height: 1.85; }
 
-    .intro-section p {
-      font-size: 1.05rem;
-      color: var(--gray-dark);
-      max-width: 780px;
-      line-height: 1.85;
-    }
-
-    /* LOCATIONS */
     .locations-section { padding: 2rem 0 5rem; }
 
-    /* Featured card (Ballsaal) */
+    /* ── SLIDER ─────────────────────────────────────────────── */
+    .loc-slider {
+      position: relative;
+      overflow: hidden;
+      background: #1a1a1a;
+      /* height set per context */
+    }
+
+    /* Placeholder gradient shown when no images */
+    .slider-placeholder {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .img-ballsaal   { background: linear-gradient(135deg, #2a1a08 0%, #8b6914 50%, #d4af37 100%); }
+    .img-tenne      { background: linear-gradient(135deg, #3a2410 0%, #8b5e2a 60%, #c8924a 100%); }
+    .img-scheune    { background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 50%, #8a7a6a 100%); }
+    .img-eiche      { background: linear-gradient(135deg, #2a1a08 0%, #5a3a18 60%, #8b6030 100%); }
+    .img-wein       { background: linear-gradient(135deg, #2a0a0a 0%, #6a1a1a 60%, #a03030 100%); }
+    .img-hof        { background: linear-gradient(135deg, #1a2a1a 0%, #3a5a3a 50%, #6a8a5a 100%); }
+    .img-biergarten { background: linear-gradient(135deg, #1a2a10 0%, #4a6a30 60%, #7a9a50 100%); }
+
+    /* Slide images */
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .slider-track img {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* Arrow buttons */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--black);
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      line-height: 1;
+    }
+
+    .loc-slider:hover .slider-btn { opacity: 1; }
+    .slider-btn:hover { background: var(--gold); }
+    .slider-btn.prev { left: 10px; }
+    .slider-btn.next { right: 10px; }
+    .slider-btn.hidden { display: none; }
+
+    /* Dots */
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .slider-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .slider-dot.active {
+      background: var(--white);
+      transform: scale(1.3);
+    }
+
+    .slider-counter {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      z-index: 10;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── CARDS ──────────────────────────────────────────────── */
     .location-featured {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 0;
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
@@ -162,41 +203,18 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .location-featured:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.13);
-    }
+    .location-featured:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.13); }
+    .location-featured .loc-slider { height: 400px; }
+    .location-featured .loc-content { padding: 3rem; display: flex; flex-direction: column; justify-content: center; background: var(--white); }
 
-    .location-featured .loc-image {
-      height: 100%;
-      min-height: 380px;
-    }
-
-    .location-featured .loc-content {
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: var(--white);
-    }
-
-    /* Grid for remaining locations */
     .location-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
     }
 
-    /* Wider cards for 2-col rows */
-    .location-grid.two-col {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .location-grid + .location-grid { margin-top: 2rem; }
 
-    .location-grid + .location-grid {
-      margin-top: 2rem;
-    }
-
-    /* Standard card */
     .loc-card {
       border-radius: var(--radius);
       overflow: hidden;
@@ -208,155 +226,35 @@
       flex-direction: column;
     }
 
-    .loc-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.13);
-    }
+    .loc-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.13); }
+    .loc-card .loc-slider { height: 240px; }
 
-    /* Image placeholders */
-    .loc-image {
-      width: 100%;
-      height: 240px;
-      background-size: cover;
-      background-position: center;
-      flex-shrink: 0;
-    }
-
-    .img-ballsaal  { background: linear-gradient(135deg, #2a1a08 0%, #8b6914 50%, #d4af37 100%); }
-    .img-tenne     { background: linear-gradient(135deg, #3a2410 0%, #8b5e2a 60%, #c8924a 100%); }
-    .img-scheune   { background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 50%, #8a7a6a 100%); }
-    .img-eiche     { background: linear-gradient(135deg, #2a1a08 0%, #5a3a18 60%, #8b6030 100%); }
-    .img-wein      { background: linear-gradient(135deg, #2a0a0a 0%, #6a1a1a 60%, #a03030 100%); }
-    .img-hof       { background: linear-gradient(135deg, #1a2a1a 0%, #3a5a3a 50%, #6a8a5a 100%); }
-    .img-biergarten { background: linear-gradient(135deg, #1a2a10 0%, #4a6a30 60%, #7a9a50 100%); }
-
-    /* Content */
     .loc-content { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
 
-    .loc-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-    }
+    .loc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
+    .loc-name { font-size: 1.3rem; font-weight: 700; line-height: 1.2; }
+    .loc-featured-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .loc-capacity { flex-shrink: 0; font-size: 0.78rem; font-weight: 700; color: var(--gray-dark); background: var(--gray); padding: 0.3rem 0.7rem; border-radius: 999px; white-space: nowrap; }
+    .loc-type { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 0.8rem; }
+    .loc-desc { color: var(--gray-dark); font-size: 0.93rem; line-height: 1.75; margin-bottom: 1.2rem; flex: 1; }
+    .loc-featured-desc { font-size: 1rem; line-height: 1.8; color: var(--gray-dark); margin-bottom: 1.5rem; }
 
-    .loc-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--black);
-      line-height: 1.2;
-    }
+    .loc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .loc-tag { font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid #e0e0e0; color: var(--gray-dark); background: var(--white); }
+    .loc-tag.gold { border-color: rgba(212,175,55,0.4); color: #8a6a10; background: rgba(212,175,55,0.08); }
 
-    .loc-featured-name {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-
-    .loc-capacity {
-      flex-shrink: 0;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--gray-dark);
-      background: var(--gray);
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      white-space: nowrap;
-    }
-
-    .loc-type {
-      font-size: 0.72rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.8rem;
-    }
-
-    .loc-desc {
-      color: var(--gray-dark);
-      font-size: 0.93rem;
-      line-height: 1.75;
-      margin-bottom: 1.2rem;
-      flex: 1;
-    }
-
-    .loc-featured-desc {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--gray-dark);
-      margin-bottom: 1.5rem;
-    }
-
-    /* Occasion tags */
-    .loc-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: auto;
-    }
-
-    .loc-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid #e0e0e0;
-      color: var(--gray-dark);
-      background: var(--white);
-    }
-
-    .loc-tag.gold {
-      border-color: rgba(212,175,55,0.4);
-      color: #8a6a10;
-      background: rgba(212,175,55,0.08);
-    }
-
-    /* CTA */
+    /* ── CTA ────────────────────────────────────────────────── */
     .cta-section { padding: 0 0 5rem; }
-
-    .cta-inner {
-      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
-      border-radius: var(--radius);
-      padding: 4rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 3rem;
-      align-items: center;
-      color: var(--white);
-    }
-
+    .cta-inner { background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); border-radius: var(--radius); padding: 4rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; color: var(--white); }
     .cta-inner h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.6rem; }
     .cta-inner p { color: #bbb; font-size: 0.97rem; line-height: 1.6; }
-
-    .btn {
-      display: inline-block;
-      padding: 0.9rem 2rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-size: 0.95rem;
-      white-space: nowrap;
-    }
-
+    .btn { display: inline-block; padding: 0.9rem 2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; white-space: nowrap; }
     .btn-gold { background: var(--gold); color: var(--black); }
     .btn-gold:hover { background: #e8c547; }
-    .btn-dark { background: var(--black); color: var(--white); }
-    .btn-dark:hover { background: var(--gold); color: var(--black); }
 
-    /* FOOTER */
+    /* ── FOOTER ─────────────────────────────────────────────── */
     footer { background: var(--black); color: var(--white); padding: 3rem 0; }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
     .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
     .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
     .footer-section a:hover { color: var(--gold); }
@@ -365,16 +263,14 @@
 
     @media (max-width: 1000px) {
       .location-featured { grid-template-columns: 1fr; }
-      .location-featured .loc-image { min-height: 260px; }
-      .location-grid { grid-template-columns: repeat(2, 1fr); }
-      .location-grid.two-col { grid-template-columns: 1fr; }
+      .location-featured .loc-slider { height: 280px; }
     }
-
     @media (max-width: 650px) {
       .hero h1 { font-size: 2rem; }
       .location-grid { grid-template-columns: 1fr; }
       .cta-inner { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
+      .slider-btn { opacity: 1; }
     }
   </style>
 </head>
@@ -426,7 +322,20 @@
 
       <!-- BALLSAAL – featured -->
       <div class="location-featured">
-        <div class="loc-image img-ballsaal"></div>
+        <div class="loc-slider" id="slider-ballsaal">
+          <div class="slider-placeholder img-ballsaal"></div>
+          <div class="slider-track">
+            <!-- Bilder hier einfügen:
+            <img src="Bilder/ballsaal-1.jpg" alt="Ballsaal im Burghof">
+            <img src="Bilder/ballsaal-2.jpg" alt="Ballsaal – Bühnenbereich">
+            <img src="Bilder/ballsaal-3.jpg" alt="Ballsaal – Sandsteintheke">
+            -->
+          </div>
+          <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+          <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+          <div class="slider-dots"></div>
+          <div class="slider-counter" style="display:none;"></div>
+        </div>
         <div class="loc-content">
           <span class="loc-type">Der große Saal</span>
           <h2 class="loc-featured-name">Ballsaal</h2>
@@ -441,11 +350,22 @@
         </div>
       </div>
 
-      <!-- ROW 1: Scheune + Tenne -->
-      <div class="location-grid two-col">
-
+      <!-- Scheune + Tenne -->
+      <div class="location-grid">
         <div class="loc-card">
-          <div class="loc-image img-scheune"></div>
+          <div class="loc-slider" id="slider-scheune">
+            <div class="slider-placeholder img-scheune"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/scheune-1.jpg" alt="Scheune im Burghof">
+              <img src="Bilder/scheune-2.jpg" alt="Scheune – Scheunentor">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
@@ -465,7 +385,19 @@
         </div>
 
         <div class="loc-card">
-          <div class="loc-image img-tenne"></div>
+          <div class="loc-slider" id="slider-tenne">
+            <div class="slider-placeholder img-tenne"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/tenne-1.jpg" alt="Tenne im Burghof">
+              <img src="Bilder/tenne-2.jpg" alt="Tenne – Dachgebälk">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
@@ -474,7 +406,7 @@
               </div>
               <span class="loc-capacity">40–60 Gäste</span>
             </div>
-            <p class="loc-desc">Ehemaliger Kornspeicher im Obergeschoss des Gutshofs. Zwei verbundene Räume ermöglichen eine natürliche Trennung von Tanzfläche und Büffet. Mit Klimaanlage – das ganze Jahr buchbar.</p>
+            <p class="loc-desc">Ehemaliger Kornspeicher im Obergeschoss. Zwei verbundene Räume ermöglichen eine natürliche Trennung von Tanzfläche und Büffet. Mit Klimaanlage – das ganze Jahr buchbar.</p>
             <div class="loc-tags">
               <span class="loc-tag">Hochzeit</span>
               <span class="loc-tag">Geburtstag</span>
@@ -483,14 +415,24 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ROW 2: Eichenstube + Weinkeller -->
-      <div class="location-grid two-col" style="margin-top: 2rem;">
-
+      <!-- Eichenstube + Weinkeller -->
+      <div class="location-grid">
         <div class="loc-card">
-          <div class="loc-image img-eiche"></div>
+          <div class="loc-slider" id="slider-eiche">
+            <div class="slider-placeholder img-eiche"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/eichenstube-1.jpg" alt="Eichenstube im Burghof">
+              <img src="Bilder/eichenstube-2.jpg" alt="Eichenstube – Detailansicht">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
@@ -499,18 +441,29 @@
               </div>
               <span class="loc-capacity">bis 30 Personen</span>
             </div>
-            <p class="loc-desc">Die feine Eichenstube verbindet Stil und Rustikalität auf engstem Raum. Ideal für Familienfeiern, Weihnachtsfeiern oder das gemeinsame Dinner einer Tagungsgruppe.</p>
+            <p class="loc-desc">Die feine Eichenstube verbindet Stil und Rustikalität. Ideal für Familienfeiern, Weihnachtsfeiern oder das gemeinsame Dinner einer Tagungsgruppe.</p>
             <div class="loc-tags">
               <span class="loc-tag">Familienfeier</span>
               <span class="loc-tag">Weihnachtsfeier</span>
               <span class="loc-tag">Dinner</span>
-              <span class="loc-tag">Tagungsabend</span>
             </div>
           </div>
         </div>
 
         <div class="loc-card">
-          <div class="loc-image img-wein"></div>
+          <div class="loc-slider" id="slider-wein">
+            <div class="slider-placeholder img-wein"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/weinkeller-1.jpg" alt="Weinkeller im Burghof">
+              <img src="Bilder/weinkeller-2.jpg" alt="Weinkeller – Kachelofen">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
@@ -519,7 +472,7 @@
               </div>
               <span class="loc-capacity">exklusiv buchbar</span>
             </div>
-            <p class="loc-desc">Mit dem Weinkeller begann vor 40 Jahren die gastronomische Geschichte des Burghofs. Kachelofen, urige Holztische und -Bänke. Im Winter besonders beliebt für Weihnachtsfeiern – auf Anfrage exklusiv reservierbar.</p>
+            <p class="loc-desc">Kachelofen, urige Holztische und -Bänke. Hier begann vor 40 Jahren die gastronomische Geschichte des Burghofs. Im Winter besonders beliebt für Weihnachtsfeiern – auf Anfrage exklusiv reservierbar.</p>
             <div class="loc-tags">
               <span class="loc-tag">Weihnachtsfeier</span>
               <span class="loc-tag">Kleines Dinner</span>
@@ -527,23 +480,33 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ROW 3: Hof + Biergarten -->
-      <div class="location-grid two-col" style="margin-top: 2rem;">
-
+      <!-- Hof + Biergarten -->
+      <div class="location-grid">
         <div class="loc-card">
-          <div class="loc-image img-hof"></div>
+          <div class="loc-slider" id="slider-hof">
+            <div class="slider-placeholder img-hof"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/hof-1.jpg" alt="Der Hof des Burghofs">
+              <img src="Bilder/hof-2.jpg" alt="Hof – Blick auf Dorfkirche">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
                 <span class="loc-type">Das Herzstück</span>
                 <h3 class="loc-name">Der Hof</h3>
               </div>
-              <span class="loc-capacity">Sektempfang & Übergang</span>
+              <span class="loc-capacity">Empfang & Übergang</span>
             </div>
-            <p class="loc-desc">Der imposante Hof mit Blick auf die evangelische Dorfkirche und das Fachwerk des alten Bauernhauses – das Herzstück der Eventlocation. Für den Empfang der Gäste und als verbindendes Element zwischen den Locations.</p>
+            <p class="loc-desc">Der imposante Hof mit Blick auf die evangelische Dorfkirche und das Fachwerk des alten Bauernhauses. Das Herzstück der Eventlocation – für den Empfang der Gäste und als verbindendes Element.</p>
             <div class="loc-tags">
               <span class="loc-tag">Sektempfang</span>
               <span class="loc-tag">Hochzeit</span>
@@ -553,7 +516,19 @@
         </div>
 
         <div class="loc-card">
-          <div class="loc-image img-biergarten"></div>
+          <div class="loc-slider" id="slider-biergarten">
+            <div class="slider-placeholder img-biergarten"></div>
+            <div class="slider-track">
+              <!-- Bilder hier einfügen:
+              <img src="Bilder/biergarten-1.jpg" alt="Biergarten im Burghof">
+              <img src="Bilder/biergarten-2.jpg" alt="Biergarten – Innenhof">
+              -->
+            </div>
+            <button class="slider-btn prev hidden" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="slider-btn next hidden" aria-label="Nächstes Bild">&#8250;</button>
+            <div class="slider-dots"></div>
+            <div class="slider-counter" style="display:none;"></div>
+          </div>
           <div class="loc-content">
             <div class="loc-top">
               <div>
@@ -570,19 +545,17 @@
             </div>
           </div>
         </div>
-
       </div>
 
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-inner">
         <div>
           <h2>Besichtigung vereinbaren</h2>
-          <p>Die Locations sieht man am besten vor Ort. Wir zeigen Ihnen gerne alles und beraten Sie bei der Auswahl – unverbindlich und persönlich.</p>
+          <p>Die Locations sieht man am besten vor Ort. Wir zeigen Ihnen gerne alles – unverbindlich und persönlich.</p>
         </div>
         <a href="kontakt.html" class="btn btn-gold">Jetzt anfragen</a>
       </div>
@@ -616,6 +589,7 @@
   </footer>
 
   <script>
+  // ── Nav active ──────────────────────────────────────────────
   (function () {
     var path = window.location.pathname.split('/').pop() || 'index.html';
     var active = path === 'eventlocation.html' ? 'events.html' : path;
@@ -623,6 +597,63 @@
       if (a.getAttribute('href') === active) a.classList.add('nav-active');
     });
   }());
+
+  // ── Slider ──────────────────────────────────────────────────
+  document.querySelectorAll('.loc-slider').forEach(function (slider) {
+    var track    = slider.querySelector('.slider-track');
+    var images   = Array.from(track.querySelectorAll('img'));
+    var placeholder = slider.querySelector('.slider-placeholder');
+    var btnPrev  = slider.querySelector('.slider-btn.prev');
+    var btnNext  = slider.querySelector('.slider-btn.next');
+    var dotsWrap = slider.querySelector('.slider-dots');
+    var counter  = slider.querySelector('.slider-counter');
+    var current  = 0;
+
+    // No images yet — show placeholder, hide controls
+    if (images.length === 0) return;
+
+    // Has images — hide placeholder, show controls
+    if (placeholder) placeholder.style.display = 'none';
+    if (images.length > 1) {
+      btnPrev.classList.remove('hidden');
+      btnNext.classList.remove('hidden');
+      counter.style.display = 'block';
+    }
+
+    // Build dots
+    images.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Bild ' + (i + 1));
+      dot.addEventListener('click', function () { go(i); });
+      dotsWrap.appendChild(dot);
+    });
+
+    var dots = Array.from(dotsWrap.querySelectorAll('.slider-dot'));
+
+    function go(idx) {
+      current = (idx + images.length) % images.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === current);
+      });
+      counter.textContent = (current + 1) + ' / ' + images.length;
+    }
+
+    btnPrev.addEventListener('click', function () { go(current - 1); });
+    btnNext.addEventListener('click', function () { go(current + 1); });
+
+    // Touch/swipe support
+    var startX = 0;
+    slider.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend', function (e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) go(diff > 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    // Init counter
+    counter.textContent = '1 / ' + images.length;
+  });
   </script>
 
 </body>
