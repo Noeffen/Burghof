@@ -3,9 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof Hotel – 44 komfortable Zimmer in 8 Kategorien. Von Standard bis Premium Suite. Alle mit Ausblick ins Grüne, Granitbäder, WLAN. Ab 119€/Nacht.">
-  <title>Hotel Burghof – 44 Zimmer & Suiten im Odenwald</title>
+  <meta name="description" content="Burghof Hotel – 42 komfortable Zimmer und 5 Seminarräume für Tagungen im Odenwald.">
+  <title>Hotel & Seminarräume – Burghof</title>
   <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --gold-light: #e8c547;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -14,19 +25,27 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #1a1a1a;
       line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
 
     header {
-      padding: 1.5rem 2rem;
-      background: white;
+      padding: 1.5rem 0;
+      background: var(--white);
       border-bottom: 1px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -36,203 +55,200 @@
       font-size: 1.3rem;
       font-weight: 700;
       text-decoration: none;
-      color: #1a1a1a;
+      color: var(--black);
       letter-spacing: 2px;
     }
 
     .logo .gold {
-      color: #d4af37;
+      color: var(--gold);
     }
 
     nav a {
+      margin-left: 2.5rem;
       text-decoration: none;
-      color: #1a1a1a;
+      color: var(--black);
       font-weight: 500;
-      margin-left: 2rem;
       transition: color 0.3s;
     }
 
     nav a:hover {
-      color: #d4af37;
+      color: var(--gold);
     }
 
-    .page-title {
-      padding: 2rem;
-      background: white;
-      text-align: center;
-      border-bottom: 2px solid #d4af37;
+    .hero {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
+      color: var(--white);
     }
 
-    .page-title h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .page-title p {
-      color: #666;
-      font-size: 1.05rem;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-    }
-
-    .intro-text {
-      background: #f8f8f8;
-      padding: 2rem;
-      border-radius: 8px;
-      margin-bottom: 3rem;
-      border-left: 4px solid #d4af37;
-    }
-
-    .intro-text h2 {
-      font-size: 1.5rem;
+    .hero h1 {
+      font-size: 2.8rem;
       margin-bottom: 1rem;
-      color: #1a1a1a;
+      font-weight: 700;
     }
 
-    .intro-text p {
-      color: #666;
-      margin-bottom: 0.8rem;
-      line-height: 1.8;
+    .hero p {
+      font-size: 1.1rem;
+      color: #ccc;
     }
 
-    .zimmer-section {
-      margin-bottom: 4rem;
+    .section {
+      padding: 4rem 0;
     }
 
-    .zimmer-section h2 {
-      font-size: 1.8rem;
+    .section-title {
+      font-size: 2.2rem;
       margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid #d4af37;
+      font-weight: 700;
     }
 
-    .zimmer-grid {
+    .room-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+      margin-bottom: 3rem;
     }
 
-    .zimmer-card {
-      background: white;
-      border-radius: 8px;
+    .room-card {
+      background: var(--white);
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow);
       transition: all 0.3s;
-      text-decoration: none;
-      color: #1a1a1a;
-      display: flex;
-      flex-direction: column;
     }
 
-    .zimmer-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 32px rgba(212,175,55,0.2);
+    .room-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
     }
 
-    .zimmer-image {
+    .room-image {
       width: 100%;
       height: 200px;
-      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
+      background: linear-gradient(135deg, #2a5a4a 0%, #4a9d6f 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      color: rgba(255,255,255,0.3);
+      font-size: 2.5rem;
     }
 
-    .zimmer-content {
-      padding: 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
+    .room-content {
+      padding: 2rem;
     }
 
-    .zimmer-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: #1a1a1a;
-    }
-
-    .zimmer-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-    }
-
-    .zimmer-price {
+    .room-content h3 {
       font-size: 1.4rem;
-      font-weight: 700;
-      color: #d4af37;
+      margin-bottom: 0.5rem;
     }
 
-    .zimmer-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .zimmer-content p {
-      color: #666;
+    .room-count {
+      color: var(--gold);
+      font-size: 0.9rem;
       margin-bottom: 1rem;
-      flex-grow: 1;
-      line-height: 1.6;
-      font-size: 0.95rem;
+      font-weight: 600;
     }
 
-    .zimmer-cta {
+    .room-content p {
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .seminar-section {
+      background: var(--gray);
+      padding: 3rem;
+      border-radius: var(--radius);
+      margin: 3rem 0;
+    }
+
+    .seminar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .seminar-image {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
+      border-radius: var(--radius);
+    }
+
+    .seminar-content h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .seminar-content p {
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .features-list li {
+      padding: 0.7rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--gray-dark);
+    }
+
+    .features-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 3rem;
+      background: var(--gray);
+      border-radius: var(--radius);
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      color: var(--gray-dark);
+      margin-bottom: 2rem;
+    }
+
+    .btn {
       display: inline-block;
-      padding: 0.7rem 1.3rem;
-      background: #1a1a1a;
-      color: white;
+      padding: 1rem 2.5rem;
+      background: var(--black);
+      color: var(--white);
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: var(--radius);
       font-weight: 600;
       transition: all 0.3s;
-      width: fit-content;
-      font-size: 0.9rem;
     }
 
-    .zimmer-cta:hover {
-      background: #d4af37;
-      color: #1a1a1a;
-    }
-
-    .breakfast-note {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin: 3rem 0;
-      border: 1px solid #d4af37;
-      text-align: center;
-    }
-
-    .breakfast-note p {
-      color: #666;
-      margin-bottom: 0.5rem;
-    }
-
-    .breakfast-note strong {
-      color: #1a1a1a;
+    .btn:hover {
+      background: var(--gold);
+      color: var(--black);
     }
 
     footer {
-      background: #1a1a1a;
-      color: white;
-      padding: 3rem 2rem;
-      margin-top: 3rem;
+      background: var(--black);
+      color: var(--white);
+      padding: 3rem 0;
+      margin-top: 4rem;
     }
 
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
+    .footer-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
@@ -240,21 +256,22 @@
     }
 
     .footer-section h4 {
-      color: #d4af37;
+      color: var(--gold);
       margin-bottom: 1rem;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       letter-spacing: 1px;
     }
 
+    .footer-section p,
     .footer-section a {
       color: #aaa;
       text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
     }
 
     .footer-section a:hover {
-      color: #d4af37;
+      color: var(--gold);
     }
 
     .footer-bottom {
@@ -266,20 +283,15 @@
     }
 
     @media (max-width: 768px) {
-      .page-title h1 {
-        font-size: 1.8rem;
-      }
-
-      nav a {
-        margin-left: 1rem;
-        font-size: 0.9rem;
-      }
-
-      .zimmer-grid {
+      .room-grid {
         grid-template-columns: 1fr;
       }
 
-      .footer-content {
+      .seminar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -287,186 +299,147 @@
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
-      <nav>
-        <a href="events.html">Events</a>
-        <a href="hotel.html">Hotel</a>
-        <a href="golf.html">Golf</a>
-        <a href="restaurant.html">Restaurant</a>
-        <a href="kontakt.html">Kontakt</a>
-      </nav>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="index.html#kernthemen">Angebote</a>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <section class="page-title">
-    <h1>Hotel Burghof</h1>
-    <p>44 komfortable Zimmer in 8 Kategorien</p>
+  <section class="hero">
+    <div class="container">
+      <h1>Hotel & Seminarräume</h1>
+      <p>Übernachtung mit Komfort, Seminare mit Innovation – perfekt für Tagungen und Kurzurlaube</p>
+    </div>
   </section>
 
-  <div class="container">
-    <section class="intro-text">
-      <h2>Granit, Eiche und ein offenes Bad mit Blick ins Grüne</h2>
-      <p>Das Hotel Burghof bietet Ihnen 44 Zimmer in verschiedenen Kategorien auf 3 Stockwerken mit Aufzug. Durch die Verwendung von Naturmaterialien wie Granit und Eiche sind moderne Räume entstanden, die Ihnen genügend Raum und Ruhe für Erholung und Inspiration geben.</p>
-      <p>Alle Räume verfügen über ein offenes Bad mit Ausblick, eine Regendusche, Fußbodenheizung und separatem WC. Kostenfreies WLAN und ein Schreibtisch stehen selbstverständlich zur Verfügung. Bodentiefe Fenster bieten Ihnen einen herrlichen Ausblick über den Odenwald.</p>
-    </section>
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Unsere Hotelzimmer</h2>
 
-    <!-- DIE ZIMMER -->
-    <section class="zimmer-section">
-      <h2>Die ZIMMER</h2>
-      <div class="zimmer-grid">
-        <!-- Standard Doppelzimmer -->
-        <a href="burghof_standardzimmer.html" class="zimmer-card">
-          <div class="zimmer-image">🛏️</div>
-          <div class="zimmer-content">
-            <h3>Standard Doppelzimmer</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">27 m²</span>
-              <span class="zimmer-price">119€</span>
-            </div>
-            <p>Komfortabel und funktional mit Morgensonne. Doppelbett aus 2 verbundenen Einzelbetten, trennbar.</p>
-            <a href="burghof_standardzimmer.html" class="zimmer-cta">Details →</a>
+      <div class="room-grid">
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Standardzimmer</h3>
+            <div class="room-count">6 Zimmer</div>
+            <p>Komfortable Zimmer mit den wichtigsten Annehmlichkeiten für einen erholsamen Aufenthalt.</p>
           </div>
-        </a>
+        </div>
 
-        <!-- Komfort Doppelzimmer -->
-        <a href="burghof_komfortzimmer.html" class="zimmer-card">
-          <div class="zimmer-image">⭐</div>
-          <div class="zimmer-content">
-            <h3>Komfort Doppelzimmer</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">27 m²</span>
-              <span class="zimmer-price">129€</span>
-            </div>
-            <p>Mit Abendsonne und Talblick. Doppelbett mit Überlänge, ebenso trennbar.</p>
-            <a href="burghof_komfortzimmer.html" class="zimmer-cta">Details →</a>
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Komfortzimmer</h3>
+            <div class="room-count">16 Zimmer</div>
+            <p>Geräumigere Zimmer mit moderner Ausstattung und Blick auf die Natur des Odenwalds.</p>
           </div>
-        </a>
+        </div>
 
-        <!-- Barrierefreie Doppelzimmer -->
-        <a href="burghof_barrierefreies.html" class="zimmer-card">
-          <div class="zimmer-image">♿</div>
-          <div class="zimmer-content">
-            <h3>Barrierefreie Doppelzimmer</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">27 m²</span>
-              <span class="zimmer-price">119€</span>
-            </div>
-            <p>Rollstuhlgerecht ausgestattet. Zimmer und Bad vollständig barrierefrei.</p>
-            <a href="burghof_barrierefreies.html" class="zimmer-cta">Details →</a>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- DIE SUITEN -->
-    <section class="zimmer-section">
-      <h2>Die SUITEN</h2>
-      <div class="zimmer-grid">
-        <!-- Juniorsuiten -->
-        <a href="burghof_juniorsuite.html" class="zimmer-card">
-          <div class="zimmer-image">✨</div>
-          <div class="zimmer-content">
-            <h3>Juniorsuiten</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">40 m²</span>
-              <span class="zimmer-price">149€</span>
-            </div>
-            <p>Geräumig mit Abendsonne und Talblick. Boxspringbett mit Überlänge.</p>
-            <a href="burghof_juniorsuite.html" class="zimmer-cta">Details →</a>
-          </div>
-        </a>
-
-        <!-- Juniorsuiten mit Dachloggia -->
-        <a href="burghof_junior_loggia.html" class="zimmer-card">
-          <div class="zimmer-image">🌅</div>
-          <div class="zimmer-content">
-            <h3>Juniorsuiten mit Dachloggia</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">27m² + 13m² Loggia</span>
-              <span class="zimmer-price">149€</span>
-            </div>
-            <p>Mit privater Dachloggia, Liegestuhl und Talblick. Premium-Komfort.</p>
-            <a href="burghof_junior_loggia.html" class="zimmer-cta">Details →</a>
-          </div>
-        </a>
-
-        <!-- Familienzimmer -->
-        <a href="burghof_familienzimmer.html" class="zimmer-card">
-          <div class="zimmer-image">👨‍👩‍👧‍👦</div>
-          <div class="zimmer-content">
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
             <h3>Familienzimmer</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">40 m² | 4 Bett</span>
-              <span class="zimmer-price">139€</span>
-            </div>
-            <p>2-Raum-Zimmer mit 2 Doppelbetten. Perfekt für Familien mit Verbindungstür.</p>
-            <a href="burghof_familienzimmer.html" class="zimmer-cta">Details →</a>
+            <div class="room-count">8 Zimmer</div>
+            <p>Perfekt für Familien – mit ausreichend Platz für Eltern und Kinder.</p>
           </div>
-        </a>
+        </div>
 
-        <!-- Familiensuite mit Dachloggia -->
-        <a href="burghof_familien_loggia.html" class="zimmer-card">
-          <div class="zimmer-image">👑</div>
-          <div class="zimmer-content">
-            <h3>Familiensuite mit Dachloggia</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">45m² + 13m² Loggia | 4 Bett</span>
-              <span class="zimmer-price">169€</span>
-            </div>
-            <p>Luxus für Familien mit großer Dachloggia. Abend- und Morgensonne.</p>
-            <a href="burghof_familien_loggia.html" class="zimmer-cta">Details →</a>
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Familiensuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Luxus für die ganze Familie – großzügig geschnittene Räume mit separaten Bereichen.</p>
           </div>
-        </a>
+        </div>
 
-        <!-- Suite mit Dachloggia -->
-        <a href="burghof_premium_suite.html" class="zimmer-card">
-          <div class="zimmer-image">💎</div>
-          <div class="zimmer-content">
-            <h3>Suite mit Dachloggia</h3>
-            <div class="zimmer-meta">
-              <span class="zimmer-meta-item">50m² + 15m² Loggia</span>
-              <span class="zimmer-price">169€</span>
-            </div>
-            <p>Unsere Premium-Suite. Schlaf- & Wohnbereich, Kingsize-Bett, Badewanne.</p>
-            <a href="burghof_premium_suite.html" class="zimmer-cta">Details →</a>
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Juniorsuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Elegante Suite mit separatem Wohnbereich – Luxus für Zwei.</p>
           </div>
-        </a>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Seniorsuite</h3>
+            <div class="room-count">2 Suiten</div>
+            <p>Barrierefreie Luxus-Suite mit erhöhtem Komfort speziell für Seniorinnen und Senioren.</p>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <div class="breakfast-note">
-      <p><strong>💡 Hinweis:</strong> Alle Preise verstehen sich pro Zimmer und Nacht <strong>exklusive Frühstück</strong>.</p>
-      <p>Frühstück: <strong>16€ pro Person</strong> | Alle Preise <strong>inklusive MwSt.</strong></p>
     </div>
+  </section>
 
-    <div style="text-align: center; padding: 2rem; background: #f8f8f8; border-radius: 8px; margin: 3rem 0;">
-      <h3 style="margin-bottom: 1rem;">Interessiert? Lassen Sie sich inspirieren!</h3>
-      <a href="kontakt.html" style="display: inline-block; padding: 1rem 2rem; background: #1a1a1a; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">Zimmer anfragen →</a>
+  <section class="seminar-section">
+    <div class="container">
+      <div class="seminar-grid">
+        <div class="seminar-image"></div>
+        <div class="seminar-content">
+          <h2>Seminarräume für Tagungen</h2>
+          <p>Wir verfügen über 5 moderne Seminarräume mit einer Gesamtkapazität von bis zu 119 Teilnehmenden.</p>
+          <p>Alle Räume sind flexibel nutzbar und mit modernster Technik ausgestattet – perfekt für Meetings, Workshops und Offsite-Tagungen.</p>
+
+          <ul class="features-list">
+            <li>5 verschiedene Räume in unterschiedlichen Größen</li>
+            <li>Bis zu 119 Plätze je nach Raumkombination</li>
+            <li>Moderne Audio-/Video-Ausstattung</li>
+            <li>Hochgeschwindigkeits-WLAN</li>
+            <li>Catering & Getränke-Service</li>
+            <li>Übernachtung im Haus</li>
+            <li>Flexible Pausenzeiten</li>
+            <li>Individuelle Betreuung</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ihre Tagung im Burghof</h2>
+        <p>Moderne Räume, erstklassiges Service und inspirierende Umgebung – alles für Ihren erfolgreichen Event</p>
+        <a href="kontakt.html" class="btn">Anfrage stellen</a>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4>KONTAKT</h4>
-        <p>Burghof 16<br>64753 Brombachtal</p>
-        <a href="tel:+496063589962">+49 6063 589962-00</a>
-        <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>KONTAKT</h4>
+          <p>Burghof 16<br>64753 Brombachtal</p>
+          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
+          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>ÖFFNUNGSZEITEN</h4>
+          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
+          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>LEGAL</h4>
+          <p><a href="datenschutz.html">Datenschutz</a></p>
+          <p><a href="impressum.html">Impressum</a></p>
+        </div>
       </div>
-      <div class="footer-section">
-        <h4>ÖFFNUNGSZEITEN</h4>
-        <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-        <a href="https://www.instagram.com/burghof_hotelundevent/">Instagram</a>
+      <div class="footer-bottom">
+        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
       </div>
-      <div class="footer-section">
-        <h4>LEGAL</h4>
-        <a href="datenschutz.html">Datenschutz</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      © 2026 Burghof
     </div>
   </footer>
 </body>
