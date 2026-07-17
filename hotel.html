@@ -3,25 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Burghof Hotel – 42 komfortable Zimmer und 5 Seminarräume für Tagungen im Odenwald.">
+  <meta name="description" content="44 Zimmer und Suiten im Burghof Brombachtal – Granit, Eiche und offenes Bad mit Blick in den Odenwald. 5 Seminarräume für Tagungen und Offsite-Events.">
   <title>Hotel & Seminarräume – Burghof</title>
   <style>
     :root {
       --black: #1a1a1a;
       --gold: #d4af37;
-      --gold-light: #e8c547;
       --white: #ffffff;
       --gray: #f8f8f8;
       --gray-dark: #444;
       --radius: 12px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -30,12 +25,9 @@
       background: var(--white);
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
+    /* HEADER */
     header {
       padding: 1.5rem 0;
       background: var(--white);
@@ -45,11 +37,7 @@
       z-index: 100;
     }
 
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
 
     .logo {
       font-size: 1.3rem;
@@ -59,9 +47,7 @@
       letter-spacing: 2px;
     }
 
-    .logo .gold {
-      color: var(--gold);
-    }
+    .logo .gold { color: var(--gold); }
 
     nav a {
       margin-left: 2.5rem;
@@ -71,42 +57,97 @@
       transition: color 0.3s;
     }
 
-    nav a:hover {
-      color: var(--gold);
-    }
+    nav a:hover { color: var(--gold); }
 
+    /* HERO */
     .hero {
       padding: 4rem 0;
       background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
       color: var(--white);
     }
 
-    .hero h1 {
-      font-size: 2.8rem;
+    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.1rem; color: #ccc; max-width: 600px; }
+
+    /* INTRO */
+    .intro {
+      padding: 3.5rem 0 1rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .intro-text h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .intro-text p {
+      color: var(--gray-dark);
+      line-height: 1.8;
       margin-bottom: 1rem;
+    }
+
+    .intro-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .fact-item {
+      padding: 1.5rem;
+      background: var(--gray);
+      border-radius: var(--radius);
+    }
+
+    .fact-number {
+      font-size: 2rem;
       font-weight: 700;
+      color: var(--black);
+      display: block;
     }
 
-    .hero p {
-      font-size: 1.1rem;
-      color: #ccc;
+    .fact-label {
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      margin-top: 0.2rem;
     }
 
-    .section {
-      padding: 4rem 0;
-    }
+    /* SECTION */
+    .section { padding: 3.5rem 0; }
 
-    .section-title {
-      font-size: 2.2rem;
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
       margin-bottom: 2rem;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
       font-weight: 700;
     }
 
+    .section-header span {
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    /* ROOM GRID */
     .room-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 3rem;
+      gap: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     .room-card {
@@ -114,89 +155,136 @@
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
-      transition: all 0.3s;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
     }
 
     .room-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.13);
     }
 
     .room-image {
       width: 100%;
-      height: 200px;
+      height: 190px;
       background: linear-gradient(135deg, #2a5a4a 0%, #4a9d6f 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
     }
 
     .room-content {
-      padding: 2rem;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .room-content h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
     }
 
-    .room-count {
-      color: var(--gold);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
+    .room-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--gray-dark);
+      margin-bottom: 0.8rem;
     }
+
+    .room-meta span::before {
+      content: "·";
+      margin-right: 0.5rem;
+      color: #ccc;
+    }
+
+    .room-meta span:first-child::before { content: ""; margin-right: 0; }
 
     .room-content p {
       color: var(--gray-dark);
-      margin-bottom: 1rem;
-      line-height: 1.7;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+      flex: 1;
     }
 
+    .room-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 1rem;
+      margin-top: auto;
+    }
+
+    .room-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .room-price small {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--gray-dark);
+      display: block;
+    }
+
+    .room-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+
+    .room-link:hover { color: var(--gold); }
+
+    /* SEMINAR */
     .seminar-section {
       background: var(--gray);
-      padding: 3rem;
-      border-radius: var(--radius);
-      margin: 3rem 0;
+      padding: 3.5rem 0;
     }
 
-    .seminar-grid {
+    .seminar-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: 4rem;
       align-items: center;
     }
 
     .seminar-image {
       width: 100%;
-      height: 300px;
+      height: 320px;
       background: linear-gradient(135deg, #d4af37 0%, #c19a6b 100%);
       border-radius: var(--radius);
     }
 
     .seminar-content h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.9rem;
       font-weight: 700;
+      margin-bottom: 1rem;
     }
 
     .seminar-content p {
       color: var(--gray-dark);
-      margin-bottom: 1rem;
       line-height: 1.8;
+      margin-bottom: 1rem;
     }
 
     .features-list {
       list-style: none;
-      margin: 2rem 0;
+      margin: 1.5rem 0;
     }
 
     .features-list li {
-      padding: 0.7rem 0;
+      padding: 0.5rem 0;
       padding-left: 1.5rem;
       position: relative;
       color: var(--gray-dark);
+      font-size: 0.95rem;
     }
 
     .features-list li::before {
@@ -205,8 +293,10 @@
       left: 0;
       color: var(--gold);
       font-weight: bold;
-      font-size: 1.2rem;
     }
+
+    /* CTA */
+    .cta-section { padding: 3.5rem 0; }
 
     .cta {
       text-align: center;
@@ -215,19 +305,12 @@
       border-radius: var(--radius);
     }
 
-    .cta h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .cta p {
-      color: var(--gray-dark);
-      margin-bottom: 2rem;
-    }
+    .cta h2 { font-size: 1.8rem; margin-bottom: 0.8rem; font-weight: 700; }
+    .cta p { color: var(--gray-dark); margin-bottom: 2rem; }
 
     .btn {
       display: inline-block;
-      padding: 1rem 2.5rem;
+      padding: 0.9rem 2.2rem;
       background: var(--black);
       color: var(--white);
       text-decoration: none;
@@ -236,17 +319,10 @@
       transition: all 0.3s;
     }
 
-    .btn:hover {
-      background: var(--gold);
-      color: var(--black);
-    }
+    .btn:hover { background: var(--gold); color: var(--black); }
 
-    footer {
-      background: var(--black);
-      color: var(--white);
-      padding: 3rem 0;
-      margin-top: 4rem;
-    }
+    /* FOOTER */
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 2rem; }
 
     .footer-grid {
       display: grid;
@@ -255,49 +331,35 @@
       margin-bottom: 2rem;
     }
 
-    .footer-section h4 {
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-    }
-
-    .footer-section p,
-    .footer-section a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.9rem;
-      line-height: 1.8;
-    }
-
-    .footer-section a:hover {
-      color: var(--gold);
-    }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
 
     .footer-bottom {
       border-top: 1px solid #333;
       padding-top: 2rem;
       text-align: center;
       color: #888;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
-    @media (max-width: 768px) {
-      .room-grid {
-        grid-template-columns: 1fr;
-      }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
 
-      .seminar-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 900px) {
+      .intro-grid, .seminar-inner { grid-template-columns: 1fr; }
+      .room-grid { grid-template-columns: 1fr 1fr; }
+    }
 
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 600px) {
+      .room-grid { grid-template-columns: 1fr; }
+      .intro-facts { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
+
   <header>
     <div class="container">
       <div class="header-content">
@@ -317,30 +379,162 @@
   <section class="hero">
     <div class="container">
       <h1>Hotel & Seminarräume</h1>
-      <p>Übernachtung mit Komfort, Seminare mit Innovation – perfekt für Tagungen und Kurzurlaube</p>
+      <p>44 Zimmer und Suiten im Odenwald – für Tagungsgäste, Hochzeitsgesellschaften und Kurzurlauber.</p>
     </div>
   </section>
 
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-text">
+          <h2>Granit, Eiche und ein offenes Bad mit Blick ins Grüne</h2>
+          <p>Das Hotel bietet 44 Zimmer in verschiedenen Kategorien auf drei Stockwerken mit Aufzug. Durch die Verwendung von Naturmaterialien wie Granit und Eiche sind moderne Räume entstanden, die genügend Raum und Ruhe für Erholung und Inspiration geben.</p>
+          <p>Alle Zimmer verfügen über ein offenes Bad mit Ausblick, eine Regendusche, Fußbodenheizung und separatem WC. Bodentiefe Fenster bieten einen herrlichen Ausblick über den Odenwald.</p>
+        </div>
+        <div class="intro-facts">
+          <div class="fact-item">
+            <span class="fact-number">44</span>
+            <span class="fact-label">Zimmer & Suiten</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-number">3</span>
+            <span class="fact-label">Stockwerke mit Aufzug</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-number">5</span>
+            <span class="fact-label">Seminarräume</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-number">119</span>
+            <span class="fact-label">Tagungs&shy;plätze</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZIMMER -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Unsere Hotelzimmer</h2>
+      <div class="section-header">
+        <h2>Die Zimmer</h2>
+        <span>34 Zimmer in drei Kategorien</span>
+      </div>
 
       <div class="room-grid">
+
         <div class="room-card">
           <div class="room-image"></div>
           <div class="room-content">
-            <h3>Standardzimmer</h3>
-            <div class="room-count">6 Zimmer</div>
-            <p>Komfortable Zimmer mit den wichtigsten Annehmlichkeiten für einen erholsamen Aufenthalt.</p>
+            <h3>Standard Doppelzimmer</h3>
+            <div class="room-meta">
+              <span>16 Zimmer</span>
+              <span>27 m²</span>
+              <span>Morgensonne</span>
+            </div>
+            <p>Boxspringbetten mit Überlänge, französischer Balkon und offenes Bad mit Regendusche. Bodentiefe Fenster mit Blick in den Odenwald.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 119
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-standard.html" class="room-link">Details ansehen</a>
+            </div>
           </div>
         </div>
 
         <div class="room-card">
           <div class="room-image"></div>
           <div class="room-content">
-            <h3>Komfortzimmer</h3>
-            <div class="room-count">16 Zimmer</div>
-            <p>Geräumigere Zimmer mit moderner Ausstattung und Blick auf die Natur des Odenwalds.</p>
+            <h3>Komfort Doppelzimmer</h3>
+            <div class="room-meta">
+              <span>16 Zimmer</span>
+              <span>27 m²</span>
+              <span>Abendsonne & Talblick</span>
+            </div>
+            <p>Wie das Standardzimmer, jedoch mit Ausrichtung auf Abendsonne und Talblick – für alle, die den Sonnenuntergang über dem Odenwald genießen möchten.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 129
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-komfort.html" class="room-link">Details ansehen</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Barrierefreies Doppelzimmer</h3>
+            <div class="room-meta">
+              <span>2 Zimmer</span>
+              <span>27 m²</span>
+              <span>Rollstuhlgerecht</span>
+            </div>
+            <p>Vollständig rollstuhlgerecht ausgestattetes Zimmer mit ebenerdiger Dusche, Morgensonne und französischem Balkon.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 119
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-barrierefrei.html" class="room-link">Details ansehen</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SUITEN -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Die Suiten</h2>
+        <span>5 Kategorien für mehr Raum und Komfort</span>
+      </div>
+
+      <div class="room-grid">
+
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Juniorsuite</h3>
+            <div class="room-meta">
+              <span>3 Suiten</span>
+              <span>40 m²</span>
+              <span>Abendsonne & Talblick</span>
+            </div>
+            <p>Großzügiger Grundriss mit Boxspringbett, französischem Balkon und offenem Badbereich mit Regendusche und Granitboden.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 149
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-juniorsuite.html" class="room-link">Details ansehen</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-image"></div>
+          <div class="room-content">
+            <h3>Juniorsuite mit Dachloggia</h3>
+            <div class="room-meta">
+              <span>4 Suiten</span>
+              <span>27 m² + 13 m² Loggia</span>
+              <span>Talblick</span>
+            </div>
+            <p>Private Dachloggia mit Liegestuhl und Talblick. Sehr breite, bodentiefe Fenster und moderner Klimaanlage.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 149
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-juniorsuite-loggia.html" class="room-link">Details ansehen</a>
+            </div>
           </div>
         </div>
 
@@ -348,71 +542,96 @@
           <div class="room-image"></div>
           <div class="room-content">
             <h3>Familienzimmer</h3>
-            <div class="room-count">8 Zimmer</div>
-            <p>Perfekt für Familien – mit ausreichend Platz für Eltern und Kinder.</p>
+            <div class="room-meta">
+              <span>40 m²</span>
+              <span>2 Räume</span>
+              <span>Abendsonne & Talblick</span>
+            </div>
+            <p>4-Bett-Zimmer mit zwei verbundenen Räumen und Verbindungstür. Zwei Doppelbetten, je nach Bedarf trennbar.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 139
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-familie.html" class="room-link">Details ansehen</a>
+            </div>
           </div>
         </div>
 
         <div class="room-card">
           <div class="room-image"></div>
           <div class="room-content">
-            <h3>Familiensuite</h3>
-            <div class="room-count">2 Suiten</div>
-            <p>Luxus für die ganze Familie – großzügig geschnittene Räume mit separaten Bereichen.</p>
+            <h3>Familiensuite mit Dachloggia</h3>
+            <div class="room-meta">
+              <span>45 m² + 13 m² Loggia</span>
+              <span>Abend- & Morgensonne</span>
+            </div>
+            <p>Unsere großzügigste Familienlösung: 4 Betten, private Dachloggia mit Liegestuhl und Talblick.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 169
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-familiensuite.html" class="room-link">Details ansehen</a>
+            </div>
           </div>
         </div>
 
         <div class="room-card">
           <div class="room-image"></div>
           <div class="room-content">
-            <h3>Juniorsuite</h3>
-            <div class="room-count">2 Suiten</div>
-            <p>Elegante Suite mit separatem Wohnbereich – Luxus für Zwei.</p>
+            <h3>Suite mit Dachloggia</h3>
+            <div class="room-meta">
+              <span>50 m² + 15 m² Loggia</span>
+              <span>Kingsize-Bett</span>
+              <span>Talblick</span>
+            </div>
+            <p>Unsere exklusivste Suite: separater Schlaf- und Wohnbereich, Kingsize-Bett, Badewanne und private Dachloggia.</p>
+            <div class="room-footer">
+              <div class="room-price">
+                ab € 169
+                <small>pro Zimmer / Nacht</small>
+              </div>
+              <a href="zimmer-suite-loggia.html" class="room-link">Details ansehen</a>
+            </div>
           </div>
         </div>
 
-        <div class="room-card">
-          <div class="room-image"></div>
-          <div class="room-content">
-            <h3>Seniorsuite</h3>
-            <div class="room-count">2 Suiten</div>
-            <p>Barrierefreie Luxus-Suite mit erhöhtem Komfort speziell für Seniorinnen und Senioren.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
+  <!-- SEMINARRÄUME -->
   <section class="seminar-section">
     <div class="container">
-      <div class="seminar-grid">
+      <div class="seminar-inner">
         <div class="seminar-image"></div>
         <div class="seminar-content">
           <h2>Seminarräume für Tagungen</h2>
-          <p>Wir verfügen über 5 moderne Seminarräume mit einer Gesamtkapazität von bis zu 119 Teilnehmenden.</p>
-          <p>Alle Räume sind flexibel nutzbar und mit modernster Technik ausgestattet – perfekt für Meetings, Workshops und Offsite-Tagungen.</p>
-
+          <p>5 flexible Seminarräume mit einer Gesamtkapazität von bis zu 119 Teilnehmenden – ausgestattet für Meetings, Workshops und mehrtägige Offsite-Tagungen.</p>
+          <p>Alle Räume lassen sich je nach Veranstaltungsgröße und Format individuell konfigurieren. Übernachtung, Catering und Tagungstechnik aus einer Hand.</p>
           <ul class="features-list">
-            <li>5 verschiedene Räume in unterschiedlichen Größen</li>
-            <li>Bis zu 119 Plätze je nach Raumkombination</li>
-            <li>Moderne Audio-/Video-Ausstattung</li>
+            <li>5 Räume in verschiedenen Größen, kombinierbar</li>
+            <li>Bis zu 119 Plätze gesamt</li>
+            <li>Moderne Audio- und Videoausstattung</li>
             <li>Hochgeschwindigkeits-WLAN</li>
-            <li>Catering & Getränke-Service</li>
-            <li>Übernachtung im Haus</li>
-            <li>Flexible Pausenzeiten</li>
-            <li>Individuelle Betreuung</li>
+            <li>Catering und Getränkeservice</li>
+            <li>Übernachtung direkt im Haus</li>
+            <li>Individuelle Pausengestaltung</li>
           </ul>
+          <a href="kontakt.html" class="btn">Tagungsanfrage stellen</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <!-- CTA -->
+  <section class="cta-section">
     <div class="container">
       <div class="cta">
-        <h2>Ihre Tagung im Burghof</h2>
-        <p>Moderne Räume, erstklassiges Service und inspirierende Umgebung – alles für Ihren erfolgreichen Event</p>
-        <a href="kontakt.html" class="btn">Anfrage stellen</a>
+        <h2>Zimmer anfragen</h2>
+        <p>Für Reservierungen und Verfügbarkeitsanfragen stehen wir Ihnen gerne zur Verfügung.</p>
+        <a href="kontakt.html" class="btn">Anfrage senden</a>
       </div>
     </div>
   </section>
@@ -423,24 +642,25 @@
         <div class="footer-section">
           <h4>KONTAKT</h4>
           <p>Burghof 16<br>64753 Brombachtal</p>
-          <p><a href="tel:+496063589962">+49 6063 589962-00</a></p>
-          <p><a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a></p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
         </div>
         <div class="footer-section">
           <h4>ÖFFNUNGSZEITEN</h4>
-          <p>Restaurant täglich 18-23 Uhr<br>Küche 18-21:30 Uhr</p>
-          <p><a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a></p>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
         </div>
         <div class="footer-section">
           <h4>LEGAL</h4>
-          <p><a href="datenschutz.html">Datenschutz</a></p>
-          <p><a href="impressum.html">Impressum</a></p>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a></p>
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
       </div>
     </div>
   </footer>
+
 </body>
 </html>
