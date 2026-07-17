@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Speisekarte des Burghof Restaurants in Brombachtal – aktuelle Gerichte, Menüs und Getränke von Chefkoch Filip Mitevski. Täglich ab 18 Uhr geöffnet.">
+  <title>Speisekarte – Restaurant im Burghof Brombachtal</title>
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/speisekarte.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/speisekarte.html">
+  <meta property="og:title" content="Speisekarte – Restaurant im Burghof Brombachtal">
+  <meta property="og:description" content="Aktuelle Speisekarte des Burghof Restaurants – Gerichte und Menüs von Chefkoch Filip Mitevski. Täglich ab 18 Uhr geöffnet im Odenwald.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "name": "Speisekarte Burghof Restaurant",
+    "url": "https://burghof-odenwald.de/speisekarte.html",
+    "hasMenuSection": {
+      "@type": "MenuSection",
+      "name": "Aktuelle Speisekarte",
+      "description": "Saisonale Gerichte und Menüs von Chefkoch Filip Mitevski"
+    },
+    "inLanguage": "de",
+    "offers": {
+      "@type": "Offer",
+      "seller": {
+        "@type": "Restaurant",
+        "name": "Restaurant im Burghof",
+        "url": "https://burghof-odenwald.de/restaurant.html"
+      }
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HEADER */
+    header {
+      padding: 1.5rem 0;
+      background: var(--white);
+      border-bottom: 1px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--black);
+      letter-spacing: 2px;
+    }
+
+    .logo .gold { color: var(--gold); }
+
+    nav a {
+      margin-left: 2.5rem;
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    nav a.nav-active { color: var(--gold); }
+    nav a.nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: var(--gray);
+      padding: 0.75rem 0;
+      font-size: 0.83rem;
+      color: var(--gray-dark);
+    }
+
+    .breadcrumb a { color: var(--gray-dark); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { margin: 0 0.4rem; color: #bbb; }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 0 2.5rem;
+      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
+      color: var(--white);
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-label {
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      color: #bbb;
+      font-size: 0.97rem;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-shrink: 0; }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-gold { background: var(--gold); color: var(--black); }
+    .btn-gold:hover { background: #e8c547; }
+    .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.25); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* PDF SECTION */
+    .pdf-section { padding: 2rem 0 4rem; }
+
+    .pdf-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .pdf-note p {
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .pdf-note a {
+      font-size: 0.88rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(212,175,55,0.4);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .pdf-note a:hover { border-color: var(--gold); }
+
+    /* PDF embed wrapper */
+    .pdf-wrapper {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid #e8e8e8;
+      background: #f0f0f0;
+      position: relative;
+    }
+
+    .pdf-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 85vh;
+      min-height: 600px;
+      border: none;
+    }
+
+    /* Fallback für mobile / Browser ohne PDF-Support */
+    .pdf-fallback {
+      display: none;
+      padding: 4rem 2rem;
+      text-align: center;
+      background: var(--gray);
+    }
+
+    .pdf-fallback h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .pdf-fallback p {
+      color: var(--gray-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Zeige Fallback wenn iframe nicht geladen */
+    .pdf-wrapper iframe.hidden + .pdf-fallback {
+      display: block;
+    }
+
+    /* MOBILE HINT */
+    .mobile-hint {
+      display: none;
+      background: var(--gray);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-hint h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .mobile-hint p { color: var(--gray-dark); font-size: 0.92rem; margin-bottom: 1.2rem; }
+
+    @media (max-width: 700px) {
+      .pdf-wrapper iframe { display: none; }
+      .mobile-hint { display: block; }
+      .pdf-fallback { display: block; }
+    }
+
+    /* BACK */
+    .back-section { padding: 2rem 0; border-top: 1px solid #f0f0f0; }
+
+    .back-link {
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.88rem; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; align-items: flex-start; }
+      .hero h1 { font-size: 1.8rem; }
+      .pdf-note { flex-direction: column; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+        <nav>
+          <a href="events.html">Events</a>
+          <a href="hotel.html">Hotel</a>
+          <a href="tagungen.html">Tagungen</a>
+          <a href="golf.html">Golf</a>
+          <a href="restaurant.html">Restaurant</a>
+          <a href="ueber-uns.html">Über uns</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <div class="container">
+      <a href="index.html">Start</a>
+      <span>›</span>
+      <a href="restaurant.html">Restaurant</a>
+      <span>›</span>
+      Speisekarte
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <span class="hero-label">Restaurant im Burghof</span>
+          <h1>Speisekarte</h1>
+          <p>Aktuelle Gerichte und Getränke — saisonal, von Chefkoch Filip Mitevski</p>
+        </div>
+        <div class="hero-actions">
+          <a href="speisekarte.pdf" download class="btn btn-gold">PDF herunterladen</a>
+          <a href="kontakt.html" class="btn btn-outline">Tisch reservieren</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pdf-section">
+    <div class="container">
+
+      <div class="pdf-note">
+        <p>Die Speisekarte wird regelmäßig aktualisiert. Änderungen vorbehalten.</p>
+        <a href="speisekarte.pdf" download>Speisekarte als PDF herunterladen ↓</a>
+      </div>
+
+      <!-- Mobile: Kein iframe, direkt Download anbieten -->
+      <div class="mobile-hint">
+        <h3>Speisekarte öffnen</h3>
+        <p>Auf mobilen Geräten öffnen Sie die Speisekarte direkt als PDF.</p>
+        <a href="speisekarte.pdf" class="btn btn-gold" target="_blank">Speisekarte öffnen</a>
+      </div>
+
+      <!-- Desktop: PDF direkt eingebettet -->
+      <div class="pdf-wrapper">
+        <iframe
+          src="speisekarte.pdf"
+          title="Speisekarte Burghof Restaurant"
+          aria-label="Aktuelle Speisekarte des Burghof Restaurants">
+        </iframe>
+        <!-- Fallback wenn Browser PDF nicht unterstützt -->
+        <div class="pdf-fallback">
+          <h3>PDF kann nicht direkt angezeigt werden</h3>
+          <p>Ihr Browser unterstützt keine eingebetteten PDFs.</p>
+          <a href="speisekarte.pdf" class="btn btn-gold" target="_blank">Speisekarte als PDF öffnen</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="back-section">
+    <div class="container">
+      <a href="restaurant.html" class="back-link">← Zurück zum Restaurant</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>KONTAKT</h4>
+          <p>Burghof 16<br>64753 Brombachtal</p>
+          <a href="tel:+496063589962">+49 6063 589962-00</a>
+          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
+        </div>
+        <div class="footer-section">
+          <h4>ÖFFNUNGSZEITEN</h4>
+          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
+          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
+        </div>
+        <div class="footer-section">
+          <h4>LEGAL</h4>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var path = window.location.pathname.split('/').pop() || 'index.html';
+    // Speisekarte belongs under Restaurant
+    var active = path === 'speisekarte.html' ? 'restaurant.html' : path;
+    document.querySelectorAll('nav a').forEach(function (a) {
+      if (a.getAttribute('href') === active) a.classList.add('nav-active');
+    });
+  }());
+  </script>
+
+</body>
+</html>
