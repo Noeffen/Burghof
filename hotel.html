@@ -424,9 +424,75 @@
 
     .footer-bottom a { color: var(--gold); text-decoration: none; }
 
+
+    /* TAGUNGEN TEASER */
+    .tagungen-teaser {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+      background: var(--gray);
+      border-radius: var(--radius);
+      padding: 2.5rem 3rem;
+      border-left: 4px solid var(--gold);
+    }
+
+    .tagungen-label {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagungen-h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .tagungen-teaser-text p {
+      color: var(--gray-dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .tagungen-facts {
+      display: flex;
+      gap: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .tagungen-fact {
+      text-align: center;
+    }
+
+    .tagungen-number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--black);
+      display: block;
+      line-height: 1;
+    }
+
+    .tagungen-fact-label {
+      font-size: 0.78rem;
+      color: var(--gray-dark);
+      margin-top: 0.3rem;
+      display: block;
+    }
+
     @media (max-width: 900px) {
       .intro-grid, .seminar-inner { grid-template-columns: 1fr; }
       .room-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .tagungen-teaser { grid-template-columns: 1fr; }
+      .tagungen-facts { justify-content: flex-start; }
     }
 
     @media (max-width: 600px) {
@@ -682,24 +748,25 @@
   </section>
 
   <!-- SEMINARRÄUME -->
-  <section class="seminar-section">
+  <!-- TAGUNGEN TEASER -->
+  <section class="section" style="padding-top: 0; padding-bottom: 4rem;">
     <div class="container">
-      <div class="seminar-inner">
-        <div class="seminar-image"></div>
-        <div class="seminar-content">
-          <h2>Seminarräume für Tagungen</h2>
-          <p>5 flexible Seminarräume mit einer Gesamtkapazität von bis zu 119 Teilnehmenden – ausgestattet für Meetings, Workshops und mehrtägige Offsite-Tagungen.</p>
-          <p>Alle Räume lassen sich je nach Veranstaltungsgröße und Format individuell konfigurieren. Übernachtung, Catering und Tagungstechnik aus einer Hand.</p>
-          <ul class="features-list">
-            <li>5 Räume in verschiedenen Größen, kombinierbar</li>
-            <li>Bis zu 119 Plätze gesamt</li>
-            <li>Moderne Audio- und Videoausstattung</li>
-            <li>Hochgeschwindigkeits-WLAN</li>
-            <li>Catering und Getränkeservice</li>
-            <li>Übernachtung direkt im Haus</li>
-            <li>Individuelle Pausengestaltung</li>
-          </ul>
-          <a href="kontakt.html" class="btn">Tagungsanfrage stellen</a>
+      <div class="tagungen-teaser">
+        <div class="tagungen-teaser-text">
+          <span class="tagungen-label">Tagungen &amp; Seminare</span>
+          <h2 class="tagungen-h2">Planen Sie eine Tagung?</h2>
+          <p>Das Hotel verfügt über 5 Seminarräume mit bis zu 119 Plätzen – direkt im Haus, mit Catering und Übernachtung aus einer Hand.</p>
+          <a href="tagungen.html" class="btn">Zur Tagungsseite</a>
+        </div>
+        <div class="tagungen-facts">
+          <div class="tagungen-fact">
+            <span class="tagungen-number">5</span>
+            <span class="tagungen-fact-label">Seminarräume</span>
+          </div>
+          <div class="tagungen-fact">
+            <span class="tagungen-number">119</span>
+            <span class="tagungen-fact-label">Personen max.</span>
+          </div>
         </div>
       </div>
     </div>
