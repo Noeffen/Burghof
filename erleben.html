@@ -74,7 +74,7 @@
     .hero p { font-size: 1.1rem; color: #ccc; }
     .section { padding: 4rem 0; }
     .section-title { font-size: 2.2rem; margin-bottom: 2rem; font-weight: 700; }
-    .activity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-bottom: 3rem; }
+    .activity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
     .activity-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s; }
     .activity-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(212,175,55,0.2); }
     .activity-image { width: 100%; height: 250px; background: linear-gradient(135deg, #3a6b5a 0%, #5ab88f 100%); }
@@ -93,7 +93,8 @@
     .footer-section a:hover { color: var(--gold); }
     .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.9rem; }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
-    @media (max-width: 768px) { .activity-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .activity-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .activity-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } nav { display: none; } }
   
     /* Active nav indicator */
     nav a.nav-active {
@@ -148,10 +149,19 @@
           </div>
         </div>
         <div class="activity-card">
-          <div class="activity-image"></div>
+          <div class="activity-image" style="background: linear-gradient(135deg, #2a4a3a 0%, #3d6b54 100%);"></div>
           <div class="activity-content">
-            <h3>Radfahren &amp; Wandern</h3>
-            <p>Der Odenwald ist ein Paradies für Radfahrer und Wanderer. Entdecken Sie malerische Routen durch die Natur, besuchen Sie charmante Dörfer und genießen Sie die frische Waldluft – direkt von unserem Haus in Brombachtal aus.</p>
+            <h3>Radfahren &amp; MTB</h3>
+            <p>Die BR1-MTB-Route startet direkt am Burghof – 32 km, 875 Höhenmeter durch den Odenwald. GPX-Daten, verschließbare Fahrradgaragen und E-Bike-Beratung inklusive.</p>
+            <a href="radfahren.html" style="display:inline-block; margin-top:1rem; font-size:0.88rem; font-weight:600; color:var(--black); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px;">Routen & Infos →</a>
+          </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-image" style="background: linear-gradient(135deg, #1a2a1a 0%, #2d4a2d 100%);"></div>
+          <div class="activity-content">
+            <h3>Wandern im Odenwald</h3>
+            <p>Gut ausgeschilderte Wanderwege starten direkt am Ortsrand – vom gemütlichen Spaziergang bis zur Tagestour Richtung Felsenmeer. Wanderkarten und GPS-Daten kostenlos an der Rezeption.</p>
+            <a href="wandern.html" style="display:inline-block; margin-top:1rem; font-size:0.88rem; font-weight:600; color:var(--black); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px;">Wanderwege entdecken →</a>
           </div>
         </div>
         <div class="activity-card">

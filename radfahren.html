@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Radfahren & MTB am Burghof Brombachtal: Die BR1-Route startet direkt am Hotel – 32 km, 875 Höhenmeter. GPX-Daten, Fahrradgaragen und Tipps für E-Biker. Odenwald, 45 Min. von Frankfurt.">
+  <title>Radfahren & MTB im Odenwald – Burghof Brombachtal | BR1-Route ab Hotel</title>
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://burghof-odenwald.de/radfahren.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burghof-odenwald.de/radfahren.html">
+  <meta property="og:title" content="Radfahren & MTB im Odenwald – Burghof Brombachtal">
+  <meta property="og:description" content="Die BR1-MTB-Route startet direkt am Burghof: 32 km, 875 Höhenmeter. GPX-Daten an der Rezeption, verschließbare Garagen und Tipps für E-Biker.">
+  <meta property="og:site_name" content="Burghof">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Radfahren & MTB im Odenwald – Burghof Brombachtal">
+  <meta name="twitter:description" content="Die BR1-MTB-Route startet direkt am Burghof: 32 km, 875 Höhenmeter. GPX-Daten und Fahrradgaragen vorhanden.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SportsActivityLocation",
+        "@id": "https://burghof-odenwald.de/radfahren.html#mtb",
+        "name": "MTB & Radfahren am Burghof Brombachtal",
+        "description": "Mountainbike und Radtouren direkt ab dem Burghof Hotel im Odenwald. BR1-Route (32 km, 875 Hm) startet am Hotel. GPX-Daten, Fahrradgaragen und E-Bike-Beratung.",
+        "url": "https://burghof-odenwald.de/radfahren.html",
+        "sport": "Mountainbiking",
+        "telephone": "+496063589962",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Burghof 16",
+          "addressLocality": "Brombachtal",
+          "postalCode": "64753",
+          "addressRegion": "Hessen",
+          "addressCountry": "DE"
+        },
+        "containedIn": {
+          "@type": "Hotel",
+          "name": "Burghof",
+          "url": "https://burghof-odenwald.de"
+        },
+        "amenityFeature": [
+          { "@type": "LocationFeatureSpecification", "name": "Verschließbare Fahrradgaragen", "value": true },
+          { "@type": "LocationFeatureSpecification", "name": "GPX-Daten an der Rezeption", "value": true },
+          { "@type": "LocationFeatureSpecification", "name": "E-Bike-Beratung", "value": true }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://burghof-odenwald.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Erleben", "item": "https://burghof-odenwald.de/erleben.html" },
+          { "@type": "ListItem", "position": 3, "name": "Radfahren & MTB", "item": "https://burghof-odenwald.de/radfahren.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --gold: #d4af37;
+      --white: #ffffff;
+      --gray: #f8f8f8;
+      --gray-dark: #444;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
+    .logo .gold { color: var(--gold); }
+    nav a { position: relative; margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a:hover, nav a.nav-active { color: var(--gold); }
+    nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s ease; }
+    nav a:hover::after, nav a.nav-active::after { width: 100%; }
+
+    .hero { padding: 5rem 0 4rem; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .breadcrumb { font-size: 0.85rem; color: #888; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; line-height: 1.2; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 1.1rem; color: #ccc; max-width: 680px; }
+    .hero-badges { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .badge { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.4); color: var(--gold); padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
+
+    .section { padding: 4rem 0; }
+    .section-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+    .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+    .section-intro { color: var(--gray-dark); font-size: 1.05rem; line-height: 1.75; max-width: 720px; margin-bottom: 3rem; }
+
+    /* Route Cards */
+    .route-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 3rem; }
+    .route-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border: 1px solid #f0f0f0; transition: all 0.3s; }
+    .route-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.3); }
+    .route-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+    .route-image { height: 220px; background: linear-gradient(135deg, #2a4a3a 0%, #3d6b54 100%); display: flex; align-items: flex-end; padding: 1.5rem; position: relative; overflow: hidden; }
+    .route-card.featured .route-image { height: auto; min-height: 280px; }
+    .route-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .route-difficulty { position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+    .diff-hard { background: #dc2626; color: white; }
+    .diff-medium { background: #d97706; color: white; }
+    .diff-easy { background: #16a34a; color: white; }
+    .route-body { padding: 1.8rem; }
+    .route-body h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .route-body p { color: var(--gray-dark); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
+    .route-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .stat { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--gray-dark); }
+    .stat strong { color: var(--black); font-weight: 700; }
+
+    /* Info Box */
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .info-card { background: var(--gray); border-radius: var(--radius); padding: 1.8rem; border-left: 3px solid var(--gold); }
+    .info-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .info-card p { font-size: 0.9rem; color: var(--gray-dark); line-height: 1.6; }
+
+    /* Map CTA */
+    .map-cta { background: linear-gradient(135deg, var(--black), #2a2a2a); color: var(--white); border-radius: var(--radius); padding: 3rem; text-align: center; margin: 3rem 0; }
+    .map-cta h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .map-cta p { color: #ccc; margin-bottom: 2rem; }
+    .btn { display: inline-block; padding: 0.9rem 2rem; border-radius: var(--radius); font-weight: 700; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+    .btn-gold { background: var(--gold); color: var(--black); }
+    .btn-gold:hover { background: #c4a030; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.3); margin-left: 1rem; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+    .footer-section a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.85rem; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .route-card.featured { grid-column: span 1; display: block; }
+      .route-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+    @media (max-width: 600px) {
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-content">
+      <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+      <nav>
+        <a href="hotel.html">Hotel</a>
+        <a href="restaurant.html">Restaurant</a>
+        <a href="events.html">Events</a>
+        <a href="tagungen.html">Tagungen</a>
+        <a href="erleben.html" class="nav-active">Erleben</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Start</a> › <a href="erleben.html">Erleben</a> › Radfahren & MTB
+    </div>
+    <h1>Radfahren &amp; MTB<br><span>im Odenwald</span></h1>
+    <p>Der Odenwald ist ein Eldorado für Mountainbiker und Radfahrer. Direkt am Burghof startet die ausgeschilderte BR1-Route – einer der schönsten MTB-Trails der Region. 45 Minuten von Frankfurt.</p>
+    <div class="hero-badges">
+      <span class="badge">BR1 direkt ab Hotel</span>
+      <span class="badge">GPX-Daten verfügbar</span>
+      <span class="badge">Fahrradgaragen</span>
+      <span class="badge">E-Bike geeignet</span>
+    </div>
+  </div>
+</section>
+
+<!-- Routen -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Touren & Routen</span>
+    <h2 class="section-title">Radtouren direkt ab dem Burghof</h2>
+    <p class="section-intro">Ob sportlicher MTB-Trail, gemütliche Radtour oder entspannte E-Bike-Ausfahrt – der Odenwald bietet für jeden das Richtige. Alle Routen starten direkt vor unserer Haustür.</p>
+
+    <div class="route-grid">
+
+      <!-- BR1 Featured -->
+      <div class="route-card featured">
+        <div class="route-image">
+          <img src="Bilder/radfahren1.jpg" alt="MTB-Tour auf der BR1-Route im Odenwald">
+          <span class="route-difficulty diff-hard">Schwer</span>
+        </div>
+        <div class="route-body">
+          <h3>BR1 – Die Hausroute des Burghof</h3>
+          <p>Die ausgeschilderte MTB-Route BR1 startet direkt am Burghof und ist das Herzstück des Odenwälder MTB-Netzes. Sportlich anspruchsvoll mit abwechslungsreichen Trails, langen Abfahrten und herrlichen Ausblicken über den Odenwald.</p>
+          <p>An der Rezeption erhalten Sie kostenlos GPX-Daten, Streckenbeschreibung und persönliche Tipps von unserem Team.</p>
+          <div class="route-stats">
+            <div class="stat">&#128205; <span><strong>32 km</strong> Länge</span></div>
+            <div class="stat">&#8679; <span><strong>875 Hm</strong> Aufstieg</span></div>
+            <div class="stat">&#9971; <span><strong>Start</strong> direkt am Hotel</span></div>
+            <div class="stat">&#9201; <span><strong>3–5 Std.</strong> Fahrzeit</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tourenradfahren -->
+      <div class="route-card">
+        <div class="route-image">
+          <img src="Bilder/radfahren2.jpg" alt="Tourenradfahren im Odenwald">
+          <span class="route-difficulty diff-medium">Mittel</span>
+        </div>
+        <div class="route-body">
+          <h3>Tourenrad & E-Bike</h3>
+          <p>Die hügelige Odenwälder Landschaft hält auch für Tourenradler und E-Biker spannende Strecken bereit. Mit dem E-Bike meistern Sie selbst anspruchsvollere Anstiege entspannt und genießen atemberaubende Ausblicke.</p>
+          <div class="route-stats">
+            <div class="stat">&#128310; <span><strong>Viele</strong> Strecken</span></div>
+            <div class="stat">&#9889; <span><strong>E-Bike</strong> geeignet</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemütliche Radtour -->
+      <div class="route-card">
+        <div class="route-image">
+          <img src="Bilder/radfahren3.jpg" alt="Gemütliche Radtour durch den Odenwald">
+          <span class="route-difficulty diff-easy">Leicht</span>
+        </div>
+        <div class="route-body">
+          <h3>Gemütliche Radausflüge</h3>
+          <p>Entdecken Sie charmante Odenwälder Dörfer, Streuobstwiesen und ruhige Waldwege – perfekt für Familien und alle, die die Natur in entspanntem Tempo genießen möchten.</p>
+          <div class="route-stats">
+            <div class="stat">&#128106; <span><strong>Familien</strong>geeignet</span></div>
+            <div class="stat">&#127807; <span><strong>Natur</strong> pur</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>&#128274; Fahrradgaragen</h4>
+        <p>Verschließbare Garagen für Ihr Fahrrad stehen kostenlos zur Verfügung – damit Ihr Bike sicher über Nacht untergestellt ist.</p>
+      </div>
+      <div class="info-card">
+        <h4>&#128506; GPX & Karten</h4>
+        <p>An unserer Rezeption erhalten Sie GPX-Dateien, Wanderkarten und persönliche Tourentipps – kostenlos und auf Ihre Kondition abgestimmt.</p>
+      </div>
+      <div class="info-card">
+        <h4>&#9889; E-Bike-Beratung</h4>
+        <p>Unser Team berät Sie gern zu geeigneten E-Bike-Strecken, dem regionalen Wegenetz und Lademöglichkeiten im Odenwald.</p>
+      </div>
+    </div>
+
+    <!-- Interaktive Karte CTA -->
+    <div class="map-cta">
+      <h3>Interaktive MTB-Streckenkarte</h3>
+      <p>Alle Mountainbike- und Radstrecken im Geo-Naturpark Bergstraße-Odenwald auf einer interaktiven Karte – mit Höhenprofilen, GPX-Download und Schwierigkeitsgrad.</p>
+      <a href="https://mtb-geo-naturpark.de/" target="_blank" rel="noopener" class="btn btn-gold">Zur Streckenkarte</a>
+      <a href="kontakt.html" class="btn btn-outline">Zimmer anfragen</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background: var(--gray); padding: 3rem 0;">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Jetzt buchen</span>
+    <h2 class="section-title">Ihr Radurlaub im Odenwald</h2>
+    <p style="color:var(--gray-dark); max-width:600px; margin:0 auto 2rem;">Planen Sie Ihren MTB-Urlaub oder Radausflug im Odenwald. Wir beraten Sie gern zu Routen, Zimmern und Paketen.</p>
+    <a href="kontakt.html" class="btn btn-gold">Anfrage senden</a>
+    <a href="erleben.html" class="btn" style="background:transparent; border:1px solid #ccc; color:var(--black); margin-left:1rem;">Weitere Aktivitäten</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Burghof</h4>
+        <p>Burghof 16<br>64753 Brombachtal<br>Odenwald</p>
+      </div>
+      <div class="footer-section">
+        <h4>Kontakt</h4>
+        <a href="tel:+496063589962">+49 6063 589962 00</a>
+        <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <a href="hotel.html">Hotel & Zimmer</a>
+        <a href="erleben.html">Erleben</a>
+        <a href="wandern.html">Wandern</a>
+        <a href="golf.html">Golf</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Burghof M&H Betriebs GmbH · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav a').forEach(a => {
+    if (a.getAttribute('href') === current) a.classList.add('nav-active');
+  });
+</script>
+
+</body>
+</html>
