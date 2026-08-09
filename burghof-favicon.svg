@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Hintergrund -->
+  <rect width="512" height="512" rx="90" fill="#1a1a1a"/>
+  <!-- Goldene Linie unten -->
+  <rect x="80" y="400" width="352" height="28" rx="14" fill="#d4af37"/>
+  <!-- Weißes B -->
+  <text x="256" y="370" 
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="700" 
+        font-size="320" 
+        fill="white" 
+        text-anchor="middle">B</text>
+</svg>
