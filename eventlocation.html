@@ -69,7 +69,11 @@
     .breadcrumb a:hover { color: var(--gold); }
     .breadcrumb span { margin: 0 0.4rem; color: #bbb; }
 
-    .hero { padding: 5rem 0 4rem; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero { padding: 5rem 0 4rem; color: var(--white); position: relative; overflow: hidden; }
+    .hero-bg-img { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.50) 60%, rgba(0,0,0,0.20) 100%); }
+    .hero .container { position: relative; z-index: 1; }
     .hero-label { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 1.2rem; }
     .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
     .hero p { font-size: 1.1rem; color: #bbb; max-width: 580px; line-height: 1.7; }
@@ -387,6 +391,9 @@
   </div>
 
   <section class="hero">
+    <div class="hero-bg-img">
+      <img src="Bilder/locations/header.jpg" alt="Eventlocation Burghof Brombachtal – Historischer Gutshof im Odenwald">
+    </div>
     <div class="container">
       <span class="hero-label">Eventlocation Burghof</span>
       <h1>Sieben Locations.<br>Ein Gutshof.</h1>
@@ -406,7 +413,7 @@
       <!-- BALLSAAL – featured -->
       <div class="location-featured">
         <div class="loc-slider" id="slider-ballsaal">
-          <div class="slider-placeholder img-ballsaal"></div>
+          <div class="slider-placeholder img-ballsaal" style="overflow:hidden;"><img src="Bilder/locations/ballsaal.jpg" alt="Ballsaal – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
           <div class="slider-track">
             <!-- Bilder hier einfügen:
             <img src="Bilder/ballsaal-1.jpg" alt="Ballsaal im Burghof">
@@ -437,7 +444,7 @@
       <div class="location-grid">
         <div class="loc-card">
           <div class="loc-slider" id="slider-scheune">
-            <div class="slider-placeholder img-scheune"></div>
+            <div class="slider-placeholder img-scheune" style="overflow:hidden;"><img src="Bilder/locations/scheune.jpg" alt="Scheune – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/scheune-1.jpg" alt="Scheune im Burghof">
@@ -469,7 +476,7 @@
 
         <div class="loc-card">
           <div class="loc-slider" id="slider-tenne">
-            <div class="slider-placeholder img-tenne"></div>
+            <div class="slider-placeholder img-tenne" style="overflow:hidden;"><img src="Bilder/locations/tenne.jpg" alt="Tenne – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/tenne-1.jpg" alt="Tenne im Burghof">
@@ -504,7 +511,7 @@
       <div class="location-grid">
         <div class="loc-card">
           <div class="loc-slider" id="slider-eiche">
-            <div class="slider-placeholder img-eiche"></div>
+            <div class="slider-placeholder img-eiche" style="overflow:hidden;"><img src="Bilder/locations/eichenstube.jpg" alt="Eichenstube – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/eichenstube-1.jpg" alt="Eichenstube im Burghof">
@@ -535,7 +542,7 @@
 
         <div class="loc-card">
           <div class="loc-slider" id="slider-wein">
-            <div class="slider-placeholder img-wein"></div>
+            <div class="slider-placeholder img-wein" style="overflow:hidden;"><img src="Bilder/locations/weinkeller.jpg" alt="Weinkeller – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/weinkeller-1.jpg" alt="Weinkeller im Burghof">
@@ -569,7 +576,7 @@
       <div class="location-grid">
         <div class="loc-card">
           <div class="loc-slider" id="slider-hof">
-            <div class="slider-placeholder img-hof"></div>
+            <div class="slider-placeholder img-hof" style="overflow:hidden;"><img src="Bilder/locations/hof.jpg" alt="Hof – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/hof-1.jpg" alt="Der Hof des Burghofs">
@@ -600,7 +607,7 @@
 
         <div class="loc-card">
           <div class="loc-slider" id="slider-biergarten">
-            <div class="slider-placeholder img-biergarten"></div>
+            <div class="slider-placeholder img-biergarten" style="overflow:hidden;"><img src="Bilder/locations/biergarten.jpg" alt="Biergarten – Eventlocation Burghof" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="slider-track">
               <!-- Bilder hier einfügen:
               <img src="Bilder/biergarten-1.jpg" alt="Biergarten im Burghof">
