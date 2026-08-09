@@ -81,7 +81,9 @@
     .activity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
     .activity-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s; }
     .activity-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(212,175,55,0.2); }
-    .activity-image { width: 100%; height: 250px; background: linear-gradient(135deg, #3a6b5a 0%, #5ab88f 100%); }
+    .activity-image { width: 100%; height: 250px; overflow: hidden; }
+    .activity-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .activity-card:hover .activity-image img { transform: scale(1.04); }
     .activity-content { padding: 2rem; }
     .activity-content h3 { font-size: 1.5rem; margin-bottom: 1rem; }
     .activity-content p { color: var(--gray-dark); line-height: 1.7; }
@@ -154,7 +156,7 @@
       <h2 class="section-title">Erleben im Odenwald</h2>
       <div class="activity-grid">
         <div class="activity-card">
-          <div class="activity-image"></div>
+          <div class="activity-image"><img src="Bilder/erleben/golf.jpg" alt="Golf im Odenwald – Golfclub Odenwald Brombachtal"></div>
           <div class="activity-content">
             <h3>Golf & Golfclub Odenwald</h3>
             <p>Der Golfclub Odenwald e.V. liegt direkt neben dem Burghof in Brombachtal-Kirchbrombach — 18 Loch inmitten von Wiesen, Wäldern und Feldern. Golfpauschalen mit Übernachtung und Greenfee buchbar.</p>
@@ -162,7 +164,7 @@
           </div>
         </div>
         <div class="activity-card">
-          <div class="activity-image" style="background: linear-gradient(135deg, #2a4a3a 0%, #3d6b54 100%);"></div>
+          <div class="activity-image"><img src="Bilder/erleben/rad.jpg" alt="Radfahren und MTB im Odenwald – BR1-Route ab Burghof"></div>
           <div class="activity-content">
             <h3>Radfahren &amp; MTB</h3>
             <p>Die BR1-MTB-Route startet direkt am Burghof – 32 km, 875 Höhenmeter durch den Odenwald. GPX-Daten, verschließbare Fahrradgaragen und E-Bike-Beratung inklusive.</p>
@@ -170,7 +172,7 @@
           </div>
         </div>
         <div class="activity-card">
-          <div class="activity-image" style="background: linear-gradient(135deg, #1a2a1a 0%, #2d4a2d 100%);"></div>
+          <div class="activity-image"><img src="Bilder/erleben/wandern.jpg" alt="Wandern im Odenwald ab dem Burghof Brombachtal"></div>
           <div class="activity-content">
             <h3>Wandern im Odenwald</h3>
             <p>Gut ausgeschilderte Wanderwege starten direkt am Ortsrand – vom gemütlichen Spaziergang bis zur Tagestour Richtung Felsenmeer. Wanderkarten und GPS-Daten kostenlos an der Rezeption.</p>
