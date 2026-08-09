@@ -116,11 +116,11 @@
     nav a:hover { color: var(--gold); }
 
     /* HERO */
-    .hero {
-      padding: 5rem 0 4rem;
-      background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%);
-      color: var(--white);
-    }
+    .hero { padding: 4rem 0; color: var(--white); position: relative; overflow: hidden; min-height: 400px; display: flex; align-items: center; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%); }
+    .hero .container { position: relative; z-index: 1; }
 
     .hero-label {
       font-size: 0.78rem;
@@ -439,19 +439,22 @@
       <div class="header-content">
         <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
         <nav>
-          <a href="events.html">Events</a>
-          <a href="hotel.html">Hotel</a>
-          <a href="tagungen.html">Tagungen</a>
-          <a href="erleben.html">Erleben</a>
-          <a href="restaurant.html">Restaurant</a>
-          <a href="ueber-uns.html">Über uns</a>
-          <a href="kontakt.html">Kontakt</a>
-        </nav>
+        <a href="events.html">Events</a>
+        <a href="hotel.html">Hotel</a>
+        <a href="tagungen.html" class="nav-active">Tagungen</a>
+        <a href="erleben.html">Erleben</a>
+        <a href="restaurant.html">Restaurant</a>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
       </div>
     </div>
   </header>
 
   <section class="hero">
+    <div class="hero-bg">
+      <img src="Bilder/tagungen/header.jpg" alt="Tagungen & Seminare im Burghof Brombachtal">
+    </div>
     <div class="container">
       <span class="hero-label">Tagungen & Seminare</span>
       <h1>Aus dem Büro heraus. Aber mit allem was zählt.</h1>
