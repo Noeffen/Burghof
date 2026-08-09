@@ -60,7 +60,11 @@
     nav a:hover { color: var(--gold); }
     nav a.nav-active { color: var(--gold); }
     nav a.nav-active::after { content: ''; position: absolute; bottom: -22px; left: 0; right: 0; height: 2px; background: var(--gold); border-radius: 2px; }
-    .hero { padding: 5rem 0 4rem; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero { padding: 5rem 0 4rem; color: var(--white); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%); }
+    .hero .container { position: relative; z-index: 1; }
     .hero-label { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 1.2rem; }
     .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
     .hero-sub { font-size: 1.1rem; color: #bbb; max-width: 580px; line-height: 1.7; margin-bottom: 2rem; }
@@ -133,6 +137,9 @@
   </header>
 
   <section class="hero">
+    <div class="hero-bg">
+      <img src="Bilder/restaurant/header.jpg" alt="Restaurant Burghof Brombachtal – Abendatmosphäre">
+    </div>
     <div class="container">
       <span class="hero-label">Restaurant im Burghof</span>
       <h1>Einen guten Abend<br>im Odenwald.</h1>
@@ -158,7 +165,7 @@
   <section class="intro-section">
     <div class="container">
       <div class="intro-grid">
-        <div class="intro-image"></div>
+        <div class="intro-image" style="background: none; overflow: hidden; padding: 0;"><img src="Bilder/restaurant/kachel.jpg" alt="Restaurant Burghof – Speisesaal" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);"></div>
         <div class="intro-text">
           <h2>Gut essen im Odenwald — jeden Abend.</h2>
           <p>Das Restaurant des Burghofs ist kein geschlossener Hotelbereich. Es ist täglich für alle geöffnet — für einen Abend zu zweit, ein Familienessen, oder ein Dinner nach einer Wanderung durch den Odenwald.</p>
@@ -173,7 +180,7 @@
   <section class="chef-section">
     <div class="container">
       <div class="chef-grid">
-        <div class="chef-image"></div>
+        <div class="chef-image" style="background: none; overflow: hidden; padding: 0;"><img src="Bilder/restaurant/filip.jpg" alt="Küchenchef Filip Mitevski – Burghof Brombachtal" style="width:100%; height:100%; object-fit:cover; object-position: center top; border-radius:var(--radius);"></div>
         <div>
           <span class="chef-label">In der Küche</span>
           <h2>Filip Mitevski</h2>
