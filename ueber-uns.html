@@ -137,6 +137,8 @@
     .footer-bottom { border-top: 1px solid #333; padding-top: 1.5rem; text-align: center; color: #888; font-size: 0.85rem; }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
 
+    .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+
     @media (max-width: 1000px) {
       .team-grid { grid-template-columns: repeat(2, 1fr); }
       .team-card.wide { grid-column: span 2; }
@@ -145,6 +147,8 @@
       .story-grid { grid-template-columns: 1fr; }
       .team-grid { grid-template-columns: 1fr; }
       .team-card.wide { grid-column: span 1; display: block; }
+      .two-col-grid { grid-template-columns: 1fr; }
+      .lage-box { padding: 1.5rem; }
       .footer-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 2rem; }
       nav { display: none; }
