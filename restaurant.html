@@ -3,273 +3,403 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Restaurant im Burghof Brombachtal – täglich ab 18 Uhr geöffnet für alle Gäste. Küche von Chefkoch Filip Mitevski. Odenwald, 45 Minuten von Frankfurt.">
-  <title>Restaurant im Burghof – Odenwald | Täglich ab 18 Uhr | Brombachtal</title>
+  <meta name="description" content="Restaurant im Burghof Brombachtal – täglich ab 18 Uhr geöffnet. Küche unter Chefkoch Filip Mitevski. Regionale Küche im Odenwald, 45 Minuten von Frankfurt.">
+  <title>Restaurant Burghof Brombachtal | Täglich ab 18 Uhr – Chefkoch Filip Mitevski</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://burghof-odenwald.de/restaurant.html">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="restaurant">
   <meta property="og:url" content="https://burghof-odenwald.de/restaurant.html">
-  <meta property="og:title" content="Restaurant im Burghof – Odenwald | Täglich ab 18 Uhr">
-  <meta property="og:description" content="Täglich ab 18 Uhr geöffnet – für Hotelgäste und alle, die einen guten Abend im Odenwald suchen. Küche von Chefkoch Filip Mitevski.">
+  <meta property="og:title" content="Restaurant Burghof Brombachtal">
+  <meta property="og:description" content="Täglich ab 18 Uhr geöffnet. Regionale Küche im Odenwald unter Chefkoch Filip Mitevski.">
   <meta property="og:site_name" content="Burghof">
   <meta property="og:locale" content="de_DE">
-  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/foto1.jpg">
+  <meta property="og:image" content="https://burghof-odenwald.de/Bilder/restaurant/header.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Restaurant im Burghof – Odenwald | Täglich ab 18 Uhr">
-  <meta name="twitter:description" content="Täglich ab 18 Uhr – für Hotelgäste und alle, die einen guten Abend im Odenwald suchen.">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Restaurant",
-    "@id": "https://burghof-odenwald.de/restaurant.html#restaurant",
-    "name": "Restaurant im Burghof",
-    "description": "Restaurant im Burghof Brombachtal – täglich ab 18 Uhr geöffnet für alle Gäste. Küche von Chefkoch Filip Mitevski.",
-    "url": "https://burghof-odenwald.de/restaurant.html",
-    "telephone": "+496063589962",
-    "email": "info@burghof-hotel.de",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Burghof 16",
-      "addressLocality": "Brombachtal",
-      "postalCode": "64753",
-      "addressRegion": "Hessen",
-      "addressCountry": "DE"
-    },
-    "servesCuisine": ["Fine Dining", "Europäische Küche", "Regionale Küche"],
-    "priceRange": "€€€",
-    "hasMenu": "https://burghof-odenwald.de/speisekarte.html",
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "18:00",
-      "closes": "23:00"
-    },
-    "containedIn": { "@type": "Hotel", "name": "Burghof", "url": "https://burghof-odenwald.de" }
+    "@graph": [
+      {
+        "@type": "Restaurant",
+        "@id": "https://burghof-odenwald.de/restaurant.html#restaurant",
+        "name": "Restaurant Burghof",
+        "description": "Täglich ab 18 Uhr geöffnetes Restaurant im Burghof Brombachtal. Regionale Küche unter Chefkoch Filip Mitevski.",
+        "url": "https://burghof-odenwald.de/restaurant.html",
+        "telephone": "+496063589962",
+        "servesCuisine": "Regional, Deutsch",
+        "openingHours": "Mo-Su 18:00-23:00",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Burghof 16",
+          "addressLocality": "Brombachtal",
+          "postalCode": "64753",
+          "addressRegion": "Hessen",
+          "addressCountry": "DE"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://burghof-odenwald.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Restaurant", "item": "https://burghof-odenwald.de/restaurant.html" }
+        ]
+      }
+    ]
   }
   </script>
+
   <style>
-    :root { --black: #1a1a1a; --gold: #d4af37; --white: #ffffff; --gray: #f8f8f8; --gray-dark: #444; --radius: 12px; --shadow: 0 8px 32px rgba(0,0,0,0.10); }
+    :root {
+      --black: #1a1a1a; --gold: #d4af37; --white: #ffffff;
+      --gray: #f8f8f8; --gray-dark: #555; --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--black); background: var(--white); }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* NAV */
     header { padding: 1.5rem 0; background: var(--white); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
     .header-content { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--black); letter-spacing: 2px; }
     .logo .gold { color: var(--gold); }
-    nav a { margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; position: relative; }
-    nav a:hover { color: var(--gold); }
-    nav a.nav-active { color: var(--gold); }
-    nav a.nav-active::after { content: ''; position: absolute; bottom: -22px; left: 0; right: 0; height: 2px; background: var(--gold); border-radius: 2px; }
-    .hero { padding: 5rem 0 4rem; color: var(--white); position: relative; overflow: hidden; }
+    nav a { position: relative; margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
+    nav a:hover, nav a.nav-active { color: var(--gold); }
+    nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s ease; }
+    nav a:hover::after, nav a.nav-active::after { width: 100%; }
+
+    /* HERO */
+    .hero { padding: 5rem 0 4rem; color: var(--white); position: relative; overflow: hidden; min-height: 460px; display: flex; align-items: center; }
     .hero-bg { position: absolute; inset: 0; z-index: 0; }
     .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%); }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%); }
     .hero .container { position: relative; z-index: 1; }
     .hero-label { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 1.2rem; }
     .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
-    .hero-sub { font-size: 1.1rem; color: #bbb; max-width: 580px; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-sub { font-size: 1.1rem; color: #ccc; max-width: 520px; line-height: 1.7; margin-bottom: 2rem; }
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn { display: inline-block; padding: 0.9rem 2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+    .btn { display: inline-block; padding: 0.85rem 1.8rem; border-radius: var(--radius); font-weight: 700; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; cursor: pointer; border: none; font-family: inherit; }
     .btn-gold { background: var(--gold); color: var(--black); }
     .btn-gold:hover { background: #e8c547; }
-    .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.3); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4); }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
     .btn-dark { background: var(--black); color: var(--white); }
     .btn-dark:hover { background: var(--gold); color: var(--black); }
+
+    /* OPENING BAR */
     .opening-bar { background: var(--gold); padding: 1.1rem 0; }
-    .opening-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-    .opening-text { font-size: 0.95rem; font-weight: 600; color: var(--black); }
-    .opening-text strong { font-size: 1.05rem; }
-    .opening-note { font-size: 0.85rem; color: rgba(26,26,26,0.65); font-weight: 500; }
-    .intro-section { padding: 5rem 0; }
-    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .intro-image { width: 100%; height: 520px; border-radius: var(--radius); overflow: hidden; }
-    .intro-text h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.3rem; line-height: 1.3; }
-    .intro-text p { color: var(--gray-dark); line-height: 1.85; margin-bottom: 1.2rem; font-size: 1.02rem; }
-    .intro-text p strong { color: var(--black); }
+    .opening-inner { display: flex; justify-content: space-between; align-items: center; }
+    .opening-inner p { color: var(--black); font-size: 0.95rem; }
+
+    /* INTRO */
+    .intro { padding: 5rem 0; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .intro-image { width: 100%; height: 480px; border-radius: var(--radius); overflow: hidden; }
+    .intro-image img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+    .intro h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.2rem; line-height: 1.3; }
+    .intro p { color: var(--gray-dark); line-height: 1.85; margin-bottom: 1rem; font-size: 1rem; }
+
+    /* CHEF */
     .chef-section { background: var(--black); padding: 5rem 0; color: var(--white); }
     .chef-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .chef-image { width: 100%; height: 520px; border-radius: var(--radius); overflow: hidden; background: #111; }
+    .chef-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
     .chef-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 0.8rem; }
     .chef-section h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 1.3rem; color: var(--white); }
     .chef-section p { color: #aaa; line-height: 1.85; margin-bottom: 1.1rem; font-size: 1rem; }
-    .karte-section { padding: 5rem 0; }
-    .karte-inner { background: var(--gray); border-radius: var(--radius); padding: 4rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
-    .karte-inner h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .karte-inner p { color: var(--gray-dark); font-size: 0.97rem; line-height: 1.6; }
-    .info-section { padding: 5rem 0; background: var(--gray); }
-    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .info-box { background: var(--white); border-radius: var(--radius); padding: 2rem; border-top: 3px solid var(--gold); }
+
+    /* SPEISEKARTE */
+    .karte { padding: 4rem 0; background: var(--gray); }
+    .karte-inner { background: var(--white); border-radius: var(--radius); padding: 3rem 4rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; box-shadow: var(--shadow); }
+    .karte h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .karte p { color: var(--gray-dark); line-height: 1.75; }
+
+    /* INFO */
+    .info-section { padding: 4rem 0; }
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .info-box { background: var(--gray); border-radius: var(--radius); padding: 2rem; border-top: 3px solid var(--gold); }
     .info-box h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-dark); }
-    .info-box p { color: var(--black); font-size: 0.97rem; line-height: 1.7; }
-    .info-box a { color: var(--black); font-weight: 600; text-decoration: none; }
-    .cta-section { padding: 5rem 0; }
-    .cta-inner { background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); border-radius: var(--radius); padding: 4rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; color: var(--white); }
-    .cta-inner h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .cta-inner p { color: #bbb; font-size: 0.97rem; line-height: 1.6; }
-    footer { background: var(--black); color: var(--white); padding: 3rem 0; }
+    .info-box p { color: var(--black); font-size: 0.95rem; line-height: 1.7; }
+
+    /* RESERVATION FORM */
+    .res-section { padding: 4rem 0; background: var(--black); }
+    .res-inner { max-width: 900px; margin: 0 auto; }
+    .res-inner h2 { font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .res-inner p { color: #aaa; margin-bottom: 2rem; }
+    .res-step1 { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; align-items: end; }
+    .res-field label { display: block; font-size: 0.8rem; font-weight: 600; color: #aaa; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .res-field input, .res-field select { width: 100%; padding: 0.75rem 1rem; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: white; font-family: inherit; font-size: 0.95rem; }
+    .res-field select { appearance: none; }
+    .res-step2 { display: none; margin-top: 1.5rem; }
+    .res-step2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .res-success { display: none; padding: 1rem 1.5rem; background: #d4edda; color: #155724; border-radius: 8px; font-weight: 600; margin-top: 1rem; }
+
+    footer { background: var(--black); color: var(--white); padding: 3rem 0; border-top: 1px solid #333; }
     .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
-    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 1px; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
     .footer-section p, .footer-section a { color: #aaa; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
     .footer-section a:hover { color: var(--gold); }
-    .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #888; font-size: 0.88rem; }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 1.5rem; text-align: center; color: #888; font-size: 0.85rem; }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
-    @media (max-width: 900px) { .intro-grid, .chef-grid { grid-template-columns: 1fr; gap: 2.5rem; } .karte-inner, .cta-inner { grid-template-columns: 1fr; } .info-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .opening-inner { flex-direction: column; align-items: flex-start; } .footer-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 900px) {
+      .intro-grid, .chef-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .karte-inner { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .res-step1 { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .opening-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .res-step1 { grid-template-columns: 1fr; }
+      .res-step2-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <div class="header-content">
-        <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
-        <nav>
-          <a href="events.html">Events</a>
-          <a href="hotel.html">Hotel</a>
-          <a href="tagungen.html">Tagungen</a>
-          <a href="erleben.html">Erleben</a>
-          <a href="restaurant.html">Restaurant</a>
-          <a href="ueber-uns.html">Über uns</a>
-          <a href="kontakt.html">Kontakt</a>
-        </nav>
-      </div>
-    </div>
-  </header>
 
-  <section class="hero">
-    <div class="hero-bg">
-      <img src="Bilder/restaurant/header.jpg" alt="Restaurant Burghof Brombachtal – Abendatmosphäre">
+<header>
+  <div class="container">
+    <div class="header-content">
+      <a href="index.html" class="logo">BURG<span class="gold">HOF</span></a>
+      <nav>
+        <a href="hotel.html">Hotel</a>
+        <a href="restaurant.html" class="nav-active">Restaurant</a>
+        <a href="events.html">Events</a>
+        <a href="tagungen.html">Tagungen</a>
+        <a href="erleben.html">Erleben</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
     </div>
-    <div class="container">
-      <span class="hero-label">Restaurant im Burghof</span>
-      <h1>Einen guten Abend<br>im Odenwald.</h1>
-      <p class="hero-sub">Täglich ab 18 Uhr geöffnet – für Hotelgäste und alle anderen. Kein Dresscode. Keine Pflicht zur Übernachtung. Nur gutes Essen von Chefkoch Filip Mitevski.</p>
-      <div class="hero-actions">
-        <a href="speisekarte.html" class="btn btn-gold">Speisekarte ansehen</a>
-        <a href="kontakt.html" class="btn btn-outline">Tisch reservieren</a>
-      </div>
-    </div>
-  </section>
+  </div>
+</header>
 
-  <div class="opening-bar">
-    <div class="container">
-      <div class="opening-inner">
-        <div class="opening-text">
-          <strong>Täglich geöffnet</strong> — 18:00 bis 23:00 Uhr &nbsp;·&nbsp; Küche bis 21:30 Uhr
-        </div>
-        <span class="opening-note">Für Gruppen empfehlen wir eine kurze Voranmeldung</span>
+<section class="hero">
+  <div class="hero-bg">
+    <img src="Bilder/restaurant/header.jpg" alt="Restaurant Burghof Brombachtal – Abendatmosphäre">
+  </div>
+  <div class="container">
+    <span class="hero-label">Restaurant im Burghof</span>
+    <h1>Einen guten Abend<br>im Odenwald.</h1>
+    <p class="hero-sub">Täglich ab 18 Uhr geöffnet – für Hotelgäste und alle anderen. Kein Dresscode. Keine Pflicht zur Übernachtung. Nur gutes Essen von Chefkoch Filip Mitevski.</p>
+    <div class="hero-actions">
+      <a href="speisekarte.html" class="btn btn-gold">Speisekarte ansehen</a>
+      <a href="#reservierung" class="btn btn-outline">Tisch reservieren</a>
+    </div>
+  </div>
+</section>
+
+<div class="opening-bar">
+  <div class="container">
+    <div class="opening-inner">
+      <p><strong>Täglich geöffnet</strong> — 18:00 bis 23:00 Uhr &nbsp;·&nbsp; Küche bis 21:30 Uhr</p>
+      <p>Für Gruppen empfehlen wir eine kurze Voranmeldung</p>
+    </div>
+  </div>
+</div>
+
+<section class="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-image">
+        <img src="Bilder/restaurant/kachel.jpg" alt="Restaurant Burghof – Speisesaal mit Blick in den Odenwald">
+      </div>
+      <div>
+        <h2>Gut essen im Odenwald — jeden Abend.</h2>
+        <p>Das Restaurant des Burghofs ist kein geschlossener Hotelbereich. Es ist täglich für alle geöffnet — für einen Abend zu zweit, ein Familienessen, oder ein Dinner nach einer Wanderung durch den Odenwald.</p>
+        <p>Die Küche arbeitet mit regionalen Produkten, auf einem Niveau das man in der Gegend selten findet. <strong>Chefkoch Filip Mitevski</strong> kocht präzise und mit Leidenschaft — ohne dass man dafür einen besonderen Anlass braucht.</p>
+        <p>45 Minuten von Frankfurt, direkt im Burghof Brombachtal.</p>
+        <a href="speisekarte.html" class="btn btn-dark" style="margin-top: 1rem;">Speisekarte ansehen</a>
       </div>
     </div>
   </div>
+</section>
 
-  <section class="intro-section">
-    <div class="container">
-      <div class="intro-grid">
-        <div class="intro-image" style="background: none; overflow: hidden; padding: 0;"><img src="Bilder/restaurant/kachel.jpg" alt="Restaurant Burghof – Speisesaal" style="width:100%; height:100%; object-fit:cover; object-position: center bottom; border-radius:var(--radius);"></div>
-        <div class="intro-text">
-          <h2>Gut essen im Odenwald — jeden Abend.</h2>
-          <p>Das Restaurant des Burghofs ist kein geschlossener Hotelbereich. Es ist täglich für alle geöffnet — für einen Abend zu zweit, ein Familienessen, oder ein Dinner nach einer Wanderung durch den Odenwald.</p>
-          <p>Die Küche arbeitet mit regionalen Produkten, auf einem Niveau das man in der Gegend selten findet. <strong>Chefkoch Filip Mitevski</strong> kocht präzise und mit Leidenschaft — ohne dass man dafür einen besonderen Anlass braucht.</p>
-          <p>45 Minuten von Frankfurt, direkt im Burghof Brombachtal.</p>
-          <a href="speisekarte.html" class="btn btn-dark" style="margin-top: 0.5rem; display: inline-block;">Speisekarte ansehen</a>
-        </div>
+<section class="chef-section">
+  <div class="container">
+    <div class="chef-grid">
+      <div class="chef-image">
+        <img src="Bilder/restaurant/filip.jpg" alt="Küchenchef Filip Mitevski – Burghof Brombachtal">
+      </div>
+      <div>
+        <span class="chef-label">In der Küche</span>
+        <h2>Filip Mitevski</h2>
+        <p>Filip Mitevski ist seit 2022 Küchenchef am Burghof. Zuvor sammelte er Erfahrungen in mehreren Häusern über jahrelange Arbeit in der gehobenen Gastronomie.</p>
+        <p>Keine Kompromisse bei den Zutaten. Keine Fertigprodukte. Die Küche am Burghof ist handwerklich, mit echten Produkten aus der Region.</p>
+        <p>Das Ergebnis schmeckt man.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="chef-section">
-    <div class="container">
-      <div class="chef-grid">
-        <div class="chef-image"><img src="Bilder/restaurant/filip.jpg" alt="Küchenchef Filip Mitevski – Burghof Brombachtal" style="width:100%; height:100%; object-fit:cover; object-position: center 15%;"></div>
-        <div>
-          <span class="chef-label">In der Küche</span>
-          <h2>Filip Mitevski</h2>
-          <p>Filip Mitevski steht für eine Küche die zeigt was geht — mit regionalen Zutaten aus dem Odenwald und dem Rhein-Main-Gebiet, verarbeitet mit jahrelanger Erfahrung aus renommierten Häusern.</p>
-          <p>Kein Thekenessen, kein Gasthaus-Standard. Aber auch kein Ort, an dem man sich fehl am Platz fühlt wenn man einfach einen guten Abend will. Die Küche spricht für sich.</p>
-          <p>Das Angebot wechselt saisonal. À la carte und Menüs.</p>
-        </div>
+<section class="karte">
+  <div class="container">
+    <div class="karte-inner">
+      <div>
+        <h2>Die Speisekarte</h2>
+        <p>Saisonale Gerichte mit regionalen Produkten — wechselnd je nach Verfügbarkeit und Jahreszeit. Die aktuelle Karte gibt es als PDF zum Download.</p>
+      </div>
+      <a href="speisekarte.html" class="btn btn-dark">Speisekarte ansehen</a>
+    </div>
+  </div>
+</section>
+
+<section class="info-section">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Öffnungszeiten</h3>
+        <p><strong>Täglich 18:00 – 23:00 Uhr</strong><br>Küche bis 21:30 Uhr</p>
+      </div>
+      <div class="info-box">
+        <h3>Reservierung</h3>
+        <p>Ohne Reservierung willkommen — für Gruppen ab 8 Personen bitte kurz voranmelden.<br>
+        <a href="tel:+496063589962" style="color: var(--black); font-weight: 600;">+49 6063 589962 00</a></p>
+      </div>
+      <div class="info-box">
+        <h3>Zugang</h3>
+        <p>Das Restaurant ist offen für alle Gäste — Hotelübernachtung nicht erforderlich. Kein Dresscode.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="karte-section">
-    <div class="container">
-      <div class="karte-inner">
-        <div>
-          <h2>Die aktuelle Speisekarte</h2>
-          <p>Gerichte, Getränke und saisonale Angebote — als PDF direkt einsehbar und zum Download. Die Karte ändert sich regelmäßig je nach Saison.</p>
+<section class="res-section" id="reservierung">
+  <div class="container">
+    <div class="res-inner">
+      <h2>Tisch reservieren</h2>
+      <p>Wählen Sie Datum, Uhrzeit und Personenzahl — wir melden uns zur Bestätigung.</p>
+
+      <form id="resForm">
+        <input type="hidden" name="access_key" value="FORMSPREE_ID">
+        <input type="hidden" name="subject" value="Tischreservierung – Burghof Restaurant">
+
+        <div class="res-step1">
+          <div class="res-field">
+            <label>Datum</label>
+            <input type="date" name="datum" required>
+          </div>
+          <div class="res-field">
+            <label>Uhrzeit</label>
+            <select name="uhrzeit" required>
+              <option value="">-- Bitte wählen --</option>
+              <option>18:00 Uhr</option>
+              <option>18:30 Uhr</option>
+              <option>19:00 Uhr</option>
+              <option>19:30 Uhr</option>
+              <option>20:00 Uhr</option>
+              <option>20:30 Uhr</option>
+              <option>21:00 Uhr</option>
+              <option>21:30 Uhr</option>
+            </select>
+          </div>
+          <div class="res-field">
+            <label>Personen</label>
+            <select name="personen" required>
+              <option value="">-- Bitte wählen --</option>
+              <option>1 Person</option>
+              <option>2 Personen</option>
+              <option>3 Personen</option>
+              <option>4 Personen</option>
+              <option>5–8 Personen</option>
+              <option>9+ Personen</option>
+            </select>
+          </div>
+          <div>
+            <button type="button" id="resNext" class="btn btn-gold">Weiter</button>
+          </div>
         </div>
-        <a href="speisekarte.html" class="btn btn-dark">Zur Speisekarte</a>
+
+        <div class="res-step2" id="resStep2">
+          <div class="res-step2-grid">
+            <div class="res-field">
+              <label>Name *</label>
+              <input type="text" name="name" required>
+            </div>
+            <div class="res-field">
+              <label>E-Mail *</label>
+              <input type="email" name="email" required>
+            </div>
+          </div>
+          <div class="res-field" style="margin-bottom:1rem;">
+            <label>Hinweise (optional)</label>
+            <textarea name="hinweis" rows="2" style="width:100%; padding:0.75rem 1rem; border:1px solid #444; border-radius:8px; background:#2a2a2a; color:white; font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold">Reservierung absenden</button>
+        </div>
+
+        <div class="res-success" id="resSuccess">
+          Vielen Dank! Wir bestätigen Ihre Reservierung per E-Mail.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Burghof</h4>
+        <p>Burghof 16<br>64753 Brombachtal<br>Odenwald</p>
+      </div>
+      <div class="footer-section">
+        <h4>Kontakt</h4>
+        <a href="tel:+496063589962">+49 6063 589962 00</a>
+        <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <a href="hotel.html">Hotel & Zimmer</a>
+        <a href="events.html">Events & Hochzeiten</a>
+        <a href="tagungen.html">Tagungen</a>
+        <a href="speisekarte.html">Speisekarte</a>
+        <a href="kontakt.html">Kontakt</a>
       </div>
     </div>
-  </section>
-
-  <section class="info-section">
-    <div class="container">
-      <div class="info-grid">
-        <div class="info-box">
-          <h3>Öffnungszeiten</h3>
-          <p>Täglich 18:00 – 23:00 Uhr<br>Küche bis 21:30 Uhr<br><br>Offen für alle Gäste — keine Hotelübernachtung nötig</p>
-        </div>
-        <div class="info-box">
-          <h3>Reservierung</h3>
-          <p>Für Gruppen ab 6 Personen empfehlen wir Voranmeldung.<br><br>
-          <a href="tel:+496063589962">+49 6063 589962-00</a><br>
-          oder über das Kontaktformular</p>
-        </div>
-        <div class="info-box">
-          <h3>Besondere Anlässe</h3>
-          <p>Privates Dinner, Geburtstag oder Firmenabend — auf Anfrage richten wir individuelle Abende für Ihre Gruppe aus.</p>
-        </div>
-      </div>
+    <div class="footer-bottom">
+      <p>© 2026 Burghof M&H Betriebs GmbH · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
     </div>
-  </section>
+  </div>
+</footer>
 
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-inner">
-        <div>
-          <h2>Tisch reservieren</h2>
-          <p>Schreiben Sie uns kurz — wir bestätigen Ihre Reservierung und freuen uns auf Ihren Besuch.</p>
-        </div>
-        <a href="kontakt.html" class="btn btn-gold">Jetzt reservieren</a>
-      </div>
-    </div>
-  </section>
+<script>
+  // Nav active
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav a').forEach(function(a) {
+    if (a.getAttribute('href') === current) a.classList.add('nav-active');
+  });
 
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-section">
-          <h4>KONTAKT</h4>
-          <p>Burghof 16<br>64753 Brombachtal</p>
-          <a href="tel:+496063589962">+49 6063 589962-00</a>
-          <a href="mailto:info@burghof-hotel.de">info@burghof-hotel.de</a>
-        </div>
-        <div class="footer-section">
-          <h4>ÖFFNUNGSZEITEN</h4>
-          <p>Restaurant täglich 18–23 Uhr<br>Küche 18–21:30 Uhr</p>
-          <a href="https://www.instagram.com/burghof_hotelundevent/" target="_blank">Instagram</a>
-        </div>
-        <div class="footer-section">
-          <h4>LEGAL</h4>
-          <a href="datenschutz.html">Datenschutz</a>
-          <a href="impressum.html">Impressum</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2026 Burghof | Website erstellt von <a href="https://huebbedigital.com">HuebbeDigital</a>
-      </div>
-    </div>
-  </footer>
+  // Reservation form: 2-step
+  document.getElementById('resNext').addEventListener('click', function() {
+    var datum = document.querySelector('[name="datum"]').value;
+    var uhrzeit = document.querySelector('[name="uhrzeit"]').value;
+    var personen = document.querySelector('[name="personen"]').value;
+    if (!datum || !uhrzeit || !personen) {
+      alert('Bitte alle Felder ausfüllen.');
+      return;
+    }
+    document.getElementById('resStep2').style.display = 'block';
+    document.getElementById('resStep2').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
 
-  <script>
-  (function () {
-    var path = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('nav a').forEach(function (a) {
-      if (a.getAttribute('href') === path) a.classList.add('nav-active');
+  document.getElementById('resForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var data = new FormData(this);
+    fetch('https://formspree.io/f/mqerezaj', {
+      method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+    }).then(function(r) {
+      if (r.ok) {
+        document.getElementById('resStep2').style.display = 'none';
+        document.querySelector('.res-step1').style.display = 'none';
+        document.getElementById('resSuccess').style.display = 'block';
+      }
     });
-  }());
-  </script>
+  });
+</script>
+
 </body>
 </html>

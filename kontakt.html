@@ -87,6 +87,9 @@
     .section { padding: 4rem 0; }
     .contact-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
     .contact-form { background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
     .contact-form h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; }
     .form-group { margin-bottom: 1.5rem; }
     .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
@@ -185,6 +188,170 @@
                 <option value="Restaurantreservierung">Restaurantreservierung</option>
                 <option value="Sonstiges">Sonstiges</option>
               </select>
+            </div>
+
+            <!-- Hotel: Anreise/Abreise -->
+            <div id="fields-hotel" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="anreise">Anreisedatum</label>
+                  <input type="date" id="anreise" name="anreise">
+                </div>
+                <div class="form-group">
+                  <label for="abreise">Abreisedatum</label>
+                  <input type="date" id="abreise" name="abreise">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="personen-hotel">Personenanzahl</label>
+                <select id="personen-hotel" name="personen_anzahl">
+                  <option value="">-- Bitte wählen --</option>
+                  <option value="1">1 Person</option>
+                  <option value="2">2 Personen</option>
+                  <option value="3">3 Personen</option>
+                  <option value="4">4 Personen</option>
+                  <option value="5+">5 oder mehr</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Restaurant: Datum, Uhrzeit, Personen -->
+            <div id="fields-restaurant" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="res-datum">Datum</label>
+                  <input type="date" id="res-datum" name="restaurant_datum">
+                </div>
+                <div class="form-group">
+                  <label for="res-uhrzeit">Uhrzeit</label>
+                  <select id="res-uhrzeit" name="restaurant_uhrzeit">
+                    <option value="">-- Bitte wählen --</option>
+                    <option>18:00 Uhr</option>
+                    <option>18:30 Uhr</option>
+                    <option>19:00 Uhr</option>
+                    <option>19:30 Uhr</option>
+                    <option>20:00 Uhr</option>
+                    <option>20:30 Uhr</option>
+                    <option>21:00 Uhr</option>
+                    <option>21:30 Uhr</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="res-personen">Personenanzahl</label>
+                <select id="res-personen" name="restaurant_personen">
+                  <option value="">-- Bitte wählen --</option>
+                  <option value="1">1 Person</option>
+                  <option value="2">2 Personen</option>
+                  <option value="3">3 Personen</option>
+                  <option value="4">4 Personen</option>
+                  <option value="5-8">5–8 Personen</option>
+                  <option value="9+">9 oder mehr (Gruppe)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Hochzeit: Datum, Gästeanzahl, Art -->
+            <div id="fields-hochzeit" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="hoch-datum">Hochzeitsdatum</label>
+                  <input type="date" id="hoch-datum" name="hochzeit_datum">
+                </div>
+                <div class="form-group">
+                  <label for="hoch-gaeste">Anzahl Gäste</label>
+                  <select id="hoch-gaeste" name="hochzeit_gaeste">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="bis 60">bis 60 Gäste</option>
+                    <option value="60-100">60–100 Gäste</option>
+                    <option value="100-150">100–150 Gäste</option>
+                    <option value="150-200">150–200 Gäste</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="hoch-art">Art der Feier</label>
+                <select id="hoch-art" name="hochzeit_art">
+                  <option value="">-- Bitte wählen --</option>
+                  <option value="Nur Feier">Nur Feier (kein Standesamt)</option>
+                  <option value="Standesamt + Feier">Standesamt + Feier</option>
+                  <option value="Noch offen">Noch offen</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Events: Datum, Anlass, Gäste -->
+            <div id="fields-events" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ev-datum">Wunschdatum</label>
+                  <input type="date" id="ev-datum" name="event_datum">
+                </div>
+                <div class="form-group">
+                  <label for="ev-gaeste">Anzahl Gäste</label>
+                  <select id="ev-gaeste" name="event_gaeste">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="bis 30">bis 30</option>
+                    <option value="30-60">30–60</option>
+                    <option value="60-120">60–120</option>
+                    <option value="120-180">120–180</option>
+                    <option value="180+">180 oder mehr</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ev-anlass">Anlass</label>
+                <select id="ev-anlass" name="event_anlass">
+                  <option value="">-- Bitte wählen --</option>
+                  <option>Geburtstag</option>
+                  <option>Jubiläum</option>
+                  <option>Firmenfeier</option>
+                  <option>Weihnachtsfeier</option>
+                  <option>Sonstiges</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Tagungen: Datum, Dauer, Teilnehmer, Raum -->
+            <div id="fields-tagung" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="tag-datum">Datum</label>
+                  <input type="date" id="tag-datum" name="tagung_datum">
+                </div>
+                <div class="form-group">
+                  <label for="tag-dauer">Dauer</label>
+                  <select id="tag-dauer" name="tagung_dauer">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="1 Tag">1 Tag</option>
+                    <option value="2 Tage">2 Tage</option>
+                    <option value="3+ Tage">3 oder mehr Tage</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="tag-teilnehmer">Teilnehmerzahl</label>
+                  <select id="tag-teilnehmer" name="tagung_teilnehmer">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="bis 10">bis 10</option>
+                    <option value="10-25">10–25</option>
+                    <option value="25-50">25–50</option>
+                    <option value="50-119">50–119</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="tag-raum">Seminarraum</label>
+                  <select id="tag-raum" name="tagung_raum">
+                    <option value="">-- Kein Wunsch --</option>
+                    <option>Odenwald (12 Pers.)</option>
+                    <option>Brombachtal (20 Pers.)</option>
+                    <option>Frankfurt (40 Pers.)</option>
+                    <option>Rhein-Main (70 Pers.)</option>
+                    <option>Ballsaal (119 Pers.)</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <label for="message">Nachricht *</label>
@@ -312,5 +479,24 @@
   });
 }());
 </script>
+
+  <script>
+  document.getElementById('anliegen').addEventListener('change', function() {
+    var v = this.value;
+    var sections = {
+      'Hotelreservierung':      'fields-hotel',
+      'Restaurantreservierung': 'fields-restaurant',
+      'Hochzeit':               'fields-hochzeit',
+      'Firmenevents':           'fields-events',
+      'Tagungen':               'fields-tagung',
+    };
+    Object.values(sections).forEach(function(id) {
+      document.getElementById(id).style.display = 'none';
+    });
+    if (sections[v]) {
+      document.getElementById(sections[v]).style.display = 'block';
+    }
+  });
+  </script>
 </body>
 </html>
