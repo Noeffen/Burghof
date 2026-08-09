@@ -77,7 +77,11 @@
     nav a {
       position: relative; margin-left: 2.5rem; text-decoration: none; color: var(--black); font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: var(--gold); }
-    .hero { padding: 4rem 0; background: linear-gradient(135deg, var(--black) 0%, #2a2a2a 100%); color: var(--white); }
+    .hero { padding: 4rem 0; color: var(--white); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%); }
+    .hero .container { position: relative; z-index: 1; }
     .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
     .hero p { font-size: 1.1rem; color: #ccc; }
     .section { padding: 4rem 0; }
@@ -144,6 +148,9 @@
     </div>
   </header>
   <section class="hero">
+    <div class="hero-bg">
+      <img src="Bilder/kontakt/kontakt.jpg" alt="Burghof Brombachtal – Kontakt">
+    </div>
     <div class="container">
       <h1>Kontakt &amp; Anfragen</h1>
       <p>Wir freuen uns auf Ihre Nachricht – kontaktieren Sie uns für Reservierungen, Anfragen oder Besichtigungen</p>
