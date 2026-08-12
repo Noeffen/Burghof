@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tischreservierung – Restaurant Burghof</title>
+<!--
+  BURGHOF – TISCHRESERVIERUNG (Firebase)
+  ========================================
+  Diese Datei ist eigenständig lauffähig und deckt zwei Ansichten ab:
+    - Standardansicht (reservierung.html)       → Buchungsformular für Gäste
+    - Admin-Ansicht  (reservierung.html#admin)  → Login + Verwaltung für Hansi
+
+  EINBINDUNG in restaurant.html:
+  Am einfachsten per <iframe>, damit Firebase-Skripte und CSS sauber isoliert
+  bleiben (Anleitung dazu gibt es im Chat). Für den Admin-Zugriff einfach
+  direkt reservierung.html#admin im Browser aufrufen (nicht zwingend über
+  das iframe der Website).
+
+  VORAUSSETZUNGEN IM FIREBASE-PROJEKT (siehe Chat-Nachricht für Details):
+    1. Firestore Database angelegt (Native-Modus)
+    2. Firestore Security Rules eingespielt (siehe Chat-Nachricht)
+    3. Authentication → Sign-in-Methode "E-Mail/Passwort" aktiviert
+    4. Ein Nutzer (z. B. hansi@burghof-odenwald.de) unter Authentication → Users angelegt
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1a1a1a; --gold: #d4af37; --white: #ffffff;
+    --gray-dark: #555; --radius: 12px;
+    --input-bg: #2a2a2a; --input-border: #444;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--black); color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+  }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin: 0 0 .5rem; color: #fff; }
+  .widget { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }
+  .sub { color: #aaa; margin-bottom: 2rem; }
+
+  .field { margin-bottom: 1.25rem; }
+  .field label { display: block; font-size: .8rem; font-weight: 600; color: #aaa; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
+  .field input, .field select { width: 100%; padding: .75rem 1rem; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .95rem; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--gold); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .slots { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .3rem; }
+  .slot-btn { padding: .6rem 1rem; border-radius: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: #fff; cursor: pointer; font-family: inherit; font-size: .9rem; transition: all .15s; text-align: center; min-width: 92px; }
+  .slot-btn small { display: block; font-size: .68rem; color: #999; margin-top: 2px; }
+  .slot-btn.frei { border-color: #3a5a3a; }
+  .slot-btn.knapp { border-color: var(--gold); }
+  .slot-btn.knapp small { color: var(--gold); }
+  .slot-btn.voll { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+  .slot-btn.selected { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+  .slot-btn.selected small { color: var(--black); }
+  .slot-btn:hover:not(.voll):not(.selected) { border-color: var(--gold); }
+
+  .btn { display: inline-block; padding: .85rem 1.8rem; border-radius: var(--radius); font-weight: 700; border: none; background: var(--gold); color: var(--black); cursor: pointer; font-family: inherit; font-size: .95rem; transition: background .2s; }
+  .btn:hover { background: #e8c547; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-sm { padding: .4rem .9rem; border-radius: 6px; font-size: .8rem; font-weight: 600; border: 1px solid var(--input-border); background: transparent; color: #fff; cursor: pointer; font-family: inherit; }
+  .btn-sm:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-sm.danger:hover { border-color: #c0392b; color: #e57368; }
+
+  .msg { padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 1.25rem; font-size: .9rem; font-weight: 600; }
+  .msg.success { background: #1f3d24; color: #8fd19e; border: 1px solid #2e5c37; }
+  .msg.error { background: #3d1f1f; color: #e2938d; border: 1px solid #5c2e2e; }
+  .hint { font-size: .8rem; color: #888; margin-top: 1rem; }
+  .hint a { color: var(--gold); text-decoration: none; }
+
+  .staff-link { display: block; text-align: center; margin-top: 2.5rem; font-size: .75rem; color: #555; text-decoration: none; }
+  .staff-link:hover { color: #888; }
+
+  .login-card { max-width: 360px; margin: 4rem auto; text-align: center; }
+  .adminHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+  .adminHeader .controls { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .adminHeader input[type=date] { padding: .5rem .7rem; border-radius: 6px; border: 1px solid var(--input-border); background: var(--input-bg); color: #fff; font-family: inherit; }
+  .back-link { color: #888; text-decoration: none; font-size: .85rem; }
+  .back-link:hover { color: var(--gold); }
+
+  .table-wrap { overflow-x: auto; }
+  table.res-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .res-table th { text-align: left; padding: .6rem .7rem; color: #999; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #333; white-space: nowrap; }
+  .res-table td { padding: .7rem; border-bottom: 1px solid #2a2a2a; vertical-align: middle; white-space: nowrap; }
+  .res-table tr.storniert td { opacity: .45; }
+  .badge { display: inline-block; padding: .2rem .6rem; border-radius: 20px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+  .badge.neu { background: #3a3a1f; color: var(--gold); }
+  .badge.bestaetigt { background: #1f3d24; color: #8fd19e; }
+  .badge.storniert { background: #3d1f1f; color: #e2938d; }
+  .row-actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .empty-state { color: #888; padding: 2rem; text-align: center; }
+  .tel-link { color: #fff; text-decoration: none; }
+  .tel-link:hover { color: var(--gold); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== GAST-ANSICHT ===================== -->
+  <section id="gastAnsicht" class="widget">
+    <h2>Tisch reservieren</h2>
+    <p class="sub">Wählen Sie Datum, Uhrzeit und Personenzahl. Die Verfügbarkeit wird live angezeigt.</p>
+
+    <div id="formMsg" hidden></div>
+
+    <form id="resForm">
+      <div class="grid2">
+        <div class="field">
+          <label for="fDatum">Datum *</label>
+          <input type="date" id="fDatum" required>
+        </div>
+        <div class="field">
+          <label for="fPersonen">Personen *</label>
+          <select id="fPersonen" required>
+            <option value="">-- Bitte wählen --</option>
+            <option value="1">1 Person</option>
+            <option value="2">2 Personen</option>
+            <option value="3">3 Personen</option>
+            <option value="4">4 Personen</option>
+            <option value="5">5 Personen</option>
+            <option value="6">6 Personen</option>
+            <option value="7">7 Personen</option>
+            <option value="8">8 Personen</option>
+            <option value="9">9 Personen</option>
+            <option value="10">10 Personen</option>
+            <option value="11">11 Personen</option>
+            <option value="12">12 Personen</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Uhrzeit *</label>
+        <div id="slotWrap" class="slots">
+          <span style="color:#888;font-size:.9rem;">Bitte zuerst ein Datum auswählen.</span>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="fName">Name *</label>
+          <input type="text" id="fName" required maxlength="100" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="fTelefon">Telefon *</label>
+          <input type="tel" id="fTelefon" required maxlength="30" autocomplete="tel" placeholder="z. B. 0176 12345678">
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Reservierung anfragen</button>
+      <p class="hint">Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
+    </form>
+
+    <a href="#admin" class="staff-link">Mitarbeiter-Anmeldung</a>
+  </section>
+
+  <!-- ===================== ADMIN-ANSICHT ===================== -->
+  <section id="adminAnsicht" class="widget" hidden>
+
+    <div id="loginBox" class="login-card">
+      <h2>Mitarbeiter-Anmeldung</h2>
+      <p class="sub">Zugang für die Verwaltung der Tischreservierungen.</p>
+      <div id="loginError" class="msg error" hidden></div>
+      <div class="field">
+        <label for="loginEmail">E-Mail</label>
+        <input type="email" id="loginEmail" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="loginPass">Passwort</label>
+        <input type="password" id="loginPass" autocomplete="current-password">
+      </div>
+      <button id="loginBtn" class="btn" style="width:100%;">Anmelden</button>
+      <a href="#" class="back-link" style="display:block;margin-top:1.5rem;">← Zurück zur Reservierung</a>
+    </div>
+
+    <div id="adminPanel" hidden>
+      <div class="adminHeader">
+        <div>
+          <h2 style="margin-bottom:.2rem;">Reservierungen</h2>
+          <a href="#" class="back-link">← Zur Reservierungsseite</a>
+        </div>
+        <div class="controls">
+          <input type="date" id="filterDatum" title="Nach Datum filtern">
+          <button id="filterUpcoming" class="btn-sm">Kommende</button>
+          <button id="filterAlle" class="btn-sm">Alle anzeigen</button>
+          <button id="logoutBtn" class="btn-sm">Abmelden</button>
+        </div>
+      </div>
+      <div id="resList"></div>
+    </div>
+
+  </section>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore, doc, collection, query, where, orderBy,
+    onSnapshot, runTransaction, updateDoc, deleteDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // ---------------------------------------------------------------
+  // Firebase-Projekt: burghof-buchung
+  // ---------------------------------------------------------------
+  const firebaseConfig = {
+    apiKey: "AIzaSyDKWIyogViqyOskAQNptcUC94y0T_k1jnQ",
+    authDomain: "burghof-buchung.firebaseapp.com",
+    projectId: "burghof-buchung",
+    storageBucket: "burghof-buchung.firebasestorage.app",
+    messagingSenderId: "977546091729",
+    appId: "1:977546091729:web:caa6851f1b95f449cf39f0"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // ---------------------------------------------------------------
+  // Konfiguration – hier bei Bedarf anpassen
+  // ---------------------------------------------------------------
+  const CONFIG = {
+    // Öffnungszeiten laut restaurant.html: täglich, Küche bis 21:30 Uhr
+    OEFFNUNGSZEITEN: [{ start: "18:00", end: "21:30" }],
+    SLOT_MINUTEN: 30,
+    // Maximale Gesamtzahl an Gästen, die pro Zeitfenster angenommen wird.
+    // An die tatsächliche Kapazität des Restaurants anpassen.
+    MAX_GAESTE_PRO_SLOT: 40
+  };
+
+  function generateSlots() {
+    const slots = [];
+    for (const range of CONFIG.OEFFNUNGSZEITEN) {
+      let [h, m] = range.start.split(":").map(Number);
+      const [eh, em] = range.end.split(":").map(Number);
+      while (h < eh || (h === eh && m <= em)) {
+        slots.push(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`);
+        m += CONFIG.SLOT_MINUTEN;
+        if (m >= 60) { m -= 60; h += 1; }
+      }
+    }
+    return slots;
+  }
+  const ALL_SLOTS = generateSlots();
+
+  function todayIso() {
+    return new Date().toISOString().slice(0, 10);
+  }
+  function formatDatum(iso) {
+    const [y, m, d] = iso.split("-");
+    return `${d}.${m}.${y}`;
+  }
+  function isPastSlot(datum, slot) {
+    const now = new Date();
+    if (datum !== todayIso()) return false;
+    const [h, m] = slot.split(":").map(Number);
+    const slotDate = new Date();
+    slotDate.setHours(h, m, 0, 0);
+    return slotDate.getTime() <= now.getTime();
+  }
+
+  // ---------------------------------------------------------------
+  // Routing zwischen Gast- und Admin-Ansicht
+  // ---------------------------------------------------------------
+  const gastAnsicht = document.getElementById("gastAnsicht");
+  const adminAnsicht = document.getElementById("adminAnsicht");
+
+  function route() {
+    if (location.hash === "#admin") {
+      gastAnsicht.hidden = true;
+      adminAnsicht.hidden = false;
+    } else {
+      adminAnsicht.hidden = true;
+      gastAnsicht.hidden = false;
+    }
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  document.querySelectorAll(".back-link").forEach(a => {
+    a.addEventListener("click", e => { e.preventDefault(); location.hash = ""; });
+  });
+
+  // =================================================================
+  // GAST-ANSICHT: Buchungsformular mit Echtzeit-Verfügbarkeit
+  // =================================================================
+  const fDatum = document.getElementById("fDatum");
+  const fPersonen = document.getElementById("fPersonen");
+  const slotWrap = document.getElementById("slotWrap");
+  const resForm = document.getElementById("resForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const formMsg = document.getElementById("formMsg");
+
+  fDatum.min = todayIso();
+
+  let selectedSlot = null;
+  let verfuegbarkeitUnsub = null;
+
+  function showFormMsg(text, type) {
+    formMsg.textContent = text;
+    formMsg.className = "msg " + type;
+    formMsg.hidden = false;
+  }
+  function hideFormMsg() {
+    formMsg.hidden = true;
+  }
+
+  function renderSlots(belegtMap) {
+    selectedSlot = null;
+    slotWrap.innerHTML = "";
+    if (!fDatum.value) {
+      slotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst ein Datum auswählen.</span>';
+      return;
+    }
+    ALL_SLOTS.forEach(slot => {
+      const belegt = (belegtMap && belegtMap[slot]) || 0;
+      const frei = CONFIG.MAX_GAESTE_PRO_SLOT - belegt;
+      const past = isPastSlot(fDatum.value, slot);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.slot = slot;
+
+      let statusClass, statusText;
+      if (past || frei <= 0) {
+        statusClass = "voll";
+        statusText = past ? "vorbei" : "ausgebucht";
+        btn.disabled = true;
+      } else if (frei <= CONFIG.MAX_GAESTE_PRO_SLOT * 0.3) {
+        statusClass = "knapp";
+        statusText = `noch ${frei} Plätze`;
+      } else {
+        statusClass = "frei";
+        statusText = "frei";
+      }
+      btn.className = "slot-btn " + statusClass;
+      btn.innerHTML = `${slot} Uhr<small>${statusText}</small>`;
+
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        slotWrap.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedSlot = slot;
+      });
+      slotWrap.appendChild(btn);
+    });
+  }
+
+  function subscribeVerfuegbarkeit() {
+    if (verfuegbarkeitUnsub) { verfuegbarkeitUnsub(); verfuegbarkeitUnsub = null; }
+    if (!fDatum.value) { renderSlots(null); return; }
+    const ref = doc(db, "verfuegbarkeit", fDatum.value);
+    verfuegbarkeitUnsub = onSnapshot(ref, snap => {
+      renderSlots(snap.exists() ? (snap.data().slots || {}) : {});
+    }, () => {
+      slotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">Verfügbarkeit konnte nicht geladen werden.</span>';
+    });
+  }
+  fDatum.addEventListener("change", subscribeVerfuegbarkeit);
+  renderSlots(null);
+
+  async function reserviere(datum, uhrzeit, personen, name, telefon) {
+    const verfRef = doc(db, "verfuegbarkeit", datum);
+    const resRef = doc(collection(db, "reservierungen"));
+    await runTransaction(db, async tx => {
+      const verfSnap = await tx.get(verfRef);
+      const bisher = verfSnap.exists() ? ((verfSnap.data().slots || {})[uhrzeit] || 0) : 0;
+      if (bisher + personen > CONFIG.MAX_GAESTE_PRO_SLOT) {
+        throw new Error("AUSGEBUCHT");
+      }
+      tx.set(verfRef, { slots: { [uhrzeit]: bisher + personen } }, { merge: true });
+      tx.set(resRef, {
+        datum, uhrzeit, personen, name, telefon,
+        status: "neu",
+        erstelltAm: serverTimestamp()
+      });
+    });
+  }
+
+  resForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    hideFormMsg();
+
+    const datum = fDatum.value;
+    const personen = parseInt(fPersonen.value, 10);
+    const name = document.getElementById("fName").value.trim();
+    const telefon = document.getElementById("fTelefon").value.trim();
+
+    if (!datum || !fPersonen.value || !name || !telefon) {
+      showFormMsg("Bitte füllen Sie alle Pflichtfelder aus.", "error");
+      return;
+    }
+    if (!selectedSlot) {
+      showFormMsg("Bitte wählen Sie eine Uhrzeit aus.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Wird gesendet …";
+    try {
+      await reserviere(datum, selectedSlot, personen, name, telefon);
+      showFormMsg(
+        `Vielen Dank, ${name}! Ihre Reservierung für den ${formatDatum(datum)} um ${selectedSlot} Uhr ` +
+        `für ${personen} ${personen === 1 ? "Person" : "Personen"} wurde übermittelt. Wir bestätigen sie in Kürze.`,
+        "success"
+      );
+      resForm.reset();
+      fDatum.min = todayIso();
+      subscribeVerfuegbarkeit();
+    } catch (err) {
+      if (err.message === "AUSGEBUCHT") {
+        showFormMsg("Für diese Uhrzeit sind leider nicht mehr genügend Plätze frei. Bitte wählen Sie eine andere Uhrzeit.", "error");
+        subscribeVerfuegbarkeit();
+      } else {
+        showFormMsg("Es gab ein Problem beim Senden Ihrer Reservierung. Bitte versuchen Sie es erneut oder rufen Sie uns an: +49 6063 589962 00.", "error");
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Reservierung anfragen";
+    }
+  });
+
+  // =================================================================
+  // ADMIN-ANSICHT: Login + Verwaltung
+  // =================================================================
+  const loginBox = document.getElementById("loginBox");
+  const adminPanel = document.getElementById("adminPanel");
+  const loginEmail = document.getElementById("loginEmail");
+  const loginPass = document.getElementById("loginPass");
+  const loginBtn = document.getElementById("loginBtn");
+  const loginError = document.getElementById("loginError");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const filterDatum = document.getElementById("filterDatum");
+  const filterUpcoming = document.getElementById("filterUpcoming");
+  const filterAlle = document.getElementById("filterAlle");
+  const resList = document.getElementById("resList");
+
+  let resListUnsub = null;
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      loginBox.hidden = true;
+      adminPanel.hidden = false;
+      subscribeReservations();
+    } else {
+      loginBox.hidden = false;
+      adminPanel.hidden = true;
+      if (resListUnsub) { resListUnsub(); resListUnsub = null; }
+    }
+  });
+
+  loginBtn.addEventListener("click", async () => {
+    loginError.hidden = true;
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPass.value);
+    } catch (err) {
+      let text = "Anmeldung fehlgeschlagen. Bitte erneut versuchen.";
+      if (["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found"].includes(err.code)) {
+        text = "E-Mail oder Passwort ist falsch.";
+      } else if (err.code === "auth/too-many-requests") {
+        text = "Zu viele Versuche. Bitte später erneut versuchen.";
+      } else if (err.code === "auth/invalid-email") {
+        text = "Bitte eine gültige E-Mail-Adresse eingeben.";
+      }
+      loginError.textContent = text;
+      loginError.hidden = false;
+    }
+  });
+  loginPass.addEventListener("keydown", e => { if (e.key === "Enter") loginBtn.click(); });
+
+  logoutBtn.addEventListener("click", () => signOut(auth));
+
+  function subscribeReservations(mode = "upcoming", datum = null) {
+    if (resListUnsub) { resListUnsub(); resListUnsub = null; }
+    resList.innerHTML = '<p class="empty-state">Lädt …</p>';
+
+    let qRef;
+    if (mode === "datum" && datum) {
+      qRef = query(collection(db, "reservierungen"), where("datum", "==", datum));
+    } else if (mode === "alle") {
+      qRef = query(collection(db, "reservierungen"));
+    } else {
+      qRef = query(collection(db, "reservierungen"), where("datum", ">=", todayIso()), orderBy("datum", "asc"));
+    }
+
+    resListUnsub = onSnapshot(qRef, snap => {
+      const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      rows.sort((a, b) => (a.datum + a.uhrzeit).localeCompare(b.datum + b.uhrzeit));
+      renderRows(rows);
+    }, err => {
+      resList.innerHTML = `<p class="empty-state" style="color:#e2938d;">Fehler beim Laden: ${err.message}</p>`;
+    });
+  }
+
+  filterDatum.addEventListener("change", () => {
+    if (filterDatum.value) subscribeReservations("datum", filterDatum.value);
+    else subscribeReservations("upcoming");
+  });
+  filterUpcoming.addEventListener("click", () => { filterDatum.value = ""; subscribeReservations("upcoming"); });
+  filterAlle.addEventListener("click", () => { filterDatum.value = ""; subscribeReservations("alle"); });
+
+  function statusBadge(status) {
+    const map = { neu: ["neu", "Neu"], "bestätigt": ["bestaetigt", "Bestätigt"], storniert: ["storniert", "Storniert"] };
+    const [cls, label] = map[status] || ["neu", status];
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  function renderRows(rows) {
+    if (rows.length === 0) {
+      resList.innerHTML = '<p class="empty-state">Keine Reservierungen gefunden.</p>';
+      return;
+    }
+    const wrap = document.createElement("div");
+    wrap.className = "table-wrap";
+    const table = document.createElement("table");
+    table.className = "res-table";
+    table.innerHTML = `
+      <thead><tr>
+        <th>Datum</th><th>Uhrzeit</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Status</th><th>Aktionen</th>
+      </tr></thead>
+      <tbody></tbody>`;
+    const tbody = table.querySelector("tbody");
+
+    rows.forEach(r => {
+      const tr = document.createElement("tr");
+      if (r.status === "storniert") tr.className = "storniert";
+      tr.innerHTML = `
+        <td>${formatDatum(r.datum)}</td>
+        <td>${r.uhrzeit} Uhr</td>
+        <td>${r.personen}</td>
+        <td>${escapeHtml(r.name)}</td>
+        <td><a class="tel-link" href="tel:${escapeHtml(r.telefon)}">${escapeHtml(r.telefon)}</a></td>
+        <td>${statusBadge(r.status)}</td>
+        <td class="row-actions"></td>
+      `;
+      const actions = tr.querySelector(".row-actions");
+
+      if (r.status !== "bestätigt") {
+        const btn = document.createElement("button");
+        btn.className = "btn-sm";
+        btn.textContent = "Bestätigen";
+        btn.addEventListener("click", () => updateDoc(doc(db, "reservierungen", r.id), { status: "bestätigt" }));
+        actions.appendChild(btn);
+      }
+      if (r.status !== "storniert") {
+        const btn = document.createElement("button");
+        btn.className = "btn-sm danger";
+        btn.textContent = "Stornieren";
+        btn.addEventListener("click", async () => {
+          if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} wirklich stornieren?`)) return;
+          await freigebenSlot(r.datum, r.uhrzeit, r.personen);
+          await updateDoc(doc(db, "reservierungen", r.id), { status: "storniert" });
+        });
+        actions.appendChild(btn);
+      }
+      const delBtn = document.createElement("button");
+      delBtn.className = "btn-sm danger";
+      delBtn.textContent = "Löschen";
+      delBtn.addEventListener("click", async () => {
+        if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} endgültig löschen?`)) return;
+        if (r.status !== "storniert") await freigebenSlot(r.datum, r.uhrzeit, r.personen);
+        await deleteDoc(doc(db, "reservierungen", r.id));
+      });
+      actions.appendChild(delBtn);
+
+      tbody.appendChild(tr);
+    });
+
+    wrap.appendChild(table);
+    resList.innerHTML = "";
+    resList.appendChild(wrap);
+  }
+
+  async function freigebenSlot(datum, uhrzeit, personen) {
+    const verfRef = doc(db, "verfuegbarkeit", datum);
+    await runTransaction(db, async tx => {
+      const snap = await tx.get(verfRef);
+      const bisher = snap.exists() ? ((snap.data().slots || {})[uhrzeit] || 0) : 0;
+      const neu = Math.max(0, bisher - personen);
+      tx.set(verfRef, { slots: { [uhrzeit]: neu } }, { merge: true });
+    });
+  }
+
+  function escapeHtml(str) {
+    const d = document.createElement("div");
+    d.textContent = str == null ? "" : String(str);
+    return d.innerHTML;
+  }
+</script>
+</body>
+</html>
