@@ -237,38 +237,25 @@
       transition: border-color 0.4s, opacity 0.4s;
     }
 
-    /* Outer rotating ring — appears on hover */
+    /* Single slow rotating ring */
     .center-emblem::after {
       content: '';
       position: absolute; inset: -10px;
       border-radius: 50%;
       border: 1px solid transparent;
-      border-top-color: rgba(212,175,55,0.7);
-      border-right-color: rgba(212,175,55,0.3);
+      border-top-color: rgba(212,175,55,0.8);
+      border-right-color: rgba(212,175,55,0.2);
+      border-bottom-color: rgba(212,175,55,0.05);
       opacity: 0;
-      transition: opacity 0.4s;
-      animation: spinRing 2.5s linear infinite;
+      transition: opacity 0.6s;
+      animation: spinRing 6s linear infinite;
     }
-
-    /* Second ring via wrapper */
-    .center-emblem-inner {
-      position: absolute; inset: -20px;
-      border-radius: 50%;
-      border: 1px solid transparent;
-      border-bottom-color: rgba(212,175,55,0.4);
-      border-left-color: rgba(212,175,55,0.15);
-      opacity: 0;
-      transition: opacity 0.5s 0.1s;
-      animation: spinRingReverse 4s linear infinite;
-      pointer-events: none;
-    }
-
+    .center-emblem-inner { display: none; }
     @keyframes spinRing { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-    @keyframes spinRingReverse { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
 
     /* Triggered via JS class */
     .center-emblem.active::after { opacity: 1; }
-    .center-emblem.active .center-emblem-inner { opacity: 1; }
+
     .center-emblem.active::before { border-color: rgba(212,175,55,0.9); }
     .center-emblem.active { transform: translate(-50%,-50%) scale(1.12); }
 
