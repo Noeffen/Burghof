@@ -135,26 +135,22 @@
       text-decoration: none;
       color: white;
       overflow: hidden;
+      background: rgba(0,0,0,0.01); /* needed for stacking context */
     }
 
-    /* Zone hover photo */
-    .zone::after {
-      content: '';
+    /* Zone hover photo — explicit div approach */
+    .zone-img {
       position: absolute; inset: 0;
-      opacity: 0;
       background-size: cover; background-position: center;
-      transition: opacity 0.5s ease;
-      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.55s ease;
+      z-index: 1;
     }
-    .zone-events::after  { background-image: url('Bilder/startseite/event.jpg'); }
-    .zone-hotel::after   { background-image: url('Bilder/startseite/hotel.jpg'); }
-    .zone-erleben::after { background-image: url('Bilder/startseite/erleben.jpg'); }
-    .zone-restaurant::after { background-image: url('Bilder/startseite/restaurant.jpg'); }
-    .zone:hover::after { opacity: 1; }
+    .zone:hover .zone-img { opacity: 1; }
 
     /* Zone hover gold sheen */
     .zone-sheen {
-      position: absolute; inset: 0; z-index: 1;
+      position: absolute; inset: 0; z-index: 2;
       opacity: 0;
       transition: opacity 0.4s;
     }
@@ -171,7 +167,7 @@
     .zone-restaurant{ justify-content: flex-start; align-items: flex-end;    padding: 3rem 3rem 0 0; }
 
     .zone-content {
-      position: relative; z-index: 2;
+      position: relative; z-index: 3;
       transform: translateY(5px);
       transition: transform 0.4s cubic-bezier(.16,1,.3,1);
     }
@@ -313,6 +309,7 @@
 
     <!-- EVENTS -->
     <a href="events.html" class="zone zone-events">
+      <div class="zone-img" style="background-image:url('Bilder/startseite/event.jpg')"></div>
       <div class="zone-sheen"></div>
       <div class="zone-content">
         <span class="zone-label">Feiern & Genießen</span>
@@ -324,6 +321,7 @@
 
     <!-- HOTEL -->
     <a href="hotel.html" class="zone zone-hotel">
+      <div class="zone-img" style="background-image:url('Bilder/startseite/hotel.jpg')"></div>
       <div class="zone-sheen"></div>
       <div class="zone-content">
         <span class="zone-label">Übernachten</span>
@@ -335,6 +333,7 @@
 
     <!-- ERLEBEN -->
     <a href="erleben.html" class="zone zone-erleben">
+      <div class="zone-img" style="background-image:url('Bilder/startseite/erleben.jpg')"></div>
       <div class="zone-sheen"></div>
       <div class="zone-content">
         <span class="zone-label">Natur & Aktivität</span>
@@ -346,6 +345,7 @@
 
     <!-- RESTAURANT -->
     <a href="restaurant.html" class="zone zone-restaurant">
+      <div class="zone-img" style="background-image:url('Bilder/startseite/restaurant.jpg')"></div>
       <div class="zone-sheen"></div>
       <div class="zone-content">
         <span class="zone-label">Genuss & Küche</span>
