@@ -48,6 +48,8 @@
   .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .grid3 { grid-template-columns: 1fr; } }
 
   .slots { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .3rem; }
   .slot-btn { padding: .6rem 1rem; border-radius: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: #fff; cursor: pointer; font-family: inherit; font-size: .9rem; transition: all .15s; text-align: center; min-width: 92px; }
@@ -104,6 +106,7 @@
   .settings-card .sub-small { color: #888; font-size: .82rem; margin: 0 0 1rem; }
   .checkbox-row { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: #ddd; margin-bottom: .8rem; cursor: pointer; }
   .checkbox-row input { width: auto; }
+  .radio-group { display: flex; flex-wrap: wrap; gap: 1.5rem; }
   .sperr-slots { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; transition: opacity .15s; }
   .sperr-chip { padding: .35rem .7rem; border-radius: 6px; border: 1px solid var(--input-border); background: var(--input-bg); color: #ccc; font-size: .78rem; cursor: pointer; font-family: inherit; }
   .sperr-chip.aktiv { background: #3d1f1f; border-color: #5c2e2e; color: #e2938d; }
@@ -129,6 +132,13 @@
   .beleg-legende .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: .4rem; vertical-align: middle; background: var(--input-bg); }
   .beleg-legende .dot.frei { border: 2px solid #3a5a3a; }
   .beleg-legende .dot.belegt { background: #3d1f1f; border: 2px solid #c0392b; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+  .modal-box { position: relative; background: #222; border: 1px solid #3a3a3a; border-radius: 12px; padding: 1.75rem; max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  .modal-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 0 0 1rem; padding-right: 1.5rem; }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #aaa; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+  .modal-close:hover { color: var(--gold); }
+  .modal-box p { margin: 0 0 .6rem; font-size: .92rem; color: #ddd; }
+  .modal-box .modal-kommentar { color: #aaa; font-style: italic; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -193,7 +203,7 @@
       </div>
 
       <button type="submit" class="btn" id="submitBtn">Reservierung anfragen</button>
-      <p class="hint">Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
+      <p class="hint">Ihr Tisch ist für 2 Stunden reserviert. Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
     </form>
 
     <a href="#admin" class="staff-link">Mitarbeiter-Anmeldung</a>
@@ -234,10 +244,17 @@
 
       <div class="settings-card" style="margin-bottom:1.5rem;">
         <h3>Reservierung telefonisch anlegen</h3>
-        <p class="sub-small">Für Gäste, die anrufen oder persönlich vorbeikommen — der passende Tisch wird automatisch zugewiesen, wie bei einer Online-Buchung.</p>
+        <p class="sub-small">Für Gäste, die anrufen oder persönlich vorbeikommen.</p>
         <div id="aResMsg" hidden></div>
         <form id="adminResForm">
-          <div class="grid2">
+          <div class="field">
+            <label>Tischzuweisung</label>
+            <div class="radio-group">
+              <label class="checkbox-row"><input type="radio" name="aModus" value="auto" checked> Automatisch (System wählt passenden Tisch)</label>
+              <label class="checkbox-row"><input type="radio" name="aModus" value="manuell"> Manuell (Tisch selbst wählen)</label>
+            </div>
+          </div>
+          <div class="grid3">
             <div class="field">
               <label for="aDatum">Datum *</label>
               <input type="date" id="aDatum" required>
@@ -246,10 +263,24 @@
               <label for="aPersonen">Personen *</label>
               <select id="aPersonen" required></select>
             </div>
+            <div class="field">
+              <label for="aDauer">Dauer</label>
+              <select id="aDauer">
+                <option value="1">1 Stunde</option>
+                <option value="2" selected>2 Stunden</option>
+                <option value="3">3 Stunden</option>
+                <option value="4">4 Stunden</option>
+              </select>
+            </div>
           </div>
           <div class="field">
             <label>Uhrzeit *</label>
             <div id="aSlotWrap" class="slots"></div>
+          </div>
+          <div class="field" id="aTischWrap" hidden>
+            <label>Tisch wählen *</label>
+            <div id="aTischPicker" class="slots"></div>
+            <p id="aTischHinweis" class="hint" style="margin-top:.4rem;" hidden></p>
           </div>
           <div class="grid2">
             <div class="field">
@@ -282,7 +313,7 @@
 
       <div class="settings-card" style="margin-bottom:1.5rem;">
         <h3>Tischbelegung</h3>
-        <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind.</p>
+        <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind. Auf einen belegten Tisch klicken, um Kommentar, Dauer und Stornierung zu sehen.</p>
         <div class="tisch-form">
           <div class="field" style="max-width:170px;margin-bottom:0;">
             <label for="belegungDatum">Datum</label>
@@ -321,6 +352,14 @@
 
   </section>
 
+</div>
+
+<div id="belegModal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="belegModalClose" aria-label="Schließen">×</button>
+    <h3 id="belegModalTitel">Tisch</h3>
+    <div id="belegModalBody"></div>
+  </div>
 </div>
 
 <script type="module">
@@ -371,6 +410,26 @@
     return slots;
   }
   const ALL_SLOTS = generateSlots();
+
+  // Liste der 30-Min-Slots, die eine Reservierung ab startSlot für die gegebene
+  // Dauer (in Stunden) belegt. Wird an den Öffnungszeiten gekappt.
+  function slotsForDuration(startSlot, stunden) {
+    const startIndex = ALL_SLOTS.indexOf(startSlot);
+    if (startIndex === -1) return [startSlot];
+    const anzahl = Math.max(1, Math.round((stunden * 60) / CONFIG.SLOT_MINUTEN));
+    const result = [];
+    for (let i = 0; i < anzahl; i++) {
+      if (startIndex + i < ALL_SLOTS.length) result.push(ALL_SLOTS[startIndex + i]);
+    }
+    return result;
+  }
+  function addHoursToSlot(slot, stunden) {
+    const [h, m] = slot.split(":").map(Number);
+    return `${String(h + stunden).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  }
+  function istTischFreiImFenster(tischId, belegtMap, fenster) {
+    return fenster.every(s => !((belegtMap[s] || []).includes(tischId)));
+  }
 
   function todayIso() {
     return new Date().toISOString().slice(0, 10);
@@ -456,10 +515,10 @@
     const personen = parseInt(fPersonen.value, 10);
     const gesperrteSlots = currentSperr.gesperrteSlots || [];
     ALL_SLOTS.forEach(slot => {
-      const belegteTische = currentBelegt[slot] || [];
+      const fenster = slotsForDuration(slot, 2);
       const past = isPastSlot(fDatum.value, slot);
-      const blocked = gesperrteSlots.includes(slot);
-      const passendeFreie = ALL_TABLES.filter(t => t.plaetze >= personen && !belegteTische.includes(t.id));
+      const blocked = fenster.some(s => gesperrteSlots.includes(s));
+      const passendeFreie = ALL_TABLES.filter(t => t.plaetze >= personen && istTischFreiImFenster(t.id, currentBelegt, fenster));
       const btn = document.createElement("button");
       btn.type = "button";
       btn.dataset.slot = slot;
@@ -517,7 +576,9 @@
   fDatum.addEventListener("change", subscribeDatum);
   renderSlots();
 
-  async function reserviere(datum, uhrzeit, personen, name, telefon, kommentar, status) {
+  async function reserviere(datum, uhrzeit, personen, name, telefon, kommentar, status, manualTischId, dauerStunden) {
+    const dauer = dauerStunden || 2;
+    const fenster = slotsForDuration(uhrzeit, dauer);
     const verfRef = doc(db, "verfuegbarkeit", datum);
     const sperrRef = doc(db, "sperrungen", datum);
     const resRef = doc(collection(db, "reservierungen"));
@@ -526,23 +587,38 @@
       const sperrSnap = await tx.get(sperrRef);
 
       const sperrData = sperrSnap.exists() ? sperrSnap.data() : {};
-      if (sperrData.ganzerTag || (sperrData.gesperrteSlots || []).includes(uhrzeit)) {
+      const gesperrteSlots = sperrData.gesperrteSlots || [];
+      if (sperrData.ganzerTag || fenster.some(s => gesperrteSlots.includes(s))) {
         throw new Error("GESPERRT");
       }
 
-      const belegteTische = verfSnap.exists() ? ((verfSnap.data().slots || {})[uhrzeit] || []) : [];
-      const kandidaten = ALL_TABLES
-        .filter(t => t.plaetze >= personen && !belegteTische.includes(t.id))
-        .sort((a, b) => a.plaetze - b.plaetze);
-      if (kandidaten.length === 0) {
-        throw new Error("AUSGEBUCHT");
+      const slotsMap = verfSnap.exists() ? (verfSnap.data().slots || {}) : {};
+      let tisch;
+      if (manualTischId) {
+        if (!istTischFreiImFenster(manualTischId, slotsMap, fenster)) {
+          throw new Error("TISCH_BELEGT");
+        }
+        tisch = ALL_TABLES_ADMIN.find(t => t.id === manualTischId) || ALL_TABLES.find(t => t.id === manualTischId);
+        if (!tisch) {
+          throw new Error("AUSGEBUCHT");
+        }
+      } else {
+        const kandidaten = ALL_TABLES
+          .filter(t => t.plaetze >= personen && istTischFreiImFenster(t.id, slotsMap, fenster))
+          .sort((a, b) => a.plaetze - b.plaetze);
+        if (kandidaten.length === 0) {
+          throw new Error("AUSGEBUCHT");
+        }
+        tisch = kandidaten[0];
       }
-      const tisch = kandidaten[0];
-      tx.set(verfRef, { slots: { [uhrzeit]: [...belegteTische, tisch.id] } }, { merge: true });
+      const updatedSlots = {};
+      fenster.forEach(s => { updatedSlots[s] = [...(slotsMap[s] || []), tisch.id]; });
+      tx.set(verfRef, { slots: updatedSlots }, { merge: true });
       tx.set(resRef, {
         datum, uhrzeit, personen, name, telefon,
         kommentar: kommentar || "",
         tischId: tisch.id, tischName: tisch.name,
+        dauerStunden: dauer, belegteSlots: fenster,
         status: status || "neu",
         erstelltAm: serverTimestamp()
       });
@@ -618,11 +694,16 @@
   const aResMsg = document.getElementById("aResMsg");
   const aDatum = document.getElementById("aDatum");
   const aPersonen = document.getElementById("aPersonen");
+  const aDauer = document.getElementById("aDauer");
   const aSlotWrap = document.getElementById("aSlotWrap");
   const aName = document.getElementById("aName");
   const aTelefon = document.getElementById("aTelefon");
   const aKommentar = document.getElementById("aKommentar");
   const aSubmitBtn = document.getElementById("aSubmitBtn");
+  const aModusRadios = document.querySelectorAll('input[name="aModus"]');
+  const aTischWrap = document.getElementById("aTischWrap");
+  const aTischPicker = document.getElementById("aTischPicker");
+  const aTischHinweis = document.getElementById("aTischHinweis");
   const belegungDatum = document.getElementById("belegungDatum");
   const belegungUhrzeit = document.getElementById("belegungUhrzeit");
   const belegungCanvas = document.getElementById("belegungCanvas");
@@ -659,6 +740,7 @@
   let ALL_TABLES_ADMIN = [];
   let currentBelegungReservations = [];
   let aSelectedSlot = null;
+  let aSelectedTischId = null;
   let aCurrentBelegt = {};
   let aCurrentSperr = {};
 
@@ -667,28 +749,39 @@
     return next || ALL_SLOTS[0];
   }
 
+  function getAModus() {
+    return document.querySelector('input[name="aModus"]:checked').value;
+  }
+
   function renderASlots() {
     aSelectedSlot = null;
+    aSelectedTischId = null;
     aSlotWrap.innerHTML = "";
     if (!aDatum.value) {
       aSlotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst ein Datum auswählen.</span>';
+      renderATischPicker();
       return;
     }
     if (aCurrentSperr.ganzerTag) {
       aSlotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">An diesem Tag sind Reservierungen gesperrt.</span>';
+      renderATischPicker();
       return;
     }
-    if (!aPersonen.value) {
+    const manuell = getAModus() === "manuell";
+    if (!manuell && !aPersonen.value) {
       aSlotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst die Personenzahl wählen.</span>';
+      renderATischPicker();
       return;
     }
-    const personen = parseInt(aPersonen.value, 10);
+    const personen = parseInt(aPersonen.value, 10) || 0;
+    const dauer = parseInt(aDauer.value, 10) || 2;
     const gesperrteSlots = aCurrentSperr.gesperrteSlots || [];
     ALL_SLOTS.forEach(slot => {
-      const belegteTische = aCurrentBelegt[slot] || [];
+      const fenster = slotsForDuration(slot, dauer);
       const past = isPastSlot(aDatum.value, slot);
-      const blocked = gesperrteSlots.includes(slot);
-      const passendeFreie = ALL_TABLES_ADMIN.filter(t => t.plaetze >= personen && !belegteTische.includes(t.id));
+      const blocked = fenster.some(s => gesperrteSlots.includes(s));
+      const freieTische = ALL_TABLES_ADMIN.filter(t => istTischFreiImFenster(t.id, aCurrentBelegt, fenster));
+      const passendeFreie = freieTische.filter(t => t.plaetze >= personen);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.dataset.slot = slot;
@@ -698,6 +791,12 @@
         statusClass = "voll"; statusText = "vorbei"; btn.disabled = true;
       } else if (blocked) {
         statusClass = "voll"; statusText = "nicht verfügbar"; btn.disabled = true;
+      } else if (manuell) {
+        if (ALL_TABLES_ADMIN.length === 0 || freieTische.length === 0) {
+          statusClass = "voll"; statusText = "alle Tische belegt"; btn.disabled = true;
+        } else {
+          statusClass = "frei"; statusText = `${freieTische.length} Tisch(e) frei`;
+        }
       } else if (ALL_TABLES_ADMIN.length === 0 || passendeFreie.length === 0) {
         statusClass = "voll"; statusText = "ausgebucht"; btn.disabled = true;
       } else if (passendeFreie.length === 1) {
@@ -713,11 +812,51 @@
         aSlotWrap.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("selected"));
         btn.classList.add("selected");
         aSelectedSlot = slot;
+        aSelectedTischId = null;
+        renderATischPicker();
       });
       aSlotWrap.appendChild(btn);
     });
+    renderATischPicker();
   }
   aPersonen.addEventListener("change", renderASlots);
+  aDauer.addEventListener("change", renderASlots);
+  aModusRadios.forEach(r => r.addEventListener("change", renderASlots));
+
+  function renderATischPicker() {
+    const manuell = getAModus() === "manuell";
+    if (!manuell || !aSelectedSlot) {
+      aTischWrap.hidden = true;
+      aTischHinweis.hidden = true;
+      return;
+    }
+    aTischWrap.hidden = false;
+    aTischPicker.innerHTML = "";
+    const dauer = parseInt(aDauer.value, 10) || 2;
+    const fenster = slotsForDuration(aSelectedSlot, dauer);
+    const personen = parseInt(aPersonen.value, 10) || 0;
+    ALL_TABLES_ADMIN.forEach(t => {
+      const belegt = !istTischFreiImFenster(t.id, aCurrentBelegt, fenster);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "slot-btn " + (belegt ? "voll" : "frei") + (t.id === aSelectedTischId ? " selected" : "");
+      btn.disabled = belegt;
+      btn.innerHTML = `${escapeHtml(t.name)}<small>${belegt ? "belegt" : t.plaetze + " Plätze"}</small>`;
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        aSelectedTischId = t.id;
+        renderATischPicker();
+      });
+      aTischPicker.appendChild(btn);
+    });
+    const gewaehlt = ALL_TABLES_ADMIN.find(t => t.id === aSelectedTischId);
+    if (gewaehlt && personen && gewaehlt.plaetze < personen) {
+      aTischHinweis.textContent = `Hinweis: „${gewaehlt.name}" hat nur ${gewaehlt.plaetze} Plätze, angegeben sind ${personen} Personen.`;
+      aTischHinweis.hidden = false;
+    } else {
+      aTischHinweis.hidden = true;
+    }
+  }
 
   function subscribeADatum(datum) {
     if (aVerfUnsub) { aVerfUnsub(); aVerfUnsub = null; }
@@ -760,11 +899,18 @@
       aResMsg.hidden = false;
       return;
     }
+    const manuell = getAModus() === "manuell";
+    if (manuell && !aSelectedTischId) {
+      aResMsg.textContent = "Bitte einen Tisch auswählen.";
+      aResMsg.className = "msg error";
+      aResMsg.hidden = false;
+      return;
+    }
 
     aSubmitBtn.disabled = true;
     aSubmitBtn.textContent = "Wird angelegt …";
     try {
-      await reserviere(datum, aSelectedSlot, personen, name, telefon, kommentar, "bestätigt");
+      await reserviere(datum, aSelectedSlot, personen, name, telefon, kommentar, "bestätigt", manuell ? aSelectedTischId : null, parseInt(aDauer.value, 10) || 2);
       aResMsg.textContent = `Reservierung für ${name} am ${formatDatum(datum)} um ${aSelectedSlot} Uhr wurde angelegt.`;
       aResMsg.className = "msg success";
       aResMsg.hidden = false;
@@ -776,6 +922,9 @@
     } catch (err) {
       if (err.message === "AUSGEBUCHT") {
         aResMsg.textContent = "Für diese Uhrzeit ist leider kein passender Tisch mehr frei.";
+      } else if (err.message === "TISCH_BELEGT") {
+        aResMsg.textContent = "Dieser Tisch ist für die gewählte Uhrzeit inzwischen belegt. Bitte einen anderen Tisch wählen.";
+        renderATischPicker();
       } else if (err.message === "GESPERRT") {
         aResMsg.textContent = "Diese Uhrzeit ist gesperrt.";
       } else {
@@ -793,14 +942,15 @@
     belegungCanvas.innerHTML = "";
     const uhrzeit = belegungUhrzeit.value;
     ALL_TABLES_ADMIN.forEach(t => {
-      const res = currentBelegungReservations.find(r => r.tischId === t.id && r.uhrzeit === uhrzeit);
+      const res = currentBelegungReservations.find(r => r.tischId === t.id && (r.belegteSlots || [r.uhrzeit]).includes(uhrzeit));
       const chip = document.createElement("div");
       chip.className = "tisch-chip beleg-chip " + (res ? "belegt" : "frei-tisch");
       chip.style.left = (t.x ?? 10) + "%";
       chip.style.top = (t.y ?? 10) + "%";
       if (res) {
         chip.innerHTML = `${escapeHtml(t.name)}<small>${escapeHtml(res.name)}</small><small>${res.personen} Pers.</small>`;
-        chip.title = `${res.name} · ${res.telefon} · ${res.personen} Personen · ${res.status}`;
+        chip.title = `${res.name} · ${res.telefon} · ${res.personen} Personen · Klicken für Details`;
+        chip.addEventListener("click", () => openBelegModal(res, t));
       } else {
         chip.innerHTML = `${escapeHtml(t.name)}<small>${t.plaetze} Plätze</small><small>frei</small>`;
       }
@@ -819,6 +969,108 @@
   }
   belegungDatum.addEventListener("change", () => subscribeBelegung(belegungDatum.value));
   belegungUhrzeit.addEventListener("change", renderBelegungCanvas);
+
+  // ---------------------------------------------------------------
+  // Detail-Modal: Kommentar ansehen, Dauer ändern, Stornieren
+  // ---------------------------------------------------------------
+  const belegModal = document.getElementById("belegModal");
+  const belegModalTitel = document.getElementById("belegModalTitel");
+  const belegModalBody = document.getElementById("belegModalBody");
+  const belegModalClose = document.getElementById("belegModalClose");
+
+  function closeBelegModal() {
+    belegModal.hidden = true;
+  }
+  belegModalClose.addEventListener("click", closeBelegModal);
+  belegModal.addEventListener("click", e => { if (e.target === belegModal) closeBelegModal(); });
+
+  function openBelegModal(res, tisch) {
+    const dauer = res.dauerStunden || 2;
+    const ende = addHoursToSlot(res.uhrzeit, dauer);
+    belegModalTitel.textContent = tisch.name;
+    belegModalBody.innerHTML = `
+      <p><strong>${escapeHtml(res.name)}</strong> · ${res.personen} ${res.personen === 1 ? "Person" : "Personen"}</p>
+      <p>${formatDatum(res.datum)} · ${res.uhrzeit}–${ende} Uhr · ${statusBadge(res.status)}</p>
+      <p><a class="tel-link" href="tel:${escapeHtml(res.telefon)}">${escapeHtml(res.telefon)}</a></p>
+      <p class="modal-kommentar">${res.kommentar ? escapeHtml(res.kommentar) : "Kein Kommentar."}</p>
+      <div class="field" style="margin-top:1rem;">
+        <label for="belegModalDauer">Dauer ändern</label>
+        <select id="belegModalDauer">
+          <option value="1">1 Stunde</option>
+          <option value="2">2 Stunden</option>
+          <option value="3">3 Stunden</option>
+          <option value="4">4 Stunden</option>
+        </select>
+      </div>
+      <p id="belegModalMsg" class="hint" hidden></p>
+      <div style="display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap;">
+        <button type="button" id="belegModalUpdateBtn" class="btn-sm">Dauer aktualisieren</button>
+        <button type="button" id="belegModalStornoBtn" class="btn-sm danger">Stornieren</button>
+      </div>
+    `;
+    const dauerSelect = document.getElementById("belegModalDauer");
+    const msgEl = document.getElementById("belegModalMsg");
+    dauerSelect.value = String(dauer);
+
+    document.getElementById("belegModalUpdateBtn").addEventListener("click", async () => {
+      const neueDauer = parseInt(dauerSelect.value, 10);
+      msgEl.hidden = true;
+      try {
+        await reservierungDauerAendern(res, neueDauer);
+        closeBelegModal();
+      } catch (err) {
+        msgEl.textContent = err.message === "KONFLIKT"
+          ? "Die zusätzliche Zeit ist für diesen Tisch bereits anderweitig belegt."
+          : err.message === "GESPERRT"
+            ? "Die zusätzliche Zeit ist gesperrt."
+            : "Dauer konnte nicht aktualisiert werden.";
+        msgEl.hidden = false;
+      }
+    });
+
+    document.getElementById("belegModalStornoBtn").addEventListener("click", async () => {
+      if (!confirm(`Reservierung von ${res.name} wirklich stornieren?`)) return;
+      await stornierenReservierung(res);
+      closeBelegModal();
+    });
+
+    belegModal.hidden = false;
+  }
+
+  async function reservierungDauerAendern(res, neueDauer) {
+    const alteSlots = res.belegteSlots || [res.uhrzeit];
+    const neueSlots = slotsForDuration(res.uhrzeit, neueDauer);
+    const verfRef = doc(db, "verfuegbarkeit", res.datum);
+    const sperrRef = doc(db, "sperrungen", res.datum);
+    const resRef = doc(db, "reservierungen", res.id);
+    await runTransaction(db, async tx => {
+      const verfSnap = await tx.get(verfRef);
+      const sperrSnap = await tx.get(sperrRef);
+
+      const slotsMap = verfSnap.exists() ? (verfSnap.data().slots || {}) : {};
+      const hinzu = neueSlots.filter(s => !alteSlots.includes(s));
+      const weg = alteSlots.filter(s => !neueSlots.includes(s));
+
+      const sperrData = sperrSnap.exists() ? sperrSnap.data() : {};
+      const gesperrteSlots = sperrData.gesperrteSlots || [];
+      if (sperrData.ganzerTag || hinzu.some(s => gesperrteSlots.includes(s))) {
+        throw new Error("GESPERRT");
+      }
+      for (const s of hinzu) {
+        if ((slotsMap[s] || []).includes(res.tischId)) {
+          throw new Error("KONFLIKT");
+        }
+      }
+
+      const updatedSlots = {};
+      hinzu.forEach(s => { updatedSlots[s] = [...(slotsMap[s] || []), res.tischId]; });
+      weg.forEach(s => { updatedSlots[s] = (slotsMap[s] || []).filter(id => id !== res.tischId); });
+      if (Object.keys(updatedSlots).length > 0) {
+        tx.set(verfRef, { slots: updatedSlots }, { merge: true });
+      }
+      tx.update(resRef, { dauerStunden: neueDauer, belegteSlots: neueSlots });
+    });
+  }
 
   onAuthStateChanged(auth, user => {
     if (user) {
@@ -850,6 +1102,7 @@
       if (belegungResUnsub) { belegungResUnsub(); belegungResUnsub = null; }
       if (aVerfUnsub) { aVerfUnsub(); aVerfUnsub = null; }
       if (aSperrUnsub) { aSperrUnsub(); aSperrUnsub = null; }
+      closeBelegModal();
     }
   });
 
@@ -1104,8 +1357,7 @@
         btn.textContent = "Stornieren";
         btn.addEventListener("click", async () => {
           if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} wirklich stornieren?`)) return;
-          if (r.tischId) await freigebenSlot(r.datum, r.uhrzeit, r.tischId);
-          await updateDoc(doc(db, "reservierungen", r.id), { status: "storniert" });
+          await stornierenReservierung(r);
         });
         actions.appendChild(btn);
       }
@@ -1114,7 +1366,7 @@
       delBtn.textContent = "Löschen";
       delBtn.addEventListener("click", async () => {
         if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} endgültig löschen?`)) return;
-        if (r.status !== "storniert" && r.tischId) await freigebenSlot(r.datum, r.uhrzeit, r.tischId);
+        if (r.status !== "storniert" && r.tischId) await freigebenSlots(r.datum, r.belegteSlots || [r.uhrzeit], r.tischId);
         await deleteDoc(doc(db, "reservierungen", r.id));
       });
       actions.appendChild(delBtn);
@@ -1127,14 +1379,21 @@
     resList.appendChild(wrap);
   }
 
-  async function freigebenSlot(datum, uhrzeit, tischId) {
+  async function freigebenSlots(datum, slots, tischId) {
     const verfRef = doc(db, "verfuegbarkeit", datum);
     await runTransaction(db, async tx => {
       const snap = await tx.get(verfRef);
-      const belegteTische = snap.exists() ? ((snap.data().slots || {})[uhrzeit] || []) : [];
-      const neu = belegteTische.filter(id => id !== tischId);
-      tx.set(verfRef, { slots: { [uhrzeit]: neu } }, { merge: true });
+      const slotsMap = snap.exists() ? (snap.data().slots || {}) : {};
+      const updated = {};
+      slots.forEach(s => { updated[s] = (slotsMap[s] || []).filter(id => id !== tischId); });
+      tx.set(verfRef, { slots: updated }, { merge: true });
     });
+  }
+
+  async function stornierenReservierung(r) {
+    if (r.status === "storniert") return;
+    if (r.tischId) await freigebenSlots(r.datum, r.belegteSlots || [r.uhrzeit], r.tischId);
+    await updateDoc(doc(db, "reservierungen", r.id), { status: "storniert" });
   }
 
   function escapeHtml(str) {
