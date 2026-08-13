@@ -110,6 +110,15 @@
   .saved-msg { color: #8fd19e; font-size: .8rem; margin-left: .6rem; }
   .gesperrte-liste { margin-top: 1rem; border-top: 1px solid #333; padding-top: 1rem; }
   .gesperrte-liste-item { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; padding: .4rem 0; color: #ccc; }
+
+  .tisch-form { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+  .tisch-form input[type=text] { flex: 1; min-width: 160px; padding: .55rem .8rem; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .9rem; }
+  .tisch-form input[type=number] { width: 90px; padding: .55rem .6rem; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .9rem; }
+  .tisch-canvas { position: relative; width: 100%; height: 380px; background: #1e1e1e; background-image: linear-gradient(#292929 1px, transparent 1px), linear-gradient(90deg, #292929 1px, transparent 1px); background-size: 24px 24px; border: 1px dashed #3a3a3a; border-radius: 10px; overflow: hidden; }
+  .tisch-chip { position: absolute; width: 74px; height: 74px; margin-left: -37px; margin-top: -37px; border-radius: 12px; background: var(--input-bg); border: 2px solid var(--gold); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: grab; user-select: none; font-size: .76rem; font-weight: 700; touch-action: none; text-align: center; padding: 2px; }
+  .tisch-chip:active { cursor: grabbing; }
+  .tisch-chip small { font-weight: 400; color: #ccc; font-size: .66rem; margin-top: 2px; }
+  .tisch-chip .del-x { position: absolute; top: -9px; right: -9px; width: 18px; height: 18px; border-radius: 50%; background: #3d1f1f; color: #e2938d; border: 1px solid #5c2e2e; font-size: .68rem; line-height: 16px; text-align: center; cursor: pointer; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -208,33 +217,31 @@
         </div>
       </div>
 
-      <div class="settings-grid">
-        <div class="settings-card">
-          <h3>Kapazität</h3>
-          <p class="sub-small">Maximale Anzahl Gäste, die insgesamt pro Zeitfenster angenommen werden.</p>
-          <div class="field" style="max-width:200px;">
-            <label for="capInput">Plätze pro Zeitfenster</label>
-            <input type="number" id="capInput" min="1" max="500">
-          </div>
-          <button id="capSaveBtn" class="btn-sm">Speichern</button>
-          <span id="capSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
+      <div class="settings-card" style="margin-bottom:1.5rem;">
+        <h3>Tischplan</h3>
+        <p class="sub-small">Tische anlegen und per Drag &amp; Drop anordnen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird — ein Tisch wird nie mit fremden Gästen geteilt. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
+        <div class="tisch-form">
+          <input type="text" id="tischNameInput" placeholder="Tischname, z. B. Tisch 1">
+          <input type="number" id="tischPlaetzeInput" placeholder="Plätze" min="1" max="20">
+          <button id="tischAddBtn" class="btn-sm">+ Tisch hinzufügen</button>
         </div>
+        <div id="tischCanvas" class="tisch-canvas"></div>
+      </div>
 
-        <div class="settings-card">
-          <h3>Tage / Uhrzeiten sperren</h3>
-          <p class="sub-small">Für ein Datum komplett oder für einzelne Uhrzeiten Reservierungen sperren.</p>
-          <div class="field" style="max-width:200px;">
-            <label for="sperrDatum">Datum</label>
-            <input type="date" id="sperrDatum">
-          </div>
-          <label class="checkbox-row">
-            <input type="checkbox" id="sperrGanzerTag"> Gesamten Tag sperren
-          </label>
-          <div id="sperrSlotsWrap" class="sperr-slots"></div>
-          <button id="sperrSaveBtn" class="btn-sm">Speichern</button>
-          <span id="sperrSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
-          <div id="gesperrteTageListe" class="gesperrte-liste"></div>
+      <div class="settings-card" style="max-width:520px;margin-bottom:2rem;">
+        <h3>Tage / Uhrzeiten sperren</h3>
+        <p class="sub-small">Für ein Datum komplett oder für einzelne Uhrzeiten Reservierungen sperren.</p>
+        <div class="field" style="max-width:200px;">
+          <label for="sperrDatum">Datum</label>
+          <input type="date" id="sperrDatum">
         </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="sperrGanzerTag"> Gesamten Tag sperren
+        </label>
+        <div id="sperrSlotsWrap" class="sperr-slots"></div>
+        <button id="sperrSaveBtn" class="btn-sm">Speichern</button>
+        <span id="sperrSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
+        <div id="gesperrteTageListe" class="gesperrte-liste"></div>
       </div>
 
       <div id="resList"></div>
@@ -248,7 +255,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getFirestore, doc, collection, query, where, orderBy,
-    onSnapshot, runTransaction, updateDoc, setDoc, deleteDoc, serverTimestamp
+    onSnapshot, runTransaction, updateDoc, setDoc, addDoc, deleteDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import {
     getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
@@ -277,9 +284,6 @@
     OEFFNUNGSZEITEN: [{ start: "18:00", end: "21:30" }],
     SLOT_MINUTEN: 30
   };
-  // Fallback, solange Hansi im Admin-Panel noch keine eigene Kapazität
-  // unter Firestore-Dokument einstellungen/global gespeichert hat.
-  const DEFAULT_MAX_CAPACITY = 40;
 
   function generateSlots() {
     const slots = [];
@@ -347,7 +351,7 @@
   fDatum.min = todayIso();
 
   let selectedSlot = null;
-  let currentCapacity = DEFAULT_MAX_CAPACITY;
+  let ALL_TABLES = [];
   let currentBelegt = {};
   let currentSperr = {};
   let verfuegbarkeitUnsub = null;
@@ -373,12 +377,17 @@
       slotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">An diesem Tag sind leider keine Reservierungen möglich. Bitte wählen Sie ein anderes Datum oder rufen Sie uns an: <a href="tel:+496063589962" style="color:var(--gold);">+49 6063 589962 00</a>.</span>';
       return;
     }
+    if (!fPersonen.value) {
+      slotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst die Personenzahl wählen.</span>';
+      return;
+    }
+    const personen = parseInt(fPersonen.value, 10);
     const gesperrteSlots = currentSperr.gesperrteSlots || [];
     ALL_SLOTS.forEach(slot => {
-      const belegt = currentBelegt[slot] || 0;
-      const frei = currentCapacity - belegt;
+      const belegteTische = currentBelegt[slot] || [];
       const past = isPastSlot(fDatum.value, slot);
       const blocked = gesperrteSlots.includes(slot);
+      const passendeFreie = ALL_TABLES.filter(t => t.plaetze >= personen && !belegteTische.includes(t.id));
       const btn = document.createElement("button");
       btn.type = "button";
       btn.dataset.slot = slot;
@@ -388,10 +397,10 @@
         statusClass = "voll"; statusText = "vorbei"; btn.disabled = true;
       } else if (blocked) {
         statusClass = "voll"; statusText = "nicht verfügbar"; btn.disabled = true;
-      } else if (frei <= 0) {
+      } else if (ALL_TABLES.length === 0 || passendeFreie.length === 0) {
         statusClass = "voll"; statusText = "ausgebucht"; btn.disabled = true;
-      } else if (frei <= currentCapacity * 0.3) {
-        statusClass = "knapp"; statusText = `noch ${frei} Plätze`;
+      } else if (passendeFreie.length === 1) {
+        statusClass = "knapp"; statusText = "nur noch 1 Tisch frei";
       } else {
         statusClass = "frei"; statusText = "frei";
       }
@@ -408,11 +417,12 @@
     });
   }
 
-  // Kapazität ist öffentlich lesbar und wird von Hansi im Admin-Panel gepflegt.
-  onSnapshot(doc(db, "einstellungen", "global"), snap => {
-    currentCapacity = snap.exists() ? (snap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
+  // Tische sind öffentlich lesbar (keine Gästedaten) und werden von Hansi im Tischplan gepflegt.
+  onSnapshot(collection(db, "tische"), snap => {
+    ALL_TABLES = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderSlots();
   });
+  fPersonen.addEventListener("change", renderSlots);
 
   function subscribeDatum() {
     if (verfuegbarkeitUnsub) { verfuegbarkeitUnsub(); verfuegbarkeitUnsub = null; }
@@ -438,26 +448,28 @@
   async function reserviere(datum, uhrzeit, personen, name, telefon) {
     const verfRef = doc(db, "verfuegbarkeit", datum);
     const sperrRef = doc(db, "sperrungen", datum);
-    const einstRef = doc(db, "einstellungen", "global");
     const resRef = doc(collection(db, "reservierungen"));
     await runTransaction(db, async tx => {
       const verfSnap = await tx.get(verfRef);
       const sperrSnap = await tx.get(sperrRef);
-      const einstSnap = await tx.get(einstRef);
 
       const sperrData = sperrSnap.exists() ? sperrSnap.data() : {};
       if (sperrData.ganzerTag || (sperrData.gesperrteSlots || []).includes(uhrzeit)) {
         throw new Error("GESPERRT");
       }
 
-      const maxProSlot = einstSnap.exists() ? (einstSnap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
-      const bisher = verfSnap.exists() ? ((verfSnap.data().slots || {})[uhrzeit] || 0) : 0;
-      if (bisher + personen > maxProSlot) {
+      const belegteTische = verfSnap.exists() ? ((verfSnap.data().slots || {})[uhrzeit] || []) : [];
+      const kandidaten = ALL_TABLES
+        .filter(t => t.plaetze >= personen && !belegteTische.includes(t.id))
+        .sort((a, b) => a.plaetze - b.plaetze);
+      if (kandidaten.length === 0) {
         throw new Error("AUSGEBUCHT");
       }
-      tx.set(verfRef, { slots: { [uhrzeit]: bisher + personen } }, { merge: true });
+      const tisch = kandidaten[0];
+      tx.set(verfRef, { slots: { [uhrzeit]: [...belegteTische, tisch.id] } }, { merge: true });
       tx.set(resRef, {
         datum, uhrzeit, personen, name, telefon,
+        tischId: tisch.id, tischName: tisch.name,
         status: "neu",
         erstelltAm: serverTimestamp()
       });
@@ -524,9 +536,10 @@
   const filterUpcoming = document.getElementById("filterUpcoming");
   const filterAlle = document.getElementById("filterAlle");
   const resList = document.getElementById("resList");
-  const capInput = document.getElementById("capInput");
-  const capSaveBtn = document.getElementById("capSaveBtn");
-  const capSavedMsg = document.getElementById("capSavedMsg");
+  const tischNameInput = document.getElementById("tischNameInput");
+  const tischPlaetzeInput = document.getElementById("tischPlaetzeInput");
+  const tischAddBtn = document.getElementById("tischAddBtn");
+  const tischCanvas = document.getElementById("tischCanvas");
   const sperrDatum = document.getElementById("sperrDatum");
   const sperrGanzerTag = document.getElementById("sperrGanzerTag");
   const sperrSlotsWrap = document.getElementById("sperrSlotsWrap");
@@ -537,19 +550,20 @@
   sperrDatum.min = todayIso();
 
   let resListUnsub = null;
-  let capacityUnsub = null;
+  let tischeUnsub = null;
   let sperrDocUnsub = null;
   let gesperrteTageUnsub = null;
   let currentSperrSlotsAdmin = new Set();
+  let ALL_TABLES_ADMIN = [];
 
   onAuthStateChanged(auth, user => {
     if (user) {
       loginBox.hidden = true;
       adminPanel.hidden = false;
       subscribeReservations();
-      capacityUnsub = onSnapshot(doc(db, "einstellungen", "global"), snap => {
-        const val = snap.exists() ? (snap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
-        if (document.activeElement !== capInput) capInput.value = val;
+      tischeUnsub = onSnapshot(collection(db, "tische"), snap => {
+        ALL_TABLES_ADMIN = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderTischCanvas();
       });
       subscribeGesperrteTage();
       sperrDatum.value = "";
@@ -558,22 +572,83 @@
       loginBox.hidden = false;
       adminPanel.hidden = true;
       if (resListUnsub) { resListUnsub(); resListUnsub = null; }
-      if (capacityUnsub) { capacityUnsub(); capacityUnsub = null; }
+      if (tischeUnsub) { tischeUnsub(); tischeUnsub = null; }
       if (sperrDocUnsub) { sperrDocUnsub(); sperrDocUnsub = null; }
       if (gesperrteTageUnsub) { gesperrteTageUnsub(); gesperrteTageUnsub = null; }
     }
   });
 
-  capSaveBtn.addEventListener("click", async () => {
-    const val = parseInt(capInput.value, 10);
-    if (!val || val < 1) {
-      alert("Bitte eine gültige Zahl größer 0 eingeben.");
+  tischAddBtn.addEventListener("click", async () => {
+    const plaetze = parseInt(tischPlaetzeInput.value, 10);
+    if (!plaetze || plaetze < 1) {
+      alert("Bitte eine gültige Platzanzahl eingeben.");
       return;
     }
-    await setDoc(doc(db, "einstellungen", "global"), { maxProSlot: val }, { merge: true });
-    capSavedMsg.hidden = false;
-    setTimeout(() => { capSavedMsg.hidden = true; }, 2000);
+    const name = tischNameInput.value.trim() || `Tisch ${ALL_TABLES_ADMIN.length + 1}`;
+    await addDoc(collection(db, "tische"), {
+      name, plaetze,
+      x: 10 + Math.random() * 75,
+      y: 10 + Math.random() * 70
+    });
+    tischNameInput.value = "";
+    tischPlaetzeInput.value = "";
   });
+
+  function renderTischCanvas() {
+    tischCanvas.innerHTML = "";
+    ALL_TABLES_ADMIN.forEach(t => {
+      const chip = document.createElement("div");
+      chip.className = "tisch-chip";
+      chip.style.left = (t.x ?? 10) + "%";
+      chip.style.top = (t.y ?? 10) + "%";
+      chip.innerHTML = `${escapeHtml(t.name)}<small>${t.plaetze} Plätze</small><span class="del-x" title="Tisch löschen">×</span>`;
+
+      chip.querySelector(".del-x").addEventListener("click", async e => {
+        e.stopPropagation();
+        if (confirm(`Tisch "${t.name}" wirklich löschen?`)) {
+          await deleteDoc(doc(db, "tische", t.id));
+        }
+      });
+      chip.addEventListener("dblclick", async () => {
+        const neu = prompt(`Anzahl Plätze für "${t.name}":`, t.plaetze);
+        const val = parseInt(neu, 10);
+        if (neu !== null && val > 0) {
+          await updateDoc(doc(db, "tische", t.id), { plaetze: val });
+        }
+      });
+      makeTischDraggable(chip, t);
+      tischCanvas.appendChild(chip);
+    });
+  }
+
+  function makeTischDraggable(chip, tisch) {
+    let dragging = false, startX, startY, origX, origY, pendingX, pendingY;
+    chip.addEventListener("pointerdown", e => {
+      if (e.target.classList.contains("del-x")) return;
+      dragging = true;
+      pendingX = null; pendingY = null;
+      chip.setPointerCapture(e.pointerId);
+      startX = e.clientX; startY = e.clientY;
+      origX = tisch.x ?? 10; origY = tisch.y ?? 10;
+    });
+    chip.addEventListener("pointermove", e => {
+      if (!dragging) return;
+      const rect = tischCanvas.getBoundingClientRect();
+      const dxPct = ((e.clientX - startX) / rect.width) * 100;
+      const dyPct = ((e.clientY - startY) / rect.height) * 100;
+      pendingX = Math.min(98, Math.max(2, origX + dxPct));
+      pendingY = Math.min(95, Math.max(5, origY + dyPct));
+      chip.style.left = pendingX + "%";
+      chip.style.top = pendingY + "%";
+    });
+    chip.addEventListener("pointerup", async () => {
+      if (!dragging) return;
+      dragging = false;
+      if (pendingX != null) {
+        await updateDoc(doc(db, "tische", tisch.id), { x: pendingX, y: pendingY });
+      }
+    });
+  }
 
   function renderSperrSlotsUI() {
     sperrSlotsWrap.innerHTML = "";
@@ -719,7 +794,7 @@
     table.className = "res-table";
     table.innerHTML = `
       <thead><tr>
-        <th>Datum</th><th>Uhrzeit</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Status</th><th>Aktionen</th>
+        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Status</th><th>Aktionen</th>
       </tr></thead>
       <tbody></tbody>`;
     const tbody = table.querySelector("tbody");
@@ -730,6 +805,7 @@
       tr.innerHTML = `
         <td>${formatDatum(r.datum)}</td>
         <td>${r.uhrzeit} Uhr</td>
+        <td>${escapeHtml(r.tischName || "–")}</td>
         <td>${r.personen}</td>
         <td>${escapeHtml(r.name)}</td>
         <td><a class="tel-link" href="tel:${escapeHtml(r.telefon)}">${escapeHtml(r.telefon)}</a></td>
@@ -751,7 +827,7 @@
         btn.textContent = "Stornieren";
         btn.addEventListener("click", async () => {
           if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} wirklich stornieren?`)) return;
-          await freigebenSlot(r.datum, r.uhrzeit, r.personen);
+          if (r.tischId) await freigebenSlot(r.datum, r.uhrzeit, r.tischId);
           await updateDoc(doc(db, "reservierungen", r.id), { status: "storniert" });
         });
         actions.appendChild(btn);
@@ -761,7 +837,7 @@
       delBtn.textContent = "Löschen";
       delBtn.addEventListener("click", async () => {
         if (!confirm(`Reservierung von ${r.name} am ${formatDatum(r.datum)} endgültig löschen?`)) return;
-        if (r.status !== "storniert") await freigebenSlot(r.datum, r.uhrzeit, r.personen);
+        if (r.status !== "storniert" && r.tischId) await freigebenSlot(r.datum, r.uhrzeit, r.tischId);
         await deleteDoc(doc(db, "reservierungen", r.id));
       });
       actions.appendChild(delBtn);
@@ -774,12 +850,12 @@
     resList.appendChild(wrap);
   }
 
-  async function freigebenSlot(datum, uhrzeit, personen) {
+  async function freigebenSlot(datum, uhrzeit, tischId) {
     const verfRef = doc(db, "verfuegbarkeit", datum);
     await runTransaction(db, async tx => {
       const snap = await tx.get(verfRef);
-      const bisher = snap.exists() ? ((snap.data().slots || {})[uhrzeit] || 0) : 0;
-      const neu = Math.max(0, bisher - personen);
+      const belegteTische = snap.exists() ? ((snap.data().slots || {})[uhrzeit] || []) : [];
+      const neu = belegteTische.filter(id => id !== tischId);
       tx.set(verfRef, { slots: { [uhrzeit]: neu } }, { merge: true });
     });
   }
