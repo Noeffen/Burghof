@@ -103,7 +103,19 @@
   @media (max-width: 700px) { .settings-grid { grid-template-columns: 1fr; } }
   .settings-card { background: #222; border: 1px solid #333; border-radius: 10px; padding: 1.25rem 1.5rem; }
   .settings-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0 0 .3rem; }
-  .settings-card .sub-small { color: #888; font-size: .82rem; margin: 0 0 1rem; }
+  .sub-small { color: #888; font-size: .82rem; margin: 0 0 1rem; }
+
+  .admin-nav { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: .5rem; background: var(--black); padding: .9rem 0; margin-bottom: 1.5rem; border-bottom: 1px solid #333; }
+  .nav-item { padding: .5rem 1rem; border-radius: 20px; border: 1px solid var(--input-border); background: var(--input-bg); color: #ccc; font-size: .82rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
+  .nav-item:hover { border-color: var(--gold); color: var(--gold); }
+  .nav-item.aktiv { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+
+  .panel { background: #1e1e1e; border: 1px solid #2e2e2e; border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; scroll-margin-top: 4.5rem; }
+  .panel-header { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; background: none; border: none; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; cursor: pointer; text-align: left; }
+  .panel-header:hover { color: var(--gold); }
+  .panel-header .chevron { font-family: inherit; font-weight: 400; color: #888; transition: transform .2s; font-size: 1rem; }
+  .panel-header.open .chevron { transform: rotate(180deg); }
+  .panel-body { padding: 0 1.5rem 1.5rem; }
   .checkbox-row { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: #ddd; margin-bottom: .8rem; cursor: pointer; }
   .checkbox-row input { width: auto; }
   .radio-group { display: flex; flex-wrap: wrap; gap: 1.5rem; }
@@ -241,131 +253,163 @@
     <div id="adminPanel" hidden>
       <div class="adminHeader">
         <div>
-          <h2 style="margin-bottom:.2rem;">Reservierungen</h2>
+          <h2 style="margin-bottom:.2rem;">Admin-Bereich</h2>
           <a href="#" class="back-link">← Zur Reservierungsseite</a>
         </div>
         <div class="controls">
-          <input type="date" id="filterDatum" title="Nach Datum filtern">
-          <button id="filterUpcoming" class="btn-sm">Kommende</button>
-          <button id="filterAlle" class="btn-sm">Alle anzeigen</button>
           <button id="logoutBtn" class="btn-sm">Abmelden</button>
         </div>
       </div>
 
-      <div class="settings-card" style="margin-bottom:1.5rem;">
-        <h3>Reservierung telefonisch anlegen</h3>
-        <p class="sub-small">Für Gäste, die anrufen oder persönlich vorbeikommen.</p>
-        <div id="aResMsg" hidden></div>
-        <form id="adminResForm">
-          <div class="field">
-            <label>Tischzuweisung</label>
-            <div class="radio-group">
-              <label class="checkbox-row"><input type="radio" name="aModus" value="auto" checked> Automatisch (System wählt passenden Tisch)</label>
-              <label class="checkbox-row"><input type="radio" name="aModus" value="manuell"> Manuell (Tisch selbst wählen)</label>
-            </div>
-          </div>
-          <div class="grid3">
-            <div class="field">
-              <label for="aDatum">Datum *</label>
-              <input type="date" id="aDatum" required>
-            </div>
-            <div class="field">
-              <label for="aPersonen">Personen *</label>
-              <select id="aPersonen" required></select>
-            </div>
-            <div class="field">
-              <label for="aDauer">Dauer</label>
-              <select id="aDauer">
-                <option value="1">1 Stunde</option>
-                <option value="2" selected>2 Stunden</option>
-                <option value="3">3 Stunden</option>
-                <option value="4">4 Stunden</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label>Uhrzeit *</label>
-            <div id="aSlotWrap" class="slots"></div>
-          </div>
-          <div class="field" id="aTischWrap" hidden>
-            <label>Tisch wählen *</label>
-            <div id="aTischPicker" class="slots"></div>
-            <p id="aTischHinweis" class="hint" style="margin-top:.4rem;" hidden></p>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="aName">Name *</label>
-              <input type="text" id="aName" required maxlength="100">
-            </div>
-            <div class="field">
-              <label for="aTelefon">Telefon *</label>
-              <input type="tel" id="aTelefon" required maxlength="30">
-            </div>
-          </div>
-          <div class="field">
-            <label for="aKommentar">Kommentar (optional)</label>
-            <textarea id="aKommentar" rows="2" maxlength="500" placeholder="z. B. Allergien, Fensterplatz, Geburtstag …"></textarea>
-          </div>
-          <button type="submit" class="btn-sm" id="aSubmitBtn">Reservierung anlegen</button>
-        </form>
-      </div>
+      <nav class="admin-nav" id="adminNav">
+        <button type="button" class="nav-item" data-panel="anlegen">Reservierung anlegen</button>
+        <button type="button" class="nav-item" data-panel="tische">Tische verwalten</button>
+        <button type="button" class="nav-item" data-panel="belegung">Tischbelegung</button>
+        <button type="button" class="nav-item" data-panel="sperren">Sperrungen</button>
+        <button type="button" class="nav-item" data-panel="liste">Reservierungsliste</button>
+      </nav>
 
-      <div class="settings-card" style="margin-bottom:1.5rem;">
-        <h3>Tische verwalten</h3>
-        <p class="sub-small">Räume anlegen, Tische darin platzieren und per Drag &amp; Drop anordnen. Am gelben Griff unten rechts ziehen, um einen Tisch größer oder kleiner zu machen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
-        <div class="raum-bar">
-          <div id="raumTabs" class="raum-tabs"></div>
-          <div class="raum-add">
-            <input type="text" id="raumNameInput" placeholder="Neuer Raum, z. B. Terrasse">
-            <button id="raumAddBtn" class="btn-sm">+ Raum</button>
-          </div>
-        </div>
-        <div class="tisch-form">
-          <input type="text" id="tischNameInput" placeholder="Tischname, z. B. Tisch 1">
-          <input type="number" id="tischPlaetzeInput" placeholder="Plätze" min="1" max="20">
-          <button id="tischAddBtn" class="btn-sm">+ Tisch hinzufügen</button>
-        </div>
-        <div id="tischCanvas" class="tisch-canvas"></div>
-      </div>
-
-      <div class="settings-card" style="margin-bottom:1.5rem;">
-        <h3>Tischbelegung</h3>
-        <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind. Auf einen belegten Tisch klicken, um Kommentar, Dauer und Stornierung zu sehen.</p>
-        <div id="belegRaumTabs" class="raum-tabs" style="margin-bottom:1rem;"></div>
-        <div class="tisch-form">
-          <div class="field" style="max-width:170px;margin-bottom:0;">
-            <label for="belegungDatum">Datum</label>
-            <input type="date" id="belegungDatum">
-          </div>
-          <div class="field" style="max-width:150px;margin-bottom:0;">
-            <label for="belegungUhrzeit">Uhrzeit</label>
-            <select id="belegungUhrzeit"></select>
-          </div>
-        </div>
-        <div id="belegungCanvas" class="tisch-canvas"></div>
-        <div class="beleg-legende">
-          <span><i class="dot frei"></i>Frei</span>
-          <span><i class="dot belegt"></i>Reserviert</span>
+      <div class="panel" id="panel-anlegen">
+        <button type="button" class="panel-header" data-panel="anlegen">
+          <span>Reservierung anlegen</span><span class="chevron">▾</span>
+        </button>
+        <div class="panel-body" id="panel-body-anlegen">
+          <p class="sub-small">Für Gäste, die anrufen, per E-Mail schreiben oder persönlich vorbeikommen.</p>
+          <div id="aResMsg" hidden></div>
+          <form id="adminResForm">
+            <div class="field">
+              <label>Tischzuweisung</label>
+              <div class="radio-group">
+                <label class="checkbox-row"><input type="radio" name="aModus" value="auto" checked> Automatisch (System wählt passenden Tisch)</label>
+                <label class="checkbox-row"><input type="radio" name="aModus" value="manuell"> Manuell (Tisch selbst wählen)</label>
+              </div>
+            </div>
+            <div class="grid3">
+              <div class="field">
+                <label for="aDatum">Datum *</label>
+                <input type="date" id="aDatum" required>
+              </div>
+              <div class="field">
+                <label for="aPersonen">Personen *</label>
+                <select id="aPersonen" required></select>
+              </div>
+              <div class="field">
+                <label for="aDauer">Dauer</label>
+                <select id="aDauer">
+                  <option value="1">1 Stunde</option>
+                  <option value="2" selected>2 Stunden</option>
+                  <option value="3">3 Stunden</option>
+                  <option value="4">4 Stunden</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Uhrzeit *</label>
+              <div id="aSlotWrap" class="slots"></div>
+            </div>
+            <div class="field" id="aTischWrap" hidden>
+              <label>Tisch wählen *</label>
+              <div id="aTischPicker" class="slots"></div>
+              <p id="aTischHinweis" class="hint" style="margin-top:.4rem;" hidden></p>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <label for="aName">Name *</label>
+                <input type="text" id="aName" required maxlength="100">
+              </div>
+              <div class="field">
+                <label for="aTelefon">Telefon *</label>
+                <input type="tel" id="aTelefon" required maxlength="30">
+              </div>
+            </div>
+            <div class="field">
+              <label for="aKommentar">Kommentar (optional)</label>
+              <textarea id="aKommentar" rows="2" maxlength="500" placeholder="z. B. Allergien, Fensterplatz, Geburtstag …"></textarea>
+            </div>
+            <button type="submit" class="btn-sm" id="aSubmitBtn">Reservierung anlegen</button>
+          </form>
         </div>
       </div>
 
-      <div class="settings-card" style="max-width:520px;margin-bottom:2rem;">
-        <h3>Tage / Uhrzeiten sperren</h3>
-        <p class="sub-small">Für ein Datum komplett oder für einzelne Uhrzeiten Reservierungen sperren.</p>
-        <div class="field" style="max-width:200px;">
-          <label for="sperrDatum">Datum</label>
-          <input type="date" id="sperrDatum">
+      <div class="panel" id="panel-tische">
+        <button type="button" class="panel-header" data-panel="tische">
+          <span>Tische verwalten</span><span class="chevron">▾</span>
+        </button>
+        <div class="panel-body" id="panel-body-tische">
+          <p class="sub-small">Räume anlegen, Tische darin platzieren und per Drag &amp; Drop anordnen. Am gelben Griff unten rechts ziehen, um einen Tisch größer oder kleiner zu machen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
+          <div class="raum-bar">
+            <div id="raumTabs" class="raum-tabs"></div>
+            <div class="raum-add">
+              <input type="text" id="raumNameInput" placeholder="Neuer Raum, z. B. Terrasse">
+              <button id="raumAddBtn" class="btn-sm">+ Raum</button>
+            </div>
+          </div>
+          <div class="tisch-form">
+            <input type="text" id="tischNameInput" placeholder="Tischname, z. B. Tisch 1">
+            <input type="number" id="tischPlaetzeInput" placeholder="Plätze" min="1" max="20">
+            <button id="tischAddBtn" class="btn-sm">+ Tisch hinzufügen</button>
+          </div>
+          <div id="tischCanvas" class="tisch-canvas"></div>
         </div>
-        <label class="checkbox-row">
-          <input type="checkbox" id="sperrGanzerTag"> Gesamten Tag sperren
-        </label>
-        <div id="sperrSlotsWrap" class="sperr-slots"></div>
-        <button id="sperrSaveBtn" class="btn-sm">Speichern</button>
-        <span id="sperrSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
-        <div id="gesperrteTageListe" class="gesperrte-liste"></div>
       </div>
 
-      <div id="resList"></div>
+      <div class="panel" id="panel-belegung">
+        <button type="button" class="panel-header" data-panel="belegung">
+          <span>Tischbelegung</span><span class="chevron">▾</span>
+        </button>
+        <div class="panel-body" id="panel-body-belegung">
+          <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind. Auf einen belegten Tisch klicken, um Kommentar, Dauer und Stornierung zu sehen.</p>
+          <div id="belegRaumTabs" class="raum-tabs" style="margin-bottom:1rem;"></div>
+          <div class="tisch-form">
+            <div class="field" style="max-width:170px;margin-bottom:0;">
+              <label for="belegungDatum">Datum</label>
+              <input type="date" id="belegungDatum">
+            </div>
+            <div class="field" style="max-width:150px;margin-bottom:0;">
+              <label for="belegungUhrzeit">Uhrzeit</label>
+              <select id="belegungUhrzeit"></select>
+            </div>
+          </div>
+          <div id="belegungCanvas" class="tisch-canvas"></div>
+          <div class="beleg-legende">
+            <span><i class="dot frei"></i>Frei</span>
+            <span><i class="dot belegt"></i>Reserviert</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-sperren">
+        <button type="button" class="panel-header" data-panel="sperren">
+          <span>Sperrungen</span><span class="chevron">▾</span>
+        </button>
+        <div class="panel-body" id="panel-body-sperren">
+          <p class="sub-small">Für ein Datum komplett oder für einzelne Uhrzeiten Reservierungen sperren.</p>
+          <div class="field" style="max-width:200px;">
+            <label for="sperrDatum">Datum</label>
+            <input type="date" id="sperrDatum">
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="sperrGanzerTag"> Gesamten Tag sperren
+          </label>
+          <div id="sperrSlotsWrap" class="sperr-slots"></div>
+          <button id="sperrSaveBtn" class="btn-sm">Speichern</button>
+          <span id="sperrSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
+          <div id="gesperrteTageListe" class="gesperrte-liste"></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-liste">
+        <button type="button" class="panel-header" data-panel="liste">
+          <span>Reservierungsliste</span><span class="chevron">▾</span>
+        </button>
+        <div class="panel-body" id="panel-body-liste">
+          <div class="field" style="max-width:200px;">
+            <label for="filterDatum">Nach Datum filtern</label>
+            <input type="date" id="filterDatum">
+          </div>
+          <div id="resList"></div>
+        </div>
+      </div>
     </div>
 
   </section>
@@ -701,8 +745,6 @@
   const loginError = document.getElementById("loginError");
   const logoutBtn = document.getElementById("logoutBtn");
   const filterDatum = document.getElementById("filterDatum");
-  const filterUpcoming = document.getElementById("filterUpcoming");
-  const filterAlle = document.getElementById("filterAlle");
   const resList = document.getElementById("resList");
   const tischNameInput = document.getElementById("tischNameInput");
   const tischPlaetzeInput = document.getElementById("tischPlaetzeInput");
@@ -735,6 +777,51 @@
   const sperrSaveBtn = document.getElementById("sperrSaveBtn");
   const sperrSavedMsg = document.getElementById("sperrSavedMsg");
   const gesperrteTageListe = document.getElementById("gesperrteTageListe");
+
+  // ---------------------------------------------------------------
+  // Ein-/ausklappbare Abschnitte + Menü zum Springen dorthin
+  // ---------------------------------------------------------------
+  const PANEL_IDS = ["anlegen", "tische", "belegung", "sperren", "liste"];
+  const DEFAULT_OPEN_PANELS = ["anlegen"];
+
+  function setPanelOpen(id, open) {
+    const body = document.getElementById("panel-body-" + id);
+    const header = document.querySelector(`.panel-header[data-panel="${id}"]`);
+    if (!body || !header) return;
+    body.hidden = !open;
+    header.classList.toggle("open", open);
+    try { localStorage.setItem("burghof-panel-" + id, open ? "1" : "0"); } catch (e) { /* Speicher evtl. nicht verfügbar */ }
+  }
+
+  PANEL_IDS.forEach(id => {
+    let stored = null;
+    try { stored = localStorage.getItem("burghof-panel-" + id); } catch (e) { /* ignorieren */ }
+    const open = stored === null ? DEFAULT_OPEN_PANELS.includes(id) : stored === "1";
+    setPanelOpen(id, open);
+  });
+
+  document.querySelectorAll(".panel-header").forEach(header => {
+    header.addEventListener("click", () => {
+      const id = header.dataset.panel;
+      const isOpen = !document.getElementById("panel-body-" + id).hidden;
+      setPanelOpen(id, !isOpen);
+    });
+  });
+
+  function setActiveNavItem(id) {
+    document.querySelectorAll(".nav-item").forEach(btn => {
+      btn.classList.toggle("aktiv", btn.dataset.panel === id);
+    });
+  }
+
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.panel;
+      setPanelOpen(id, true);
+      setActiveNavItem(id);
+      document.getElementById("panel-" + id).scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 
   sperrDatum.min = todayIso();
   aDatum.min = todayIso();
@@ -1439,14 +1526,9 @@
     if (resListUnsub) { resListUnsub(); resListUnsub = null; }
     resList.innerHTML = '<p class="empty-state">Lädt …</p>';
 
-    let qRef;
-    if (mode === "datum" && datum) {
-      qRef = query(collection(db, "reservierungen"), where("datum", "==", datum));
-    } else if (mode === "alle") {
-      qRef = query(collection(db, "reservierungen"));
-    } else {
-      qRef = query(collection(db, "reservierungen"), where("datum", ">=", todayIso()), orderBy("datum", "asc"));
-    }
+    const qRef = mode === "datum" && datum
+      ? query(collection(db, "reservierungen"), where("datum", "==", datum))
+      : query(collection(db, "reservierungen"), where("datum", ">=", todayIso()), orderBy("datum", "asc"));
 
     resListUnsub = onSnapshot(qRef, snap => {
       const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -1461,8 +1543,6 @@
     if (filterDatum.value) subscribeReservations("datum", filterDatum.value);
     else subscribeReservations("upcoming");
   });
-  filterUpcoming.addEventListener("click", () => { filterDatum.value = ""; subscribeReservations("upcoming"); });
-  filterAlle.addEventListener("click", () => { filterDatum.value = ""; subscribeReservations("alle"); });
 
   function statusBadge(status) {
     const map = { neu: ["neu", "Neu"], "bestätigt": ["bestaetigt", "Bestätigt"], storniert: ["storniert", "Storniert"] };
