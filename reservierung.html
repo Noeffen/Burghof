@@ -439,7 +439,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
-    getFirestore, doc, collection, query, where, orderBy,
+    getFirestore, doc, getDoc, collection, query, where, orderBy,
     onSnapshot, runTransaction, updateDoc, setDoc, addDoc, deleteDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import {
@@ -656,9 +656,11 @@
     const verfRef = doc(db, "verfuegbarkeit", datum);
     const sperrRef = doc(db, "sperrungen", datum);
     const resRef = doc(collection(db, "reservierungen"));
+    const zaehlerRef = doc(db, "zaehler", "reservierungen");
     await runTransaction(db, async tx => {
       const verfSnap = await tx.get(verfRef);
       const sperrSnap = await tx.get(sperrRef);
+      const zaehlerSnap = await tx.get(zaehlerRef);
 
       const sperrData = sperrSnap.exists() ? sperrSnap.data() : {};
       const gesperrteSlots = sperrData.gesperrteSlots || [];
@@ -685,10 +687,14 @@
         }
         tisch = kandidaten[0];
       }
+      const nummer = zaehlerSnap.exists() ? (zaehlerSnap.data().naechste || 1) : 1;
+
       const updatedSlots = {};
       fenster.forEach(s => { updatedSlots[s] = [...(slotsMap[s] || []), tisch.id]; });
       tx.set(verfRef, { slots: updatedSlots }, { merge: true });
+      tx.set(zaehlerRef, { naechste: nummer + 1 }, { merge: true });
       tx.set(resRef, {
+        nummer,
         datum, uhrzeit, personen, name, telefon,
         email: email || "", kontaktPer: kontaktPer || "",
         kommentar: kommentar || "",
@@ -1137,7 +1143,7 @@
   function openBelegModal(res, tisch) {
     const dauer = res.dauerStunden || 2;
     const ende = addHoursToSlot(res.uhrzeit, dauer);
-    belegModalTitel.textContent = tisch.name;
+    belegModalTitel.textContent = `${tisch.name}${res.nummer ? " · Reservierung #" + res.nummer : ""}`;
     belegModalBody.innerHTML = `
       <p><strong>${escapeHtml(res.name)}</strong> · ${res.personen} ${res.personen === 1 ? "Person" : "Personen"}</p>
       <p>${formatDatum(res.datum)} · ${res.uhrzeit}–${ende} Uhr · ${statusBadge(res.status)}</p>
@@ -1153,29 +1159,119 @@
           <option value="4">4 Stunden</option>
         </select>
       </div>
-      <p id="belegModalMsg" class="hint" hidden></p>
-      <div style="display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap;">
-        <button type="button" id="belegModalUpdateBtn" class="btn-sm">Dauer aktualisieren</button>
-        <button type="button" id="belegModalStornoBtn" class="btn-sm danger">Stornieren</button>
+      <button type="button" id="belegModalDauerBtn" class="btn-sm">Dauer aktualisieren</button>
+
+      <div class="field" style="margin-top:1.25rem;">
+        <label>Tisch/Raum ändern</label>
+        <div class="radio-group">
+          <label class="checkbox-row"><input type="radio" name="belegModalModus" value="auto" checked> Automatisch</label>
+          <label class="checkbox-row"><input type="radio" name="belegModalModus" value="manuell"> Manuell</label>
+        </div>
       </div>
+      <div id="belegModalRaumTabs" class="raum-tabs" hidden style="margin-bottom:.6rem;"></div>
+      <div id="belegModalTischPicker" class="slots" hidden></div>
+      <button type="button" id="belegModalTischBtn" class="btn-sm">Zuweisung aktualisieren</button>
+
+      <p id="belegModalMsg" class="hint" hidden></p>
+      <button type="button" id="belegModalStornoBtn" class="btn-sm danger" style="margin-top:1.25rem;">Stornieren</button>
     `;
     const dauerSelect = document.getElementById("belegModalDauer");
     const msgEl = document.getElementById("belegModalMsg");
     dauerSelect.value = String(dauer);
 
-    document.getElementById("belegModalUpdateBtn").addEventListener("click", async () => {
+    function zeigeModalMsg(text) {
+      msgEl.textContent = text;
+      msgEl.hidden = false;
+    }
+
+    document.getElementById("belegModalDauerBtn").addEventListener("click", async () => {
       const neueDauer = parseInt(dauerSelect.value, 10);
       msgEl.hidden = true;
       try {
         await reservierungDauerAendern(res, neueDauer);
         closeBelegModal();
       } catch (err) {
-        msgEl.textContent = err.message === "KONFLIKT"
+        zeigeModalMsg(err.message === "KONFLIKT"
           ? "Die zusätzliche Zeit ist für diesen Tisch bereits anderweitig belegt."
           : err.message === "GESPERRT"
             ? "Die zusätzliche Zeit ist gesperrt."
-            : "Dauer konnte nicht aktualisiert werden.";
-        msgEl.hidden = false;
+            : "Dauer konnte nicht aktualisiert werden.");
+      }
+    });
+
+    // ---- Tisch/Raum ändern ----
+    const raumTabsEl = document.getElementById("belegModalRaumTabs");
+    const tischPickerEl = document.getElementById("belegModalTischPicker");
+    let modalSlotsMap = null;
+    let modalRaumId = tisch.raumId || defaultRaumId();
+    let modalTischId = null;
+
+    async function ladeModalSlotsMap() {
+      if (modalSlotsMap) return modalSlotsMap;
+      const snap = await getDoc(doc(db, "verfuegbarkeit", res.datum));
+      modalSlotsMap = snap.exists() ? (snap.data().slots || {}) : {};
+      return modalSlotsMap;
+    }
+
+    async function renderModalTischPicker() {
+      const modus = document.querySelector('input[name="belegModalModus"]:checked').value;
+      if (modus !== "manuell") {
+        raumTabsEl.hidden = true;
+        tischPickerEl.hidden = true;
+        return;
+      }
+      raumTabsEl.hidden = false;
+      tischPickerEl.hidden = false;
+      const fenster = res.belegteSlots || [res.uhrzeit];
+      await ladeModalSlotsMap();
+
+      raumTabsEl.innerHTML = "";
+      [...ALL_ROOMS].sort((a, b) => a.name.localeCompare(b.name)).forEach(r => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "raum-tab" + (r.id === modalRaumId ? " aktiv" : "");
+        btn.textContent = r.name;
+        btn.addEventListener("click", () => {
+          modalRaumId = r.id;
+          modalTischId = null;
+          renderModalTischPicker();
+        });
+        raumTabsEl.appendChild(btn);
+      });
+
+      tischPickerEl.innerHTML = "";
+      ALL_TABLES_ADMIN.filter(t => (t.raumId || defaultRaumId()) === modalRaumId).forEach(t => {
+        const belegt = fenster.some(s => (modalSlotsMap[s] || []).includes(t.id) && t.id !== res.tischId);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "slot-btn " + (belegt ? "voll" : "frei") + (t.id === modalTischId ? " selected" : "");
+        btn.disabled = belegt;
+        btn.innerHTML = `${escapeHtml(t.name)}<small>${belegt ? "belegt" : t.plaetze + " Plätze"}</small>`;
+        btn.addEventListener("click", () => {
+          modalTischId = t.id;
+          renderModalTischPicker();
+        });
+        tischPickerEl.appendChild(btn);
+      });
+    }
+    document.querySelectorAll('input[name="belegModalModus"]').forEach(r => r.addEventListener("change", renderModalTischPicker));
+
+    document.getElementById("belegModalTischBtn").addEventListener("click", async () => {
+      const modus = document.querySelector('input[name="belegModalModus"]:checked').value;
+      msgEl.hidden = true;
+      if (modus === "manuell" && !modalTischId) {
+        zeigeModalMsg("Bitte einen Tisch auswählen.");
+        return;
+      }
+      try {
+        await reservierungTischAendern(res, modus === "manuell" ? modalTischId : null);
+        closeBelegModal();
+      } catch (err) {
+        zeigeModalMsg(err.message === "TISCH_BELEGT"
+          ? "Dieser Tisch ist zur gewählten Zeit bereits belegt."
+          : err.message === "AUSGEBUCHT"
+            ? "Kein passender Tisch mehr frei."
+            : "Zuweisung konnte nicht aktualisiert werden.");
       }
     });
 
@@ -1186,6 +1282,39 @@
     });
 
     belegModal.hidden = false;
+  }
+
+  async function reservierungTischAendern(res, manualTischId) {
+    const fenster = res.belegteSlots || [res.uhrzeit];
+    const verfRef = doc(db, "verfuegbarkeit", res.datum);
+    const resRef = doc(db, "reservierungen", res.id);
+    await runTransaction(db, async tx => {
+      const verfSnap = await tx.get(verfRef);
+      const slotsMap = verfSnap.exists() ? (verfSnap.data().slots || {}) : {};
+
+      let neuerTisch;
+      if (manualTischId) {
+        const belegt = fenster.some(s => (slotsMap[s] || []).includes(manualTischId) && manualTischId !== res.tischId);
+        if (belegt) throw new Error("TISCH_BELEGT");
+        neuerTisch = ALL_TABLES_ADMIN.find(t => t.id === manualTischId);
+        if (!neuerTisch) throw new Error("AUSGEBUCHT");
+      } else {
+        const kandidaten = ALL_TABLES_ADMIN
+          .filter(t => t.plaetze >= res.personen && fenster.every(s => !(slotsMap[s] || []).includes(t.id) || t.id === res.tischId))
+          .sort((a, b) => a.plaetze - b.plaetze);
+        if (kandidaten.length === 0) throw new Error("AUSGEBUCHT");
+        neuerTisch = kandidaten[0];
+      }
+
+      const updatedSlots = {};
+      fenster.forEach(s => {
+        let arr = (slotsMap[s] || []).filter(id => id !== res.tischId);
+        if (!arr.includes(neuerTisch.id)) arr = [...arr, neuerTisch.id];
+        updatedSlots[s] = arr;
+      });
+      tx.set(verfRef, { slots: updatedSlots }, { merge: true });
+      tx.update(resRef, { tischId: neuerTisch.id, tischName: neuerTisch.name });
+    });
   }
 
   async function reservierungDauerAendern(res, neueDauer) {
@@ -1591,7 +1720,7 @@
     table.className = "res-table";
     table.innerHTML = `
       <thead><tr>
-        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Kontakt</th><th>Kommentar</th><th>Status</th><th>Aktionen</th>
+        <th>Nr.</th><th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Kontakt</th><th>Kommentar</th><th>Status</th><th>Aktionen</th>
       </tr></thead>
       <tbody></tbody>`;
     const tbody = table.querySelector("tbody");
@@ -1605,6 +1734,7 @@
         ? `<a class="tel-link" href="mailto:${escapeHtml(r.email)}">${escapeHtml(r.email)}</a>${r.kontaktPer === "email" ? ' ★' : ""}`
         : "";
       tr.innerHTML = `
+        <td>${r.nummer ? "#" + r.nummer : "–"}</td>
         <td>${formatDatum(r.datum)}</td>
         <td>${r.uhrzeit} Uhr</td>
         <td>${escapeHtml(r.tischName || "–")}</td>
@@ -1617,6 +1747,16 @@
       `;
       const actions = tr.querySelector(".row-actions");
 
+      if (r.status !== "storniert") {
+        const btn = document.createElement("button");
+        btn.className = "btn-sm";
+        btn.textContent = "Tisch ändern";
+        btn.addEventListener("click", () => {
+          const tisch = ALL_TABLES_ADMIN.find(t => t.id === r.tischId) || { id: r.tischId, name: r.tischName || "Unbekannt" };
+          openBelegModal(r, tisch);
+        });
+        actions.appendChild(btn);
+      }
       if (r.status !== "bestätigt") {
         const btn = document.createElement("button");
         btn.className = "btn-sm";
