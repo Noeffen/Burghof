@@ -96,6 +96,20 @@
   .empty-state { color: #888; padding: 2rem; text-align: center; }
   .tel-link { color: #fff; text-decoration: none; }
   .tel-link:hover { color: var(--gold); }
+
+  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (max-width: 700px) { .settings-grid { grid-template-columns: 1fr; } }
+  .settings-card { background: #222; border: 1px solid #333; border-radius: 10px; padding: 1.25rem 1.5rem; }
+  .settings-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0 0 .3rem; }
+  .settings-card .sub-small { color: #888; font-size: .82rem; margin: 0 0 1rem; }
+  .checkbox-row { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: #ddd; margin-bottom: .8rem; cursor: pointer; }
+  .checkbox-row input { width: auto; }
+  .sperr-slots { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; transition: opacity .15s; }
+  .sperr-chip { padding: .35rem .7rem; border-radius: 6px; border: 1px solid var(--input-border); background: var(--input-bg); color: #ccc; font-size: .78rem; cursor: pointer; font-family: inherit; }
+  .sperr-chip.aktiv { background: #3d1f1f; border-color: #5c2e2e; color: #e2938d; }
+  .saved-msg { color: #8fd19e; font-size: .8rem; margin-left: .6rem; }
+  .gesperrte-liste { margin-top: 1rem; border-top: 1px solid #333; padding-top: 1rem; }
+  .gesperrte-liste-item { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; padding: .4rem 0; color: #ccc; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -193,6 +207,36 @@
           <button id="logoutBtn" class="btn-sm">Abmelden</button>
         </div>
       </div>
+
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>Kapazität</h3>
+          <p class="sub-small">Maximale Anzahl Gäste, die insgesamt pro Zeitfenster angenommen werden.</p>
+          <div class="field" style="max-width:200px;">
+            <label for="capInput">Plätze pro Zeitfenster</label>
+            <input type="number" id="capInput" min="1" max="500">
+          </div>
+          <button id="capSaveBtn" class="btn-sm">Speichern</button>
+          <span id="capSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
+        </div>
+
+        <div class="settings-card">
+          <h3>Tage / Uhrzeiten sperren</h3>
+          <p class="sub-small">Für ein Datum komplett oder für einzelne Uhrzeiten Reservierungen sperren.</p>
+          <div class="field" style="max-width:200px;">
+            <label for="sperrDatum">Datum</label>
+            <input type="date" id="sperrDatum">
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="sperrGanzerTag"> Gesamten Tag sperren
+          </label>
+          <div id="sperrSlotsWrap" class="sperr-slots"></div>
+          <button id="sperrSaveBtn" class="btn-sm">Speichern</button>
+          <span id="sperrSavedMsg" class="saved-msg" hidden>Gespeichert ✓</span>
+          <div id="gesperrteTageListe" class="gesperrte-liste"></div>
+        </div>
+      </div>
+
       <div id="resList"></div>
     </div>
 
@@ -204,7 +248,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getFirestore, doc, collection, query, where, orderBy,
-    onSnapshot, runTransaction, updateDoc, deleteDoc, serverTimestamp
+    onSnapshot, runTransaction, updateDoc, setDoc, deleteDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import {
     getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
@@ -231,11 +275,11 @@
   const CONFIG = {
     // Öffnungszeiten laut restaurant.html: täglich, Küche bis 21:30 Uhr
     OEFFNUNGSZEITEN: [{ start: "18:00", end: "21:30" }],
-    SLOT_MINUTEN: 30,
-    // Maximale Gesamtzahl an Gästen, die pro Zeitfenster angenommen wird.
-    // An die tatsächliche Kapazität des Restaurants anpassen.
-    MAX_GAESTE_PRO_SLOT: 40
+    SLOT_MINUTEN: 30
   };
+  // Fallback, solange Hansi im Admin-Panel noch keine eigene Kapazität
+  // unter Firestore-Dokument einstellungen/global gespeichert hat.
+  const DEFAULT_MAX_CAPACITY = 40;
 
   function generateSlots() {
     const slots = [];
@@ -303,7 +347,11 @@
   fDatum.min = todayIso();
 
   let selectedSlot = null;
+  let currentCapacity = DEFAULT_MAX_CAPACITY;
+  let currentBelegt = {};
+  let currentSperr = {};
   let verfuegbarkeitUnsub = null;
+  let sperrGastUnsub = null;
 
   function showFormMsg(text, type) {
     formMsg.textContent = text;
@@ -314,32 +362,38 @@
     formMsg.hidden = true;
   }
 
-  function renderSlots(belegtMap) {
+  function renderSlots() {
     selectedSlot = null;
     slotWrap.innerHTML = "";
     if (!fDatum.value) {
       slotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst ein Datum auswählen.</span>';
       return;
     }
+    if (currentSperr.ganzerTag) {
+      slotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">An diesem Tag sind leider keine Reservierungen möglich. Bitte wählen Sie ein anderes Datum oder rufen Sie uns an: <a href="tel:+496063589962" style="color:var(--gold);">+49 6063 589962 00</a>.</span>';
+      return;
+    }
+    const gesperrteSlots = currentSperr.gesperrteSlots || [];
     ALL_SLOTS.forEach(slot => {
-      const belegt = (belegtMap && belegtMap[slot]) || 0;
-      const frei = CONFIG.MAX_GAESTE_PRO_SLOT - belegt;
+      const belegt = currentBelegt[slot] || 0;
+      const frei = currentCapacity - belegt;
       const past = isPastSlot(fDatum.value, slot);
+      const blocked = gesperrteSlots.includes(slot);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.dataset.slot = slot;
 
       let statusClass, statusText;
-      if (past || frei <= 0) {
-        statusClass = "voll";
-        statusText = past ? "vorbei" : "ausgebucht";
-        btn.disabled = true;
-      } else if (frei <= CONFIG.MAX_GAESTE_PRO_SLOT * 0.3) {
-        statusClass = "knapp";
-        statusText = `noch ${frei} Plätze`;
+      if (past) {
+        statusClass = "voll"; statusText = "vorbei"; btn.disabled = true;
+      } else if (blocked) {
+        statusClass = "voll"; statusText = "nicht verfügbar"; btn.disabled = true;
+      } else if (frei <= 0) {
+        statusClass = "voll"; statusText = "ausgebucht"; btn.disabled = true;
+      } else if (frei <= currentCapacity * 0.3) {
+        statusClass = "knapp"; statusText = `noch ${frei} Plätze`;
       } else {
-        statusClass = "frei";
-        statusText = "frei";
+        statusClass = "frei"; statusText = "frei";
       }
       btn.className = "slot-btn " + statusClass;
       btn.innerHTML = `${slot} Uhr<small>${statusText}</small>`;
@@ -354,26 +408,51 @@
     });
   }
 
-  function subscribeVerfuegbarkeit() {
+  // Kapazität ist öffentlich lesbar und wird von Hansi im Admin-Panel gepflegt.
+  onSnapshot(doc(db, "einstellungen", "global"), snap => {
+    currentCapacity = snap.exists() ? (snap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
+    renderSlots();
+  });
+
+  function subscribeDatum() {
     if (verfuegbarkeitUnsub) { verfuegbarkeitUnsub(); verfuegbarkeitUnsub = null; }
-    if (!fDatum.value) { renderSlots(null); return; }
-    const ref = doc(db, "verfuegbarkeit", fDatum.value);
-    verfuegbarkeitUnsub = onSnapshot(ref, snap => {
-      renderSlots(snap.exists() ? (snap.data().slots || {}) : {});
+    if (sperrGastUnsub) { sperrGastUnsub(); sperrGastUnsub = null; }
+    currentBelegt = {};
+    currentSperr = {};
+    if (!fDatum.value) { renderSlots(); return; }
+    renderSlots();
+    verfuegbarkeitUnsub = onSnapshot(doc(db, "verfuegbarkeit", fDatum.value), snap => {
+      currentBelegt = snap.exists() ? (snap.data().slots || {}) : {};
+      renderSlots();
     }, () => {
       slotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">Verfügbarkeit konnte nicht geladen werden.</span>';
     });
+    sperrGastUnsub = onSnapshot(doc(db, "sperrungen", fDatum.value), snap => {
+      currentSperr = snap.exists() ? snap.data() : {};
+      renderSlots();
+    });
   }
-  fDatum.addEventListener("change", subscribeVerfuegbarkeit);
-  renderSlots(null);
+  fDatum.addEventListener("change", subscribeDatum);
+  renderSlots();
 
   async function reserviere(datum, uhrzeit, personen, name, telefon) {
     const verfRef = doc(db, "verfuegbarkeit", datum);
+    const sperrRef = doc(db, "sperrungen", datum);
+    const einstRef = doc(db, "einstellungen", "global");
     const resRef = doc(collection(db, "reservierungen"));
     await runTransaction(db, async tx => {
       const verfSnap = await tx.get(verfRef);
+      const sperrSnap = await tx.get(sperrRef);
+      const einstSnap = await tx.get(einstRef);
+
+      const sperrData = sperrSnap.exists() ? sperrSnap.data() : {};
+      if (sperrData.ganzerTag || (sperrData.gesperrteSlots || []).includes(uhrzeit)) {
+        throw new Error("GESPERRT");
+      }
+
+      const maxProSlot = einstSnap.exists() ? (einstSnap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
       const bisher = verfSnap.exists() ? ((verfSnap.data().slots || {})[uhrzeit] || 0) : 0;
-      if (bisher + personen > CONFIG.MAX_GAESTE_PRO_SLOT) {
+      if (bisher + personen > maxProSlot) {
         throw new Error("AUSGEBUCHT");
       }
       tx.set(verfRef, { slots: { [uhrzeit]: bisher + personen } }, { merge: true });
@@ -414,11 +493,14 @@
       );
       resForm.reset();
       fDatum.min = todayIso();
-      subscribeVerfuegbarkeit();
+      subscribeDatum();
     } catch (err) {
       if (err.message === "AUSGEBUCHT") {
         showFormMsg("Für diese Uhrzeit sind leider nicht mehr genügend Plätze frei. Bitte wählen Sie eine andere Uhrzeit.", "error");
-        subscribeVerfuegbarkeit();
+        subscribeDatum();
+      } else if (err.message === "GESPERRT") {
+        showFormMsg("Diese Uhrzeit ist für Reservierungen leider gesperrt. Bitte wählen Sie eine andere Uhrzeit oder ein anderes Datum.", "error");
+        subscribeDatum();
       } else {
         showFormMsg("Es gab ein Problem beim Senden Ihrer Reservierung. Bitte versuchen Sie es erneut oder rufen Sie uns an: +49 6063 589962 00.", "error");
       }
@@ -442,20 +524,133 @@
   const filterUpcoming = document.getElementById("filterUpcoming");
   const filterAlle = document.getElementById("filterAlle");
   const resList = document.getElementById("resList");
+  const capInput = document.getElementById("capInput");
+  const capSaveBtn = document.getElementById("capSaveBtn");
+  const capSavedMsg = document.getElementById("capSavedMsg");
+  const sperrDatum = document.getElementById("sperrDatum");
+  const sperrGanzerTag = document.getElementById("sperrGanzerTag");
+  const sperrSlotsWrap = document.getElementById("sperrSlotsWrap");
+  const sperrSaveBtn = document.getElementById("sperrSaveBtn");
+  const sperrSavedMsg = document.getElementById("sperrSavedMsg");
+  const gesperrteTageListe = document.getElementById("gesperrteTageListe");
+
+  sperrDatum.min = todayIso();
 
   let resListUnsub = null;
+  let capacityUnsub = null;
+  let sperrDocUnsub = null;
+  let gesperrteTageUnsub = null;
+  let currentSperrSlotsAdmin = new Set();
 
   onAuthStateChanged(auth, user => {
     if (user) {
       loginBox.hidden = true;
       adminPanel.hidden = false;
       subscribeReservations();
+      capacityUnsub = onSnapshot(doc(db, "einstellungen", "global"), snap => {
+        const val = snap.exists() ? (snap.data().maxProSlot || DEFAULT_MAX_CAPACITY) : DEFAULT_MAX_CAPACITY;
+        if (document.activeElement !== capInput) capInput.value = val;
+      });
+      subscribeGesperrteTage();
+      sperrDatum.value = "";
+      loadSperrDatum(null);
     } else {
       loginBox.hidden = false;
       adminPanel.hidden = true;
       if (resListUnsub) { resListUnsub(); resListUnsub = null; }
+      if (capacityUnsub) { capacityUnsub(); capacityUnsub = null; }
+      if (sperrDocUnsub) { sperrDocUnsub(); sperrDocUnsub = null; }
+      if (gesperrteTageUnsub) { gesperrteTageUnsub(); gesperrteTageUnsub = null; }
     }
   });
+
+  capSaveBtn.addEventListener("click", async () => {
+    const val = parseInt(capInput.value, 10);
+    if (!val || val < 1) {
+      alert("Bitte eine gültige Zahl größer 0 eingeben.");
+      return;
+    }
+    await setDoc(doc(db, "einstellungen", "global"), { maxProSlot: val }, { merge: true });
+    capSavedMsg.hidden = false;
+    setTimeout(() => { capSavedMsg.hidden = true; }, 2000);
+  });
+
+  function renderSperrSlotsUI() {
+    sperrSlotsWrap.innerHTML = "";
+    sperrSlotsWrap.style.opacity = sperrGanzerTag.checked ? "0.4" : "1";
+    sperrSlotsWrap.style.pointerEvents = sperrGanzerTag.checked ? "none" : "auto";
+    ALL_SLOTS.forEach(slot => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "sperr-chip" + (currentSperrSlotsAdmin.has(slot) ? " aktiv" : "");
+      chip.textContent = slot + " Uhr";
+      chip.addEventListener("click", () => {
+        if (sperrGanzerTag.checked) return;
+        if (currentSperrSlotsAdmin.has(slot)) currentSperrSlotsAdmin.delete(slot);
+        else currentSperrSlotsAdmin.add(slot);
+        renderSperrSlotsUI();
+      });
+      sperrSlotsWrap.appendChild(chip);
+    });
+  }
+
+  function loadSperrDatum(datum) {
+    if (sperrDocUnsub) { sperrDocUnsub(); sperrDocUnsub = null; }
+    currentSperrSlotsAdmin = new Set();
+    sperrGanzerTag.checked = false;
+    if (!datum) { renderSperrSlotsUI(); return; }
+    sperrDocUnsub = onSnapshot(doc(db, "sperrungen", datum), snap => {
+      const data = snap.exists() ? snap.data() : {};
+      sperrGanzerTag.checked = !!data.ganzerTag;
+      currentSperrSlotsAdmin = new Set(data.gesperrteSlots || []);
+      renderSperrSlotsUI();
+    });
+  }
+  sperrDatum.addEventListener("change", () => loadSperrDatum(sperrDatum.value));
+  sperrGanzerTag.addEventListener("change", renderSperrSlotsUI);
+
+  sperrSaveBtn.addEventListener("click", async () => {
+    if (!sperrDatum.value) {
+      alert("Bitte zuerst ein Datum wählen.");
+      return;
+    }
+    await setDoc(doc(db, "sperrungen", sperrDatum.value), {
+      ganzerTag: sperrGanzerTag.checked,
+      gesperrteSlots: sperrGanzerTag.checked ? [] : Array.from(currentSperrSlotsAdmin)
+    });
+    sperrSavedMsg.hidden = false;
+    setTimeout(() => { sperrSavedMsg.hidden = true; }, 2000);
+  });
+
+  function subscribeGesperrteTage() {
+    if (gesperrteTageUnsub) { gesperrteTageUnsub(); gesperrteTageUnsub = null; }
+    const qRef = query(collection(db, "sperrungen"), where("ganzerTag", "==", true));
+    gesperrteTageUnsub = onSnapshot(qRef, snap => {
+      const rows = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .filter(r => r.id >= todayIso())
+        .sort((a, b) => a.id.localeCompare(b.id));
+      if (rows.length === 0) {
+        gesperrteTageListe.innerHTML = '<p style="color:#666;font-size:.8rem;">Keine komplett gesperrten Tage.</p>';
+        return;
+      }
+      gesperrteTageListe.innerHTML = '<p style="color:#888;font-size:.75rem;margin-bottom:.3rem;">Komplett gesperrte Tage:</p>';
+      rows.forEach(r => {
+        const row = document.createElement("div");
+        row.className = "gesperrte-liste-item";
+        row.innerHTML = `<span>${formatDatum(r.id)}</span>`;
+        const btn = document.createElement("button");
+        btn.className = "btn-sm";
+        btn.textContent = "Entsperren";
+        btn.addEventListener("click", async () => {
+          await setDoc(doc(db, "sperrungen", r.id), { ganzerTag: false, gesperrteSlots: [] });
+          if (sperrDatum.value === r.id) loadSperrDatum(r.id);
+        });
+        row.appendChild(btn);
+        gesperrteTageListe.appendChild(row);
+      });
+    });
+  }
 
   loginBtn.addEventListener("click", async () => {
     loginError.hidden = true;
