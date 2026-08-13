@@ -118,16 +118,26 @@
   .tisch-form input[type=text] { flex: 1; min-width: 160px; padding: .55rem .8rem; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .9rem; }
   .tisch-form input[type=number] { width: 90px; padding: .55rem .6rem; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .9rem; }
   .tisch-canvas { position: relative; width: 100%; height: 380px; background: #1e1e1e; background-image: linear-gradient(#292929 1px, transparent 1px), linear-gradient(90deg, #292929 1px, transparent 1px); background-size: 24px 24px; border: 1px dashed #3a3a3a; border-radius: 10px; overflow: hidden; }
-  .tisch-chip { position: absolute; width: 74px; height: 74px; margin-left: -37px; margin-top: -37px; border-radius: 12px; background: var(--input-bg); border: 2px solid var(--gold); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: grab; user-select: none; font-size: .76rem; font-weight: 700; touch-action: none; text-align: center; padding: 2px; }
+  .tisch-chip { position: absolute; border-radius: 12px; background: var(--input-bg); border: 2px solid var(--gold); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: grab; user-select: none; font-size: .76rem; font-weight: 700; touch-action: none; text-align: center; padding: 2px; }
   .tisch-chip:active { cursor: grabbing; }
   .tisch-chip small { font-weight: 400; color: #ccc; font-size: .66rem; margin-top: 2px; }
   .tisch-chip .del-x { position: absolute; top: -9px; right: -9px; width: 18px; height: 18px; border-radius: 50%; background: #3d1f1f; color: #e2938d; border: 1px solid #5c2e2e; font-size: .68rem; line-height: 16px; text-align: center; cursor: pointer; }
+  .tisch-chip .resize-handle { position: absolute; bottom: -5px; right: -5px; width: 15px; height: 15px; border-radius: 4px; background: var(--gold); border: 1px solid #1a1a1a; cursor: nwse-resize; touch-action: none; }
 
-  .tisch-chip.beleg-chip { width: 84px; height: 84px; margin-left: -42px; margin-top: -42px; font-size: .7rem; cursor: default; }
+  .tisch-chip.beleg-chip { font-size: .7rem; cursor: default; }
   .tisch-chip.beleg-chip small { font-size: .62rem; }
   .tisch-chip.beleg-chip.frei-tisch { border-color: #3a5a3a; }
-  .tisch-chip.beleg-chip.belegt { background: #3d1f1f; border-color: #c0392b; }
+  .tisch-chip.beleg-chip.belegt { background: #3d1f1f; border-color: #c0392b; cursor: pointer; }
   .tisch-chip.beleg-chip.belegt small { color: #e2938d; }
+
+  .raum-bar { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .raum-tabs { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .raum-tab { display: flex; align-items: center; gap: .45rem; padding: .45rem .8rem; border-radius: 20px; border: 1px solid var(--input-border); background: var(--input-bg); color: #ccc; font-size: .82rem; cursor: pointer; font-family: inherit; }
+  .raum-tab.aktiv { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+  .raum-tab .raum-del { opacity: .6; font-size: .85rem; line-height: 1; }
+  .raum-tab .raum-del:hover { opacity: 1; color: #c0392b; }
+  .raum-add { display: flex; gap: .5rem; }
+  .raum-add input { padding: .5rem .7rem; border-radius: 6px; border: 1px solid var(--input-border); background: var(--input-bg); color: #fff; font-family: inherit; font-size: .85rem; }
   .beleg-legende { display: flex; gap: 1.2rem; margin-top: .8rem; font-size: .78rem; color: #aaa; align-items: center; }
   .beleg-legende .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: .4rem; vertical-align: middle; background: var(--input-bg); }
   .beleg-legende .dot.frei { border: 2px solid #3a5a3a; }
@@ -302,7 +312,14 @@
 
       <div class="settings-card" style="margin-bottom:1.5rem;">
         <h3>Tische verwalten</h3>
-        <p class="sub-small">Tische anlegen und per Drag &amp; Drop anordnen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird — ein Tisch wird nie mit fremden Gästen geteilt. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
+        <p class="sub-small">Räume anlegen, Tische darin platzieren und per Drag &amp; Drop anordnen. Am gelben Griff unten rechts ziehen, um einen Tisch größer oder kleiner zu machen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
+        <div class="raum-bar">
+          <div id="raumTabs" class="raum-tabs"></div>
+          <div class="raum-add">
+            <input type="text" id="raumNameInput" placeholder="Neuer Raum, z. B. Terrasse">
+            <button id="raumAddBtn" class="btn-sm">+ Raum</button>
+          </div>
+        </div>
         <div class="tisch-form">
           <input type="text" id="tischNameInput" placeholder="Tischname, z. B. Tisch 1">
           <input type="number" id="tischPlaetzeInput" placeholder="Plätze" min="1" max="20">
@@ -314,6 +331,7 @@
       <div class="settings-card" style="margin-bottom:1.5rem;">
         <h3>Tischbelegung</h3>
         <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind. Auf einen belegten Tisch klicken, um Kommentar, Dauer und Stornierung zu sehen.</p>
+        <div id="belegRaumTabs" class="raum-tabs" style="margin-bottom:1rem;"></div>
         <div class="tisch-form">
           <div class="field" style="max-width:170px;margin-bottom:0;">
             <label for="belegungDatum">Datum</label>
@@ -690,6 +708,10 @@
   const tischPlaetzeInput = document.getElementById("tischPlaetzeInput");
   const tischAddBtn = document.getElementById("tischAddBtn");
   const tischCanvas = document.getElementById("tischCanvas");
+  const raumTabs = document.getElementById("raumTabs");
+  const raumNameInput = document.getElementById("raumNameInput");
+  const raumAddBtn = document.getElementById("raumAddBtn");
+  const belegRaumTabs = document.getElementById("belegRaumTabs");
   const adminResForm = document.getElementById("adminResForm");
   const aResMsg = document.getElementById("aResMsg");
   const aDatum = document.getElementById("aDatum");
@@ -731,6 +753,7 @@
 
   let resListUnsub = null;
   let tischeUnsub = null;
+  let roomsUnsub = null;
   let sperrDocUnsub = null;
   let gesperrteTageUnsub = null;
   let belegungResUnsub = null;
@@ -738,6 +761,10 @@
   let aSperrUnsub = null;
   let currentSperrSlotsAdmin = new Set();
   let ALL_TABLES_ADMIN = [];
+  let ALL_ROOMS = [];
+  let currentRaumId = null;
+  let currentBelegRaumId = null;
+  let defaultRoomEnsured = false;
   let currentBelegungReservations = [];
   let aSelectedSlot = null;
   let aSelectedTischId = null;
@@ -940,11 +967,18 @@
 
   function renderBelegungCanvas() {
     belegungCanvas.innerHTML = "";
+    if (!currentBelegRaumId) return;
     const uhrzeit = belegungUhrzeit.value;
-    ALL_TABLES_ADMIN.forEach(t => {
+    const raumTische = ALL_TABLES_ADMIN.filter(t => (t.raumId || defaultRaumId()) === currentBelegRaumId);
+    raumTische.forEach(t => {
       const res = currentBelegungReservations.find(r => r.tischId === t.id && (r.belegteSlots || [r.uhrzeit]).includes(uhrzeit));
+      const size = Math.max(74, t.groesse || 74) + 10;
       const chip = document.createElement("div");
       chip.className = "tisch-chip beleg-chip " + (res ? "belegt" : "frei-tisch");
+      chip.style.width = size + "px";
+      chip.style.height = size + "px";
+      chip.style.marginLeft = (-size / 2) + "px";
+      chip.style.marginTop = (-size / 2) + "px";
       chip.style.left = (t.x ?? 10) + "%";
       chip.style.top = (t.y ?? 10) + "%";
       if (res) {
@@ -1083,6 +1117,22 @@
         renderBelegungCanvas();
         renderASlots();
       });
+      roomsUnsub = onSnapshot(collection(db, "raeume"), snap => {
+        ALL_ROOMS = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (ALL_ROOMS.length === 0) {
+          if (!defaultRoomEnsured) {
+            defaultRoomEnsured = true;
+            addDoc(collection(db, "raeume"), { name: "Hauptraum", erstelltAm: serverTimestamp() });
+          }
+          return;
+        }
+        if (!currentRaumId || !ALL_ROOMS.find(r => r.id === currentRaumId)) currentRaumId = defaultRaumId();
+        if (!currentBelegRaumId || !ALL_ROOMS.find(r => r.id === currentBelegRaumId)) currentBelegRaumId = defaultRaumId();
+        renderRaumTabs();
+        renderBelegRaumTabs();
+        renderTischCanvas();
+        renderBelegungCanvas();
+      });
       subscribeGesperrteTage();
       sperrDatum.value = "";
       loadSperrDatum(null);
@@ -1097,6 +1147,7 @@
       adminPanel.hidden = true;
       if (resListUnsub) { resListUnsub(); resListUnsub = null; }
       if (tischeUnsub) { tischeUnsub(); tischeUnsub = null; }
+      if (roomsUnsub) { roomsUnsub(); roomsUnsub = null; }
       if (sperrDocUnsub) { sperrDocUnsub(); sperrDocUnsub = null; }
       if (gesperrteTageUnsub) { gesperrteTageUnsub(); gesperrteTageUnsub = null; }
       if (belegungResUnsub) { belegungResUnsub(); belegungResUnsub = null; }
@@ -1112,9 +1163,15 @@
       alert("Bitte eine gültige Platzanzahl eingeben.");
       return;
     }
+    if (!currentRaumId) {
+      alert("Bitte zuerst einen Raum anlegen.");
+      return;
+    }
     const name = tischNameInput.value.trim() || `Tisch ${ALL_TABLES_ADMIN.length + 1}`;
     await addDoc(collection(db, "tische"), {
       name, plaetze,
+      raumId: currentRaumId,
+      groesse: 74,
       x: 10 + Math.random() * 75,
       y: 10 + Math.random() * 70
     });
@@ -1122,14 +1179,85 @@
     tischPlaetzeInput.value = "";
   });
 
+  function defaultRaumId() {
+    if (ALL_ROOMS.length === 0) return null;
+    const sorted = [...ALL_ROOMS].sort((a, b) => (a.erstelltAm?.seconds || 0) - (b.erstelltAm?.seconds || 0));
+    return sorted[0].id;
+  }
+
+  function renderRaumTabs() {
+    raumTabs.innerHTML = "";
+    [...ALL_ROOMS].sort((a, b) => a.name.localeCompare(b.name)).forEach(r => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "raum-tab" + (r.id === currentRaumId ? " aktiv" : "");
+      btn.innerHTML = `${escapeHtml(r.name)}<span class="raum-del" title="Raum löschen">×</span>`;
+      btn.querySelector(".raum-del").addEventListener("click", async e => {
+        e.stopPropagation();
+        const tischeImRaum = ALL_TABLES_ADMIN.filter(t => (t.raumId || defaultRaumId()) === r.id);
+        if (tischeImRaum.length > 0) {
+          alert(`Bitte zuerst alle Tische aus "${r.name}" löschen oder in einen anderen Raum verschieben (Tisch anklicken und ziehen geht nur innerhalb desselben Raums).`);
+          return;
+        }
+        if (ALL_ROOMS.length <= 1) {
+          alert("Es muss mindestens ein Raum vorhanden sein.");
+          return;
+        }
+        if (confirm(`Raum "${r.name}" wirklich löschen?`)) {
+          await deleteDoc(doc(db, "raeume", r.id));
+        }
+      });
+      btn.addEventListener("click", () => {
+        currentRaumId = r.id;
+        renderRaumTabs();
+        renderTischCanvas();
+      });
+      raumTabs.appendChild(btn);
+    });
+  }
+
+  function renderBelegRaumTabs() {
+    belegRaumTabs.innerHTML = "";
+    [...ALL_ROOMS].sort((a, b) => a.name.localeCompare(b.name)).forEach(r => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "raum-tab" + (r.id === currentBelegRaumId ? " aktiv" : "");
+      btn.textContent = r.name;
+      btn.addEventListener("click", () => {
+        currentBelegRaumId = r.id;
+        renderBelegRaumTabs();
+        renderBelegungCanvas();
+      });
+      belegRaumTabs.appendChild(btn);
+    });
+  }
+
+  raumAddBtn.addEventListener("click", async () => {
+    const name = raumNameInput.value.trim();
+    if (!name) {
+      alert("Bitte einen Raumnamen eingeben.");
+      return;
+    }
+    const ref = await addDoc(collection(db, "raeume"), { name, erstelltAm: serverTimestamp() });
+    currentRaumId = ref.id;
+    raumNameInput.value = "";
+  });
+
   function renderTischCanvas() {
     tischCanvas.innerHTML = "";
-    ALL_TABLES_ADMIN.forEach(t => {
+    if (!currentRaumId) return;
+    const raumTische = ALL_TABLES_ADMIN.filter(t => (t.raumId || defaultRaumId()) === currentRaumId);
+    raumTische.forEach(t => {
+      const size = t.groesse || 74;
       const chip = document.createElement("div");
       chip.className = "tisch-chip";
+      chip.style.width = size + "px";
+      chip.style.height = size + "px";
+      chip.style.marginLeft = (-size / 2) + "px";
+      chip.style.marginTop = (-size / 2) + "px";
       chip.style.left = (t.x ?? 10) + "%";
       chip.style.top = (t.y ?? 10) + "%";
-      chip.innerHTML = `${escapeHtml(t.name)}<small>${t.plaetze} Plätze</small><span class="del-x" title="Tisch löschen">×</span>`;
+      chip.innerHTML = `${escapeHtml(t.name)}<small>${t.plaetze} Plätze</small><span class="del-x" title="Tisch löschen">×</span><span class="resize-handle" title="Ziehen zum Vergrößern/Verkleinern"></span>`;
 
       chip.querySelector(".del-x").addEventListener("click", async e => {
         e.stopPropagation();
@@ -1145,14 +1273,45 @@
         }
       });
       makeTischDraggable(chip, t);
+      makeTischResizable(chip.querySelector(".resize-handle"), chip, t);
       tischCanvas.appendChild(chip);
+    });
+  }
+
+  function makeTischResizable(handle, chip, tisch) {
+    let resizing = false, startX, startY, startSize, pendingSize;
+    handle.addEventListener("pointerdown", e => {
+      e.stopPropagation();
+      resizing = true;
+      pendingSize = null;
+      handle.setPointerCapture(e.pointerId);
+      startX = e.clientX; startY = e.clientY;
+      startSize = tisch.groesse || 74;
+    });
+    handle.addEventListener("pointermove", e => {
+      if (!resizing) return;
+      e.stopPropagation();
+      const delta = Math.max(e.clientX - startX, e.clientY - startY);
+      pendingSize = Math.round(Math.min(150, Math.max(48, startSize + delta)));
+      chip.style.width = pendingSize + "px";
+      chip.style.height = pendingSize + "px";
+      chip.style.marginLeft = (-pendingSize / 2) + "px";
+      chip.style.marginTop = (-pendingSize / 2) + "px";
+    });
+    handle.addEventListener("pointerup", async e => {
+      if (!resizing) return;
+      e.stopPropagation();
+      resizing = false;
+      if (pendingSize != null) {
+        await updateDoc(doc(db, "tische", tisch.id), { groesse: pendingSize });
+      }
     });
   }
 
   function makeTischDraggable(chip, tisch) {
     let dragging = false, startX, startY, origX, origY, pendingX, pendingY;
     chip.addEventListener("pointerdown", e => {
-      if (e.target.classList.contains("del-x")) return;
+      if (e.target.classList.contains("del-x") || e.target.classList.contains("resize-handle")) return;
       dragging = true;
       pendingX = null; pendingY = null;
       chip.setPointerCapture(e.pointerId);
