@@ -44,8 +44,8 @@
 
   .field { margin-bottom: 1.25rem; }
   .field label { display: block; font-size: .8rem; font-weight: 600; color: #aaa; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
-  .field input, .field select { width: 100%; padding: .75rem 1rem; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .95rem; }
-  .field input:focus, .field select:focus { outline: none; border-color: var(--gold); }
+  .field input, .field select, .field textarea { width: 100%; padding: .75rem 1rem; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: #fff; font-family: inherit; font-size: .95rem; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
 
@@ -119,6 +119,16 @@
   .tisch-chip:active { cursor: grabbing; }
   .tisch-chip small { font-weight: 400; color: #ccc; font-size: .66rem; margin-top: 2px; }
   .tisch-chip .del-x { position: absolute; top: -9px; right: -9px; width: 18px; height: 18px; border-radius: 50%; background: #3d1f1f; color: #e2938d; border: 1px solid #5c2e2e; font-size: .68rem; line-height: 16px; text-align: center; cursor: pointer; }
+
+  .tisch-chip.beleg-chip { width: 84px; height: 84px; margin-left: -42px; margin-top: -42px; font-size: .7rem; cursor: default; }
+  .tisch-chip.beleg-chip small { font-size: .62rem; }
+  .tisch-chip.beleg-chip.frei-tisch { border-color: #3a5a3a; }
+  .tisch-chip.beleg-chip.belegt { background: #3d1f1f; border-color: #c0392b; }
+  .tisch-chip.beleg-chip.belegt small { color: #e2938d; }
+  .beleg-legende { display: flex; gap: 1.2rem; margin-top: .8rem; font-size: .78rem; color: #aaa; align-items: center; }
+  .beleg-legende .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: .4rem; vertical-align: middle; background: var(--input-bg); }
+  .beleg-legende .dot.frei { border: 2px solid #3a5a3a; }
+  .beleg-legende .dot.belegt { background: #3d1f1f; border: 2px solid #c0392b; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -177,6 +187,11 @@
         </div>
       </div>
 
+      <div class="field">
+        <label for="fKommentar">Kommentar (optional)</label>
+        <textarea id="fKommentar" rows="2" maxlength="500" placeholder="z. B. Allergien, Fensterplatz, Geburtstag …"></textarea>
+      </div>
+
       <button type="submit" class="btn" id="submitBtn">Reservierung anfragen</button>
       <p class="hint">Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
     </form>
@@ -218,7 +233,44 @@
       </div>
 
       <div class="settings-card" style="margin-bottom:1.5rem;">
-        <h3>Tischplan</h3>
+        <h3>Reservierung telefonisch anlegen</h3>
+        <p class="sub-small">Für Gäste, die anrufen oder persönlich vorbeikommen — der passende Tisch wird automatisch zugewiesen, wie bei einer Online-Buchung.</p>
+        <div id="aResMsg" hidden></div>
+        <form id="adminResForm">
+          <div class="grid2">
+            <div class="field">
+              <label for="aDatum">Datum *</label>
+              <input type="date" id="aDatum" required>
+            </div>
+            <div class="field">
+              <label for="aPersonen">Personen *</label>
+              <select id="aPersonen" required></select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Uhrzeit *</label>
+            <div id="aSlotWrap" class="slots"></div>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label for="aName">Name *</label>
+              <input type="text" id="aName" required maxlength="100">
+            </div>
+            <div class="field">
+              <label for="aTelefon">Telefon *</label>
+              <input type="tel" id="aTelefon" required maxlength="30">
+            </div>
+          </div>
+          <div class="field">
+            <label for="aKommentar">Kommentar (optional)</label>
+            <textarea id="aKommentar" rows="2" maxlength="500" placeholder="z. B. Allergien, Fensterplatz, Geburtstag …"></textarea>
+          </div>
+          <button type="submit" class="btn-sm" id="aSubmitBtn">Reservierung anlegen</button>
+        </form>
+      </div>
+
+      <div class="settings-card" style="margin-bottom:1.5rem;">
+        <h3>Tische verwalten</h3>
         <p class="sub-small">Tische anlegen und per Drag &amp; Drop anordnen. Die Platzanzahl bestimmt, welcher Tisch bei einer Reservierung automatisch vergeben wird — ein Tisch wird nie mit fremden Gästen geteilt. Zum Ändern der Platzanzahl doppelklicken, zum Löschen das × anklicken.</p>
         <div class="tisch-form">
           <input type="text" id="tischNameInput" placeholder="Tischname, z. B. Tisch 1">
@@ -226,6 +278,26 @@
           <button id="tischAddBtn" class="btn-sm">+ Tisch hinzufügen</button>
         </div>
         <div id="tischCanvas" class="tisch-canvas"></div>
+      </div>
+
+      <div class="settings-card" style="margin-bottom:1.5rem;">
+        <h3>Tischbelegung</h3>
+        <p class="sub-small">Übersicht, welche Tische für ein Datum und eine Uhrzeit bereits reserviert sind.</p>
+        <div class="tisch-form">
+          <div class="field" style="max-width:170px;margin-bottom:0;">
+            <label for="belegungDatum">Datum</label>
+            <input type="date" id="belegungDatum">
+          </div>
+          <div class="field" style="max-width:150px;margin-bottom:0;">
+            <label for="belegungUhrzeit">Uhrzeit</label>
+            <select id="belegungUhrzeit"></select>
+          </div>
+        </div>
+        <div id="belegungCanvas" class="tisch-canvas"></div>
+        <div class="beleg-legende">
+          <span><i class="dot frei"></i>Frei</span>
+          <span><i class="dot belegt"></i>Reserviert</span>
+        </div>
       </div>
 
       <div class="settings-card" style="max-width:520px;margin-bottom:2rem;">
@@ -445,7 +517,7 @@
   fDatum.addEventListener("change", subscribeDatum);
   renderSlots();
 
-  async function reserviere(datum, uhrzeit, personen, name, telefon) {
+  async function reserviere(datum, uhrzeit, personen, name, telefon, kommentar, status) {
     const verfRef = doc(db, "verfuegbarkeit", datum);
     const sperrRef = doc(db, "sperrungen", datum);
     const resRef = doc(collection(db, "reservierungen"));
@@ -469,8 +541,9 @@
       tx.set(verfRef, { slots: { [uhrzeit]: [...belegteTische, tisch.id] } }, { merge: true });
       tx.set(resRef, {
         datum, uhrzeit, personen, name, telefon,
+        kommentar: kommentar || "",
         tischId: tisch.id, tischName: tisch.name,
-        status: "neu",
+        status: status || "neu",
         erstelltAm: serverTimestamp()
       });
     });
@@ -484,6 +557,7 @@
     const personen = parseInt(fPersonen.value, 10);
     const name = document.getElementById("fName").value.trim();
     const telefon = document.getElementById("fTelefon").value.trim();
+    const kommentar = document.getElementById("fKommentar").value.trim();
 
     if (!datum || !fPersonen.value || !name || !telefon) {
       showFormMsg("Bitte füllen Sie alle Pflichtfelder aus.", "error");
@@ -497,7 +571,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "Wird gesendet …";
     try {
-      await reserviere(datum, selectedSlot, personen, name, telefon);
+      await reserviere(datum, selectedSlot, personen, name, telefon, kommentar);
       showFormMsg(
         `Vielen Dank, ${name}! Ihre Reservierung für den ${formatDatum(datum)} um ${selectedSlot} Uhr ` +
         `für ${personen} ${personen === 1 ? "Person" : "Personen"} wurde übermittelt. Wir bestätigen sie in Kürze.`,
@@ -540,6 +614,18 @@
   const tischPlaetzeInput = document.getElementById("tischPlaetzeInput");
   const tischAddBtn = document.getElementById("tischAddBtn");
   const tischCanvas = document.getElementById("tischCanvas");
+  const adminResForm = document.getElementById("adminResForm");
+  const aResMsg = document.getElementById("aResMsg");
+  const aDatum = document.getElementById("aDatum");
+  const aPersonen = document.getElementById("aPersonen");
+  const aSlotWrap = document.getElementById("aSlotWrap");
+  const aName = document.getElementById("aName");
+  const aTelefon = document.getElementById("aTelefon");
+  const aKommentar = document.getElementById("aKommentar");
+  const aSubmitBtn = document.getElementById("aSubmitBtn");
+  const belegungDatum = document.getElementById("belegungDatum");
+  const belegungUhrzeit = document.getElementById("belegungUhrzeit");
+  const belegungCanvas = document.getElementById("belegungCanvas");
   const sperrDatum = document.getElementById("sperrDatum");
   const sperrGanzerTag = document.getElementById("sperrGanzerTag");
   const sperrSlotsWrap = document.getElementById("sperrSlotsWrap");
@@ -548,13 +634,191 @@
   const gesperrteTageListe = document.getElementById("gesperrteTageListe");
 
   sperrDatum.min = todayIso();
+  aDatum.min = todayIso();
+  ALL_SLOTS.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s + " Uhr";
+    belegungUhrzeit.appendChild(opt);
+  });
+  for (let n = 1; n <= 20; n++) {
+    const opt = document.createElement("option");
+    opt.value = n;
+    opt.textContent = n === 1 ? "1 Person" : `${n} Personen`;
+    aPersonen.appendChild(opt);
+  }
 
   let resListUnsub = null;
   let tischeUnsub = null;
   let sperrDocUnsub = null;
   let gesperrteTageUnsub = null;
+  let belegungResUnsub = null;
+  let aVerfUnsub = null;
+  let aSperrUnsub = null;
   let currentSperrSlotsAdmin = new Set();
   let ALL_TABLES_ADMIN = [];
+  let currentBelegungReservations = [];
+  let aSelectedSlot = null;
+  let aCurrentBelegt = {};
+  let aCurrentSperr = {};
+
+  function defaultSlotFor(datum) {
+    const next = ALL_SLOTS.find(s => !isPastSlot(datum, s));
+    return next || ALL_SLOTS[0];
+  }
+
+  function renderASlots() {
+    aSelectedSlot = null;
+    aSlotWrap.innerHTML = "";
+    if (!aDatum.value) {
+      aSlotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst ein Datum auswählen.</span>';
+      return;
+    }
+    if (aCurrentSperr.ganzerTag) {
+      aSlotWrap.innerHTML = '<span style="color:#e2938d;font-size:.9rem;">An diesem Tag sind Reservierungen gesperrt.</span>';
+      return;
+    }
+    if (!aPersonen.value) {
+      aSlotWrap.innerHTML = '<span style="color:#888;font-size:.9rem;">Bitte zuerst die Personenzahl wählen.</span>';
+      return;
+    }
+    const personen = parseInt(aPersonen.value, 10);
+    const gesperrteSlots = aCurrentSperr.gesperrteSlots || [];
+    ALL_SLOTS.forEach(slot => {
+      const belegteTische = aCurrentBelegt[slot] || [];
+      const past = isPastSlot(aDatum.value, slot);
+      const blocked = gesperrteSlots.includes(slot);
+      const passendeFreie = ALL_TABLES_ADMIN.filter(t => t.plaetze >= personen && !belegteTische.includes(t.id));
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.slot = slot;
+
+      let statusClass, statusText;
+      if (past) {
+        statusClass = "voll"; statusText = "vorbei"; btn.disabled = true;
+      } else if (blocked) {
+        statusClass = "voll"; statusText = "nicht verfügbar"; btn.disabled = true;
+      } else if (ALL_TABLES_ADMIN.length === 0 || passendeFreie.length === 0) {
+        statusClass = "voll"; statusText = "ausgebucht"; btn.disabled = true;
+      } else if (passendeFreie.length === 1) {
+        statusClass = "knapp"; statusText = "nur noch 1 Tisch frei";
+      } else {
+        statusClass = "frei"; statusText = "frei";
+      }
+      btn.className = "slot-btn " + statusClass;
+      btn.innerHTML = `${slot} Uhr<small>${statusText}</small>`;
+
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        aSlotWrap.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        aSelectedSlot = slot;
+      });
+      aSlotWrap.appendChild(btn);
+    });
+  }
+  aPersonen.addEventListener("change", renderASlots);
+
+  function subscribeADatum(datum) {
+    if (aVerfUnsub) { aVerfUnsub(); aVerfUnsub = null; }
+    if (aSperrUnsub) { aSperrUnsub(); aSperrUnsub = null; }
+    aCurrentBelegt = {};
+    aCurrentSperr = {};
+    if (!datum) { renderASlots(); return; }
+    renderASlots();
+    aVerfUnsub = onSnapshot(doc(db, "verfuegbarkeit", datum), snap => {
+      aCurrentBelegt = snap.exists() ? (snap.data().slots || {}) : {};
+      renderASlots();
+    });
+    aSperrUnsub = onSnapshot(doc(db, "sperrungen", datum), snap => {
+      aCurrentSperr = snap.exists() ? snap.data() : {};
+      renderASlots();
+    });
+  }
+  aDatum.addEventListener("change", () => subscribeADatum(aDatum.value));
+  renderASlots();
+
+  adminResForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    aResMsg.hidden = true;
+
+    const datum = aDatum.value;
+    const personen = parseInt(aPersonen.value, 10);
+    const name = aName.value.trim();
+    const telefon = aTelefon.value.trim();
+    const kommentar = aKommentar.value.trim();
+
+    if (!datum || !aPersonen.value || !name || !telefon) {
+      aResMsg.textContent = "Bitte alle Pflichtfelder ausfüllen.";
+      aResMsg.className = "msg error";
+      aResMsg.hidden = false;
+      return;
+    }
+    if (!aSelectedSlot) {
+      aResMsg.textContent = "Bitte eine Uhrzeit auswählen.";
+      aResMsg.className = "msg error";
+      aResMsg.hidden = false;
+      return;
+    }
+
+    aSubmitBtn.disabled = true;
+    aSubmitBtn.textContent = "Wird angelegt …";
+    try {
+      await reserviere(datum, aSelectedSlot, personen, name, telefon, kommentar, "bestätigt");
+      aResMsg.textContent = `Reservierung für ${name} am ${formatDatum(datum)} um ${aSelectedSlot} Uhr wurde angelegt.`;
+      aResMsg.className = "msg success";
+      aResMsg.hidden = false;
+      aName.value = "";
+      aTelefon.value = "";
+      aKommentar.value = "";
+      aPersonen.value = "";
+      renderASlots();
+    } catch (err) {
+      if (err.message === "AUSGEBUCHT") {
+        aResMsg.textContent = "Für diese Uhrzeit ist leider kein passender Tisch mehr frei.";
+      } else if (err.message === "GESPERRT") {
+        aResMsg.textContent = "Diese Uhrzeit ist gesperrt.";
+      } else {
+        aResMsg.textContent = "Es gab ein Problem beim Anlegen der Reservierung. Bitte erneut versuchen.";
+      }
+      aResMsg.className = "msg error";
+      aResMsg.hidden = false;
+    } finally {
+      aSubmitBtn.disabled = false;
+      aSubmitBtn.textContent = "Reservierung anlegen";
+    }
+  });
+
+  function renderBelegungCanvas() {
+    belegungCanvas.innerHTML = "";
+    const uhrzeit = belegungUhrzeit.value;
+    ALL_TABLES_ADMIN.forEach(t => {
+      const res = currentBelegungReservations.find(r => r.tischId === t.id && r.uhrzeit === uhrzeit);
+      const chip = document.createElement("div");
+      chip.className = "tisch-chip beleg-chip " + (res ? "belegt" : "frei-tisch");
+      chip.style.left = (t.x ?? 10) + "%";
+      chip.style.top = (t.y ?? 10) + "%";
+      if (res) {
+        chip.innerHTML = `${escapeHtml(t.name)}<small>${escapeHtml(res.name)}</small><small>${res.personen} Pers.</small>`;
+        chip.title = `${res.name} · ${res.telefon} · ${res.personen} Personen · ${res.status}`;
+      } else {
+        chip.innerHTML = `${escapeHtml(t.name)}<small>${t.plaetze} Plätze</small><small>frei</small>`;
+      }
+      belegungCanvas.appendChild(chip);
+    });
+  }
+
+  function subscribeBelegung(datum) {
+    if (belegungResUnsub) { belegungResUnsub(); belegungResUnsub = null; }
+    currentBelegungReservations = [];
+    if (!datum) { renderBelegungCanvas(); return; }
+    belegungResUnsub = onSnapshot(query(collection(db, "reservierungen"), where("datum", "==", datum)), snap => {
+      currentBelegungReservations = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(r => r.status !== "storniert");
+      renderBelegungCanvas();
+    });
+  }
+  belegungDatum.addEventListener("change", () => subscribeBelegung(belegungDatum.value));
+  belegungUhrzeit.addEventListener("change", renderBelegungCanvas);
 
   onAuthStateChanged(auth, user => {
     if (user) {
@@ -564,10 +828,18 @@
       tischeUnsub = onSnapshot(collection(db, "tische"), snap => {
         ALL_TABLES_ADMIN = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderTischCanvas();
+        renderBelegungCanvas();
+        renderASlots();
       });
       subscribeGesperrteTage();
       sperrDatum.value = "";
       loadSperrDatum(null);
+      const heute = todayIso();
+      belegungDatum.value = heute;
+      belegungUhrzeit.value = defaultSlotFor(heute);
+      subscribeBelegung(heute);
+      aDatum.value = heute;
+      subscribeADatum(heute);
     } else {
       loginBox.hidden = false;
       adminPanel.hidden = true;
@@ -575,6 +847,9 @@
       if (tischeUnsub) { tischeUnsub(); tischeUnsub = null; }
       if (sperrDocUnsub) { sperrDocUnsub(); sperrDocUnsub = null; }
       if (gesperrteTageUnsub) { gesperrteTageUnsub(); gesperrteTageUnsub = null; }
+      if (belegungResUnsub) { belegungResUnsub(); belegungResUnsub = null; }
+      if (aVerfUnsub) { aVerfUnsub(); aVerfUnsub = null; }
+      if (aSperrUnsub) { aSperrUnsub(); aSperrUnsub = null; }
     }
   });
 
@@ -794,7 +1069,7 @@
     table.className = "res-table";
     table.innerHTML = `
       <thead><tr>
-        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Status</th><th>Aktionen</th>
+        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Kommentar</th><th>Status</th><th>Aktionen</th>
       </tr></thead>
       <tbody></tbody>`;
     const tbody = table.querySelector("tbody");
@@ -802,6 +1077,7 @@
     rows.forEach(r => {
       const tr = document.createElement("tr");
       if (r.status === "storniert") tr.className = "storniert";
+      const kommentarKurz = r.kommentar ? (r.kommentar.length > 30 ? r.kommentar.slice(0, 30) + "…" : r.kommentar) : "–";
       tr.innerHTML = `
         <td>${formatDatum(r.datum)}</td>
         <td>${r.uhrzeit} Uhr</td>
@@ -809,6 +1085,7 @@
         <td>${r.personen}</td>
         <td>${escapeHtml(r.name)}</td>
         <td><a class="tel-link" href="tel:${escapeHtml(r.telefon)}">${escapeHtml(r.telefon)}</a></td>
+        <td title="${escapeHtml(r.kommentar || "")}" style="white-space:normal;max-width:220px;">${escapeHtml(kommentarKurz)}</td>
         <td>${statusBadge(r.status)}</td>
         <td class="row-actions"></td>
       `;
