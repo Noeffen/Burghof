@@ -208,7 +208,7 @@
         </div>
       </div>
 
-      <div class="grid2">
+      <div class="grid3">
         <div class="field">
           <label for="fName">Name *</label>
           <input type="text" id="fName" required maxlength="100" autocomplete="name">
@@ -216,6 +216,18 @@
         <div class="field">
           <label for="fTelefon">Telefon *</label>
           <input type="tel" id="fTelefon" required maxlength="30" autocomplete="tel" placeholder="z. B. 0176 12345678">
+        </div>
+        <div class="field">
+          <label for="fEmail">E-Mail *</label>
+          <input type="email" id="fEmail" required maxlength="100" autocomplete="email" placeholder="name@beispiel.de">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Bestätigung/Absage erhalten per *</label>
+        <div class="radio-group">
+          <label class="checkbox-row"><input type="radio" name="fKontakt" value="email" checked> E-Mail</label>
+          <label class="checkbox-row"><input type="radio" name="fKontakt" value="telefon"> Telefon</label>
         </div>
       </div>
 
@@ -225,7 +237,7 @@
       </div>
 
       <button type="submit" class="btn" id="submitBtn">Reservierung anfragen</button>
-      <p class="hint">Ihr Tisch ist für 2 Stunden reserviert. Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
+      <p class="hint">Ihr Tisch ist für 2 Stunden reserviert — benötigen Sie länger, vermerken Sie dies bitte im Kommentar. Für Gruppen ab 13 Personen kontaktieren Sie uns bitte telefonisch: <a href="tel:+496063589962">+49 6063 589962 00</a></p>
     </form>
 
     <a href="#admin" class="staff-link">Mitarbeiter-Anmeldung</a>
@@ -638,7 +650,7 @@
   fDatum.addEventListener("change", subscribeDatum);
   renderSlots();
 
-  async function reserviere(datum, uhrzeit, personen, name, telefon, kommentar, status, manualTischId, dauerStunden) {
+  async function reserviere({ datum, uhrzeit, personen, name, telefon, email, kontaktPer, kommentar, status, manualTischId, dauerStunden }) {
     const dauer = dauerStunden || 2;
     const fenster = slotsForDuration(uhrzeit, dauer);
     const verfRef = doc(db, "verfuegbarkeit", datum);
@@ -678,6 +690,7 @@
       tx.set(verfRef, { slots: updatedSlots }, { merge: true });
       tx.set(resRef, {
         datum, uhrzeit, personen, name, telefon,
+        email: email || "", kontaktPer: kontaktPer || "",
         kommentar: kommentar || "",
         tischId: tisch.id, tischName: tisch.name,
         dauerStunden: dauer, belegteSlots: fenster,
@@ -695,10 +708,21 @@
     const personen = parseInt(fPersonen.value, 10);
     const name = document.getElementById("fName").value.trim();
     const telefon = document.getElementById("fTelefon").value.trim();
+    const email = document.getElementById("fEmail").value.trim();
+    const kontaktRadio = document.querySelector('input[name="fKontakt"]:checked');
+    const kontaktPer = kontaktRadio ? kontaktRadio.value : "";
     const kommentar = document.getElementById("fKommentar").value.trim();
 
-    if (!datum || !fPersonen.value || !name || !telefon) {
+    if (!datum || !fPersonen.value || !name || !telefon || !email) {
       showFormMsg("Bitte füllen Sie alle Pflichtfelder aus.", "error");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFormMsg("Bitte geben Sie eine gültige E-Mail-Adresse ein.", "error");
+      return;
+    }
+    if (!kontaktPer) {
+      showFormMsg("Bitte wählen Sie, wie Sie die Bestätigung erhalten möchten.", "error");
       return;
     }
     if (!selectedSlot) {
@@ -709,7 +733,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "Wird gesendet …";
     try {
-      await reserviere(datum, selectedSlot, personen, name, telefon, kommentar);
+      await reserviere({ datum, uhrzeit: selectedSlot, personen, name, telefon, email, kontaktPer, kommentar });
       showFormMsg(
         `Vielen Dank, ${name}! Ihre Reservierung für den ${formatDatum(datum)} um ${selectedSlot} Uhr ` +
         `für ${personen} ${personen === 1 ? "Person" : "Personen"} wurde übermittelt. Wir bestätigen sie in Kürze.`,
@@ -1024,7 +1048,12 @@
     aSubmitBtn.disabled = true;
     aSubmitBtn.textContent = "Wird angelegt …";
     try {
-      await reserviere(datum, aSelectedSlot, personen, name, telefon, kommentar, "bestätigt", manuell ? aSelectedTischId : null, parseInt(aDauer.value, 10) || 2);
+      await reserviere({
+        datum, uhrzeit: aSelectedSlot, personen, name, telefon, kommentar,
+        status: "bestätigt",
+        manualTischId: manuell ? aSelectedTischId : null,
+        dauerStunden: parseInt(aDauer.value, 10) || 2
+      });
       aResMsg.textContent = `Reservierung für ${name} am ${formatDatum(datum)} um ${aSelectedSlot} Uhr wurde angelegt.`;
       aResMsg.className = "msg success";
       aResMsg.hidden = false;
@@ -1112,7 +1141,8 @@
     belegModalBody.innerHTML = `
       <p><strong>${escapeHtml(res.name)}</strong> · ${res.personen} ${res.personen === 1 ? "Person" : "Personen"}</p>
       <p>${formatDatum(res.datum)} · ${res.uhrzeit}–${ende} Uhr · ${statusBadge(res.status)}</p>
-      <p><a class="tel-link" href="tel:${escapeHtml(res.telefon)}">${escapeHtml(res.telefon)}</a></p>
+      <p><a class="tel-link" href="tel:${escapeHtml(res.telefon)}">${escapeHtml(res.telefon)}</a>${res.kontaktPer === "telefon" ? " ★ bevorzugt" : ""}</p>
+      ${res.email ? `<p><a class="tel-link" href="mailto:${escapeHtml(res.email)}">${escapeHtml(res.email)}</a>${res.kontaktPer === "email" ? " ★ bevorzugt" : ""}</p>` : ""}
       <p class="modal-kommentar">${res.kommentar ? escapeHtml(res.kommentar) : "Kein Kommentar."}</p>
       <div class="field" style="margin-top:1rem;">
         <label for="belegModalDauer">Dauer ändern</label>
@@ -1561,7 +1591,7 @@
     table.className = "res-table";
     table.innerHTML = `
       <thead><tr>
-        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Telefon</th><th>Kommentar</th><th>Status</th><th>Aktionen</th>
+        <th>Datum</th><th>Uhrzeit</th><th>Tisch</th><th>Personen</th><th>Name</th><th>Kontakt</th><th>Kommentar</th><th>Status</th><th>Aktionen</th>
       </tr></thead>
       <tbody></tbody>`;
     const tbody = table.querySelector("tbody");
@@ -1570,13 +1600,17 @@
       const tr = document.createElement("tr");
       if (r.status === "storniert") tr.className = "storniert";
       const kommentarKurz = r.kommentar ? (r.kommentar.length > 30 ? r.kommentar.slice(0, 30) + "…" : r.kommentar) : "–";
+      const telZeile = `<a class="tel-link" href="tel:${escapeHtml(r.telefon)}">${escapeHtml(r.telefon)}</a>${r.kontaktPer === "telefon" ? ' ★' : ""}`;
+      const mailZeile = r.email
+        ? `<a class="tel-link" href="mailto:${escapeHtml(r.email)}">${escapeHtml(r.email)}</a>${r.kontaktPer === "email" ? ' ★' : ""}`
+        : "";
       tr.innerHTML = `
         <td>${formatDatum(r.datum)}</td>
         <td>${r.uhrzeit} Uhr</td>
         <td>${escapeHtml(r.tischName || "–")}</td>
         <td>${r.personen}</td>
         <td>${escapeHtml(r.name)}</td>
-        <td><a class="tel-link" href="tel:${escapeHtml(r.telefon)}">${escapeHtml(r.telefon)}</a></td>
+        <td>${telZeile}${mailZeile ? "<br>" + mailZeile : ""}</td>
         <td title="${escapeHtml(r.kommentar || "")}" style="white-space:normal;max-width:220px;">${escapeHtml(kommentarKurz)}</td>
         <td>${statusBadge(r.status)}</td>
         <td class="row-actions"></td>
